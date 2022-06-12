@@ -13,6 +13,23 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
+        public async Task<IEnumerable<TodoStatus>> GetStatuses()
+        {
+            try
+            {
+                var foundTodoStatuses = await _context.TodoStatuses.ToListAsync();
+
+                if (foundTodoStatuses == null)
+                    throw new Exception("Статусы не найдены");
+
+                return foundTodoStatuses;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<Todo> GetTodoAsync(int id)
         {
             try
@@ -30,16 +47,43 @@ namespace NetCore.Server.Services
             }   
         }
 
-        public async Task<IEnumerable<Todo>> GetTodosAsync()
+        public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
         {
             try
             {
-                var foundTodos = await _context.Todos.ToListAsync();
+                var foundGroup = await _context.Groups
+                    .Include(g => g.Todos)
+                    .SingleOrDefaultAsync(g => g.Id == id);
 
-                if (foundTodos == null)
+                if (foundGroup == null)
+                    throw new Exception("Группа не найдена");
+
+                if (foundGroup.Todos == null)
                     throw new Exception("Задачи не найдены");
 
-                return foundTodos;
+                return foundGroup.Todos;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id)
+        {
+            try
+            {
+                var foundAccount = await _context.Accounts
+                    .Include(a => a.Todos)
+                    .SingleOrDefaultAsync(a => a.Id == id);
+
+                if (foundAccount == null)
+                    throw new Exception("Аккаунт не найден");
+
+                if (foundAccount.Todos == null)
+                    throw new Exception("Задачи не найдены");
+
+                return foundAccount.Todos;
             }
             catch (Exception ex)
             {
@@ -62,7 +106,7 @@ namespace NetCore.Server.Services
             }
         }        
 
-        public async Task<Todo> EditTodoAsync(Todo todo)
+        public async Task<Todo> UpdateTodoAsync(Todo todo)
         {
             try
             {
@@ -94,23 +138,6 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }
-
-        public async Task<IEnumerable<TodoStatus>> GetStatuses()
-        {
-            try
-            {
-                var foundTodoStatuses = await _context.TodoStatuses.ToListAsync();
-
-                if (foundTodoStatuses == null)
-                    throw new Exception("Статусы не найдены");
-
-                return foundTodoStatuses;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        }        
     }
 }
