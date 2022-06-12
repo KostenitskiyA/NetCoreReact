@@ -17,7 +17,8 @@ namespace NetCore.Server.Services
         {
             try 
             {
-                var foundGroup = await _context.Groups.SingleOrDefaultAsync(g => g.Id == id);
+                var foundGroup = await _context.Groups
+                    .SingleOrDefaultAsync(g => g.Id == id);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
@@ -30,19 +31,21 @@ namespace NetCore.Server.Services
             }
         }
 
-        // TODO: Доработать под many-to-many
-        public async Task<IEnumerable<Group>> GetGroups(int id)
+        public async Task<IEnumerable<Group>> GetGroupsByAccount(int id)
         {
             try
             {
-                var foundGroups = await _context.Groups.Include(g => g.Users)
-                    .Where(g => g.Users.)
-                    .ToListAsync();
+                var foundUser = await _context.Accounts
+                    .Include(a => a.Groups)
+                    .SingleOrDefaultAsync(a => a.Id == id);
 
-                if (foundGroup == null)
-                    throw new Exception("Группа не найдена");
+                if (foundUser == null) 
+                    throw new Exception("Пользователь не найден");
 
-                return foundGroup;
+                if (foundUser.Groups == null)
+                    throw new Exception("Группы не найдены");
+
+                return foundUser.Groups;
             }
             catch (Exception ex)
             {
@@ -54,9 +57,10 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var createdGroup = await _context.Groups.AddAsync(group);
+                var createdGroup = await _context.Groups
+                    .AddAsync(group);
 
-                if (createdGroup == null)
+                if (createdGroup.Entity == null)
                     throw new Exception("Группа не создана");
 
                 await _context.SaveChangesAsync();
@@ -69,19 +73,21 @@ namespace NetCore.Server.Services
             }
         }        
 
-        public async Task<Group> EditGroup(Group group)
+        public async Task<Group> UpdateGroup(Group group)
         {
             try
             {
-                var foundGroup = await _context.Groups.SingleOrDefaultAsync(g => g.Id == group.Id);
+                var foundGroup = await _context.Groups
+                    .SingleOrDefaultAsync(g => g.Id == group.Id);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
 
-                var editedTodo = _context.Groups.Update(foundGroup);
+                var editedTodo = _context.Groups
+                    .Update(foundGroup);
 
                 if (editedTodo == null)
-                    throw new Exception("Группа не изменена");
+                    throw new Exception("Группа не обновлена");
 
                 await _context.SaveChangesAsync();
 
@@ -97,12 +103,14 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var foundGroup = await _context.Groups.SingleOrDefaultAsync(g => g.Id == id);
+                var foundGroup = await _context.Groups
+                    .SingleOrDefaultAsync(g => g.Id == id);
                 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
 
-                _context.Groups.Remove(foundGroup);
+                _context.Groups
+                    .Remove(foundGroup);
 
                 await _context.SaveChangesAsync();
             }

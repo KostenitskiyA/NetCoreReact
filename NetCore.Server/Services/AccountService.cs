@@ -13,7 +13,7 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<User> GetAccountAsync(int id)
+        public async Task<Account> GetAccountAsync(int id)
         {
             try
             {
@@ -21,8 +21,6 @@ namespace NetCore.Server.Services
 
                 if (foundAccount == null)
                     throw new Exception("Аккаунт не найден");
-
-                foundAccount.User = null;
 
                 return foundAccount;
             }
@@ -32,19 +30,21 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<User>> GetAccountAsync()
+        public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
         {
             try
             {
-                var foundAccounts = await _context.Accounts.ToListAsync();
+                var foundGroup = await _context.Groups
+                    .Include(g => g.Accounts)
+                    .SingleOrDefaultAsync(g => g.Id == id);
 
-                if (foundAccounts == null)
+                if (foundGroup == null)
+                    throw new Exception("Группа не найдена");
+
+                if (foundGroup.Accounts == null)
                     throw new Exception("Аккаунты не найдены");
 
-                foreach (var account in foundAccounts)
-                    account.User = null;
-
-                return foundAccounts;
+                return foundGroup.Accounts;
             }
             catch (Exception ex)
             {

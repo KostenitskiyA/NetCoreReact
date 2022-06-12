@@ -12,12 +12,13 @@ namespace NetCore.Server.Interfaces
         /// </summary>
         /// <param name="id">Идентификатор аккаунта</param>
         /// <returns>Аккаунт</returns>
-        public Task<User> GetAccountAsync(int id);
+        public Task<Account> GetAccountAsync(int id);
 
         /// <summary>
-        /// Получение аккаунтов
+        /// Получение аккаунтов группы
         /// </summary>
-        /// <returns>Коллекция аккаунтов</returns>
-        public Task<IEnumerable<User>> GetAccountAsync();
+        /// <param name="id">Идентификатор группы</param>
+        /// <returns>Коллекция аккаунтов группы</returns>
+        public Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id);
     }
 }

@@ -15,11 +15,11 @@ namespace NetCore.Server.Interfaces
         public Task<Group> GetGroup(int id);
 
         /// <summary>
-        /// Получение групп
+        /// Получение групп аккаунта
         /// </summary>
-        /// <param name="id">Идентификатор пользователя</param>
+        /// <param name="id">Идентификатор аккаунта</param>
         /// <returns>Коллекция групп</returns>
-        public Task<IEnumerable<Group>> GetGroups(int id);
+        public Task<IEnumerable<Group>> GetGroupsByAccount(int id);
 
         /// <summary>
         /// Создание группы
@@ -29,11 +29,11 @@ namespace NetCore.Server.Interfaces
         public Task<Group> CreateGroup(Group group);
 
         /// <summary>
-        /// Изменение группы
+        /// Обновление группы
         /// </summary>
-        /// <param name="group">Изменяемая группа</param>
-        /// <returns>Изменённая группа</returns>
-        public Task<Group> EditGroup(Group group);
+        /// <param name="group">Обновляемая группа</param>
+        /// <returns>Обновлённая группа</returns>
+        public Task<Group> UpdateGroup(Group group);
 
         /// <summary>
         /// Удаление группы

@@ -13,7 +13,7 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<Account> SignInAsync(Account user)
+        public async Task<Account> SignInAsync(User user)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<Account> LogInAsync(Account user)
+        public async Task<Account> LogInAsync(User user)
         {
             try
             {
