@@ -8,6 +8,12 @@ namespace NetCore.Server.Interfaces
     public interface ITodoService
     {
         /// <summary>
+        /// Получение статусов
+        /// </summary>
+        /// <returns>Коллекция статусов</returns>
+        public Task<IEnumerable<TodoStatus>> GetStatuses();
+
+        /// <summary>
         /// Получение задачи
         /// </summary>
         /// <param name="id"></param>
@@ -15,10 +21,18 @@ namespace NetCore.Server.Interfaces
         public Task<Todo> GetTodoAsync(int id);
 
         /// <summary>
-        /// Получение задач
+        /// Получение задач группы
         /// </summary>
-        /// <returns>Коллекция задач</returns>
-        public Task<IEnumerable<Todo>> GetTodosAsync();
+        /// <param name="id">Идентификатор группы</param>
+        /// <returns>Коллекция задач группы</returns>
+        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id);
+
+        /// <summary>
+        /// Получение задач аккаунта
+        /// </summary>
+        /// <param name="id">Идентификатор аккаунта</param>
+        /// <returns>Коллекция задач аккаунта</returns>
+        public Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id);
 
         /// <summary>
         /// Создание задачи
@@ -28,22 +42,16 @@ namespace NetCore.Server.Interfaces
         public Task<Todo> CreteTodoAsync(Todo todo);
 
         /// <summary>
-        /// Изменение задача
+        /// Обновление задачи
         /// </summary>
-        /// <param name="todo">Изменяемая задача</param>
-        /// <returns>Изменённая задача</returns>
-        public Task<Todo> EditTodoAsync(Todo todo);
+        /// <param name="todo">Обновляемая задача</param>
+        /// <returns>Обновлённая задача</returns>
+        public Task<Todo> UpdateTodoAsync(Todo todo);
 
         /// <summary>
         /// Удаление задача
         /// </summary>
         /// <param name="id">Идентификатор удаляемой задачи</param>
         public Task DeleteTodoAsync(int id);
-
-        /// <summary>
-        /// Получение статусов
-        /// </summary>
-        /// <returns>Коллекция статусов</returns>
-        public Task<IEnumerable<TodoStatus>> GetStatuses();
     }
 }

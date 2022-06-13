@@ -6,9 +6,9 @@ namespace NetCore.Server.Models
     {
         public DbSet<Group> Groups { get; set; }
               
-        public DbSet<User> Accounts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
-        public DbSet<Account> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<TodoStatus> TodoStatuses { get; set; }
 

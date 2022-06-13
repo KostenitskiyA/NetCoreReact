@@ -4,6 +4,7 @@ using NetCore.Server.Models;
 using NetCore.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddCors(options =>
     options.AddPolicy("CORSPolicy",
         builder =>
@@ -30,13 +31,13 @@ builder.Services.AddTransient<ITodoService, TodoService>();
 
 var app = builder.Build();
 
+app.UseCors("CORSPolicy");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors("CORSPolicy");
 
 app.MapControllers();
 

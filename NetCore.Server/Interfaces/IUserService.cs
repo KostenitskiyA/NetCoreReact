@@ -12,13 +12,13 @@ namespace NetCore.Server.Interfaces
         /// </summary>
         /// <param name="user">Пользователь для регистрации</param>
         /// <returns>Авторизированный пользователь</returns>
-        public Task<User> SignInAsync(Account user);
+        public Task<Account> SignInAsync(User user);
 
         /// <summary>
         /// Авторизация пользователя
         /// </summary>
         /// <param name="user">Данные пользователя для входа</param>
         /// <returns>Авторизированный пользователь</returns>
-        public Task<User> LogInAsync(Account user);
+        public Task<Account> LogInAsync(User user);
     }
 }

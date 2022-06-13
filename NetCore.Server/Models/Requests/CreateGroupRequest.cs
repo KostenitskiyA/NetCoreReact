@@ -16,8 +16,8 @@
         public string Code { get; set; } = string.Empty;
 
         /// <summary>
-        /// Владелец группы
+        /// Идентификатор владелеца группы
         /// </summary>
-        public Account Owner { get; set; }
+        public int OwnerId { get; set; }
     }
 }

@@ -13,23 +13,24 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<Account> SignInAsync(Account user)
+        public async Task<Account> SignInAsync(User user)
         {
             try
             {
-                await _context.Users.AddAsync(user);
-                await _context.Authentications.AddAsync(user.Authentication);
+                var createdUser = await _context.Users
+                    .AddAsync(user);
+                var createdAccount = await _context.Accounts
+                    .AddAsync(user.Account);
                 await _context.SaveChangesAsync();
 
-                var createdUser = await _context.Users.Include(u => u.Authentication)
-                    .SingleOrDefaultAsync();
+                var created = await _context.Users
+                    .Include(u => u.Account)
+                    .SingleOrDefaultAsync(u => u.Id == createdUser.Entity.Id);
 
                 if (createdUser == null)
                     throw new Exception("Не удалось создать пользователя");
 
-                createdUser.Authentication.User = null;
-
-                return createdUser;
+                return created.Account;
             }
             catch (Exception ex)
             {
@@ -37,20 +38,19 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<Account> LogInAsync(Account user)
+        public async Task<Account> LogInAsync(User user)
         {
             try
             {
-                var foundUser = await _context.Users.Include(u => u.Authentication)
-                    .SingleOrDefaultAsync(u => u.Authentication.Login == user.Authentication.Login
-                                            && u.Authentication.Password == user.Authentication.Password);
+                var foundUser = await _context.Users
+                    .Include(u => u.Account)
+                    .SingleOrDefaultAsync(u => u.Login == user.Login
+                                            && u.Password == user.Password);
 
                 if (foundUser == null)
                     throw new Exception("Пользователь не найден");
 
-                foundUser.Authentication.User = null;
-
-                return foundUser;
+                return foundUser.Account;
             }
             catch (Exception ex)
             {
