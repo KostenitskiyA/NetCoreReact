@@ -12,24 +12,24 @@ namespace NetCore.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
-        private IUserService _authenticationProvider;
+        private IUserService _userProvider;
 
         public UserController(ILogger<UserController> logger, 
-            IUserService authenticationProvider)
+            IUserService userProvider)
         {
             _logger = logger;
-            _authenticationProvider = authenticationProvider;
+            _userProvider = userProvider;
         }
 
         [HttpPost]
         [Route("signin")]
-        public async Task<ActionResult<Account>> Signin([FromBody] Account user)
+        public async Task<ActionResult<Account>> Signin([FromBody] User user)
         {
             try
             {
                 _logger.LogInformation("Запрос Signin получен");
 
-                var result = await _authenticationProvider.SignInAsync(user);
+                var result = await _userProvider.SignInAsync(user);
 
                 _logger.LogInformation("Запрос Signin обработан");
 
@@ -44,13 +44,13 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<Account>> Login([FromBody] Account user)
+        public async Task<ActionResult<Account>> Login([FromBody] User user)
         {
             try
             {
                 _logger.LogInformation("Запрос Login получен");
 
-                var result = await _authenticationProvider.LogInAsync(user);
+                var result = await _userProvider.LogInAsync(user);
 
                 var claims = new List<Claim> { new Claim(ClaimTypes.Name, result.Name) };
 

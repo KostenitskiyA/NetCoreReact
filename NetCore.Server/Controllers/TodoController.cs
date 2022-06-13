@@ -61,14 +61,35 @@ namespace NetCore.Server.Controllers
         }
 
         [HttpGet]
-        [Route("todos")]
-        public async Task<ActionResult<IEnumerable<Todo>>> GetTodos()
+        [Route("byGroup/{id}")]
+        public async Task<ActionResult<IEnumerable<Todo>>> GetTodosByGroup(int id)
         {
             try
             {
                 _logger.LogInformation("Запрос Todos получен");
 
-                var result = await _todoProvider.GetTodosAsync();
+                var result = await _todoProvider.GetTodosByGroupAsync(id);
+
+                _logger.LogInformation("Запрос Todos обработан");
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("byAccount/{id}")]
+        public async Task<ActionResult<IEnumerable<Todo>>> GetTodosByAccount(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос Todos получен");
+
+                var result = await _todoProvider.GetTodosByAccountAsync(id);
 
                 _logger.LogInformation("Запрос Todos обработан");
 
@@ -119,7 +140,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос EditTodo получен");
 
-                var result = await _todoProvider.EditTodoAsync(todo);
+                var result = await _todoProvider.UpdateTodoAsync(todo);
 
                 _logger.LogInformation("Запрос EditTodo обработан");
 
@@ -133,14 +154,14 @@ namespace NetCore.Server.Controllers
         }
 
         [HttpPost]
-        [Route("delete")]
-        public async Task<ActionResult> DeleteTodo(Todo todo)
+        [Route("delete/{id}")]
+        public async Task<ActionResult> DeleteTodo(int id)
         {
             try
             {
                 _logger.LogInformation("Запрос DeleteTodo получен");
 
-                await _todoProvider.DeleteTodoAsync(todo);
+                await _todoProvider.DeleteTodoAsync(id);
 
                 _logger.LogInformation("Запрос DeleteTodo обработан");
 

@@ -26,8 +26,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IAccountService, AccountService>();
-//builder.Services.AddTransient<IUserService, UserService>();
-//builder.Services.AddTransient<ITodoService, TodoService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<ITodoService, TodoService>();
 
 var app = builder.Build();
 

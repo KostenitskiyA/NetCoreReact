@@ -28,7 +28,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос GetGroup получен");
 
-                var result = await _groupService.GetGroup(id);
+                var result = await _groupService.GetGroupAsync(id);
 
                 _logger.LogInformation("Запрос GetGroup обработан");
 
@@ -50,7 +50,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос GetGroupsByAccount получен");
 
-                var result = await _groupService.GetGroupsByAccount(id);
+                var result = await _groupService.GetGroupsByAccountAsync(id);
 
                 _logger.LogInformation("Запрос GetGroupsByAccount обработан");
 
@@ -72,7 +72,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос CreateGroup получен");
 
-                var result = await _groupService.CreateGroup(
+                var result = await _groupService.CreateGroupAsync(
                     new Group() { 
                         Name = request.Name, 
                         Code = request.Code, 
@@ -99,7 +99,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос Signin получен");
 
-                var result = await _groupService.UpdateGroup(new Group());
+                var result = await _groupService.UpdateGroupAsync(new Group());
 
                 _logger.LogInformation("Запрос Signin обработан");
 
@@ -121,7 +121,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос DeleteGroup получен");
 
-                await _groupService.DeleteGroup(id);
+                await _groupService.DeleteGroupAsync(id);
 
                 _logger.LogInformation("Запрос DeleteGroup обработан");
 

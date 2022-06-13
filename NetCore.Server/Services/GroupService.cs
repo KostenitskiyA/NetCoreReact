@@ -13,7 +13,7 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<Group> GetGroup(int id)
+        public async Task<Group> GetGroupAsync(int id)
         {
             try 
             {
@@ -31,7 +31,7 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Group>> GetGroupsByAccount(int id)
+        public async Task<IEnumerable<Group>> GetGroupsByAccountAsync(int id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<Group> CreateGroup(Group group)
+        public async Task<Group> CreateGroupAsync(Group group)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace NetCore.Server.Services
             }
         }        
 
-        public async Task<Group> UpdateGroup(Group group)
+        public async Task<Group> UpdateGroupAsync(Group group)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task DeleteGroup(int id)
+        public async Task DeleteGroupAsync(int id)
         {
             try
             {
