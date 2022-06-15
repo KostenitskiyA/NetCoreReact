@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
+using NetCore.Server.Models.Configure;
 using NetCore.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,9 @@ builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITodoService, TodoService>();
+
+var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
+builder.Services.Configure<AuthOptions>(authOptionsConfiguration);
 
 var app = builder.Build();
 

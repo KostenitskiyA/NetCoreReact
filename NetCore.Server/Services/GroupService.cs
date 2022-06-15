@@ -13,7 +13,32 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<Group> GetGroupAsync(int id)
+        public Task<Group> CreateGroupAsync(Group group)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteGroupAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Group> GetGroupAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Group>> GetGroupsByAccountAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Group> UpdateGroupAsync(Group group)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public async Task<Group> GetGroupAsync(int id)
         {
             try 
             {
@@ -118,6 +143,6 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }
+        }*/
     }
 }
