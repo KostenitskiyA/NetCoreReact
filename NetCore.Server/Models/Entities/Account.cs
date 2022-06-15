@@ -20,7 +20,7 @@
         /// </summary>
         public User? User { get; set; }
 
-        /// <summary>
+        /*/// <summary>
         /// Группы аккаунты
         /// </summary>
         public IEnumerable<Group>? Groups { get; set; }
@@ -33,6 +33,6 @@
         /// <summary>
         /// Задачи аккаунта
         /// </summary>
-        public IEnumerable<Todo>? Todos { get; set; }
+        public IEnumerable<Todo>? Todos { get; set; }*/
     }
 }

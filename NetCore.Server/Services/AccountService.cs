@@ -30,7 +30,12 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
+        public Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
         {
             try
             {
@@ -50,6 +55,6 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }
+        }*/
     }
 }

@@ -13,7 +13,42 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<TodoStatus>> GetStatuses()
+        public Task<Todo> CreteTodoAsync(Todo todo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteTodoAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<TodoStatus>> GetStatuses()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Todo> GetTodoAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Todo> UpdateTodoAsync(Todo todo)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public async Task<IEnumerable<TodoStatus>> GetStatuses()
         {
             try
             {
@@ -138,6 +173,6 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }        
+        }        */
     }
 }
