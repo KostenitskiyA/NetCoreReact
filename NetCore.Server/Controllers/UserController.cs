@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Configurations;
+using NetCore.Server.Models.Requests;
+using NetCore.Server.Models.Responces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -30,13 +32,13 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("signin")]
-        public async Task<ActionResult<Account>> Signin([FromBody] User user)
+        public async Task<ActionResult<SignInResponce>> SignIn([FromBody] SignInRequest request)
         {
             try
             {
                 _logger.LogInformation("Запрос Signin получен");
 
-                var result = await _userProvider.SignInAsync(user);
+                var result = await _userProvider.SignInAsync(new Models.User());
 
                 _logger.LogInformation("Запрос Signin обработан");
 
@@ -51,7 +53,7 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<Account>> Login([FromBody] User user)
+        public async Task<ActionResult<Account>> LogIn([FromBody] User user)
         {
             try
             {
@@ -78,6 +80,8 @@ namespace NetCore.Server.Controllers
 
                 _logger.LogInformation("Запрос Login обработан");
 
+                result.User = null;
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -89,7 +93,7 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("logout")]
-        public async Task<ActionResult> Logout([FromBody] Account user)
+        public async Task<ActionResult> LogOut([FromBody] Account user)
         {
             try
             {

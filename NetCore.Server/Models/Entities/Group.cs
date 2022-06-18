@@ -30,7 +30,7 @@
         /// </summary>
         public Account Owner { get; set; }
 
-        /// <summary>
+        /*/// <summary>
         /// Аккаунты группы
         /// </summary>
         public IEnumerable<Account> Accounts { get; set; }
@@ -43,6 +43,6 @@
         /// <summary>
         /// Составная таблица Группы-Аккаунты
         /// </summary>
-        public IEnumerable<GroupAccount> GroupAccounts { get; set; }
+        public IEnumerable<GroupAccount> GroupAccounts { get; set; }*/
     }
 }
