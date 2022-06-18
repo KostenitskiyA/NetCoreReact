@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
-using NetCore.Server.Models.Configure;
+using NetCore.Server.Models.Configurations;
 using NetCore.Server.Models.Requests;
 using NetCore.Server.Models.Responces;
 using System.IdentityModel.Tokens.Jwt;
@@ -65,9 +65,7 @@ namespace NetCore.Server.Controllers
                 var securityKey = authParams.GetSymmetricSecurityKey();
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-                var claims = new List<Claim> { 
-                    new Claim(JwtRegisteredClaimNames.Name, result.Name)
-                };
+                var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.Name, result.Name) };
 
                 var token = new JwtSecurityToken(
                     issuer: authParams.Issuer,
