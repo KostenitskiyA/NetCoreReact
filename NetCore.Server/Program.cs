@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
+using NetCore.Server.Models.Configurations;
 using NetCore.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,9 @@ builder.Services.AddCors(options =>
 
 var connection = builder.Configuration.GetConnectionString("DefaultDatabase");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection, options => options.EnableRetryOnFailure()));
+
+var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
+builder.Services.Configure<AuthOptions>(authOptionsConfiguration);
 
 builder.Services.AddControllers();
 

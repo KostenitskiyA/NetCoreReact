@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
+using NetCore.Server.Models.Configurations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace NetCore.Server.Controllers
@@ -12,12 +16,15 @@ namespace NetCore.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
+        private IOptions<AuthOptions> _authOptions;
         private IUserService _userProvider;
 
         public UserController(ILogger<UserController> logger, 
+            IOptions<AuthOptions> authOptions,
             IUserService userProvider)
         {
             _logger = logger;
+            _authOptions = authOptions;
             _userProvider = userProvider;
         }
 
@@ -52,18 +59,22 @@ namespace NetCore.Server.Controllers
 
                 var result = await _userProvider.LogInAsync(user);
 
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name, result.Name) };
+                var authParams = _authOptions.Value;
+                var securityKey = authParams.GetSymmetricSecurityKey();
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-                /*var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
+                var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.Name, result.Name) };
+
+                var token = new JwtSecurityToken(
+                    issuer: authParams.Issuer,
+                    audience: authParams.Audience,
                     claims: claims,
-                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                    expires: DateTime.Now.AddSeconds(authParams.TokenLifetime),
+                    signingCredentials: credentials);
 
-                new JwtSecurityTokenHandler().WriteToken(jwt);*/
+                var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-                HttpContext.Response.Cookies.Append("Mister", "Bebra", new CookieOptions() { Secure = false, HttpOnly = false });
+                HttpContext.Response.Cookies.Append("Token", generatedToken);
 
                 _logger.LogInformation("Запрос Login обработан");
 
