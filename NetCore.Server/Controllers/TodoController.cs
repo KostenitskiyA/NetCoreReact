@@ -134,7 +134,7 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("edit")]
-        public async Task<ActionResult<Todo>> EditTodo(Todo todo)
+        public async Task<ActionResult<Todo>> UpdateTodo(Todo todo)
         {
             try
             {

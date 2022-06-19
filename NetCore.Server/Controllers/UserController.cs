@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -53,14 +54,21 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<Account>> LogIn([FromBody] User user)
+        public async Task<ActionResult<LogInResponce>> LogIn([FromBody] LogInRequest request)
         {
             try
             {
                 _logger.LogInformation("Запрос Login получен");
 
+                // Маппим LogInRequest в User
+                var configLogInRequest = new MapperConfiguration(cfg => cfg.CreateMap<LogInRequest, User>());
+                var mapperLogInRequest = configLogInRequest.CreateMapper();
+                var user = mapperLogInRequest.Map<User>(request);
+
+                // Сам сервис аутентификации
                 var result = await _userProvider.LogInAsync(user);
 
+                // Создание JWT-токена
                 var authParams = _authOptions.Value;
                 var securityKey = authParams.GetSymmetricSecurityKey();
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -76,13 +84,17 @@ namespace NetCore.Server.Controllers
 
                 var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
+                // Запись JWT-токена в кукки
                 HttpContext.Response.Cookies.Append("Token", generatedToken);
+
+                // Маппим LogInRequest в User
+                var configAccount = new MapperConfiguration(cfg => cfg.CreateMap<Account, LogInResponce>());
+                var mapperAccount = configAccount.CreateMapper();
+                var account = mapperAccount.Map<LogInResponce>(result);
 
                 _logger.LogInformation("Запрос Login обработан");
 
-                result.User = null;
-
-                return Ok(result);
+                return Ok(account);
             }
             catch (Exception ex)
             {

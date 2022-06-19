@@ -1,9 +1,9 @@
 ﻿namespace NetCore.Server.Models.Responces
 {
     /// <summary>
-    /// Ответ регистрации пользователя
+    /// Ответ входа пользователя
     /// </summary>
-    public class SignInResponce
+    public class LogInResponce
     {
         /// <summary>
         /// Идентификатор
