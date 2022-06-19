@@ -33,9 +33,6 @@ builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITodoService, TodoService>();
 
-var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
-builder.Services.Configure<AuthOptions>(authOptionsConfiguration);
-
 var app = builder.Build();
 
 app.UseCors("CORSPolicy");

@@ -1,15 +1,10 @@
 ﻿namespace NetCore.Server.Models.Requests
 {
     /// <summary>
-    /// Запрос регистрации пользователя
+    /// Запрос входа пользователя
     /// </summary>
-    public class SignInRequest
+    public class LogInRequest
     {
-        /// <summary>
-        /// Имя
-        /// </summary>
-        public string Name { get; set; } = string.Empty;
-
         /// <summary>
         /// Логин
         /// </summary>
