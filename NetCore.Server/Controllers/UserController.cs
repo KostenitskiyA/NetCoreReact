@@ -39,11 +39,21 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос Signin получен");
 
-                var result = await _userProvider.SignInAsync(new Models.User());
+                // Маппим SignInRequest в User
+                var configSignInRequest = new MapperConfiguration(cfg => cfg.CreateMap<SignInRequest, User>());
+                var mapperSignInRequest = configSignInRequest.CreateMapper();
+                var user = mapperSignInRequest.Map<User>(request);
 
+                var result = await _userProvider.SignInAsync(user);
+
+                // Маппим SignInResponce в User
+                var configSignInResponce = new MapperConfiguration(cfg => cfg.CreateMap<SignInResponce, User>());
+                var mapperSignInResponce = configSignInResponce.CreateMapper();
+                var userResponce = mapperSignInResponce.Map<SignInResponce>(result);
                 _logger.LogInformation("Запрос Signin обработан");
 
-                return Ok(result);
+
+                return Ok(userResponce);
             }
             catch (Exception ex)
             {
@@ -87,7 +97,7 @@ namespace NetCore.Server.Controllers
                 // Запись JWT-токена в кукки
                 HttpContext.Response.Cookies.Append("Token", generatedToken);
 
-                // Маппим LogInRequest в User
+                // Маппим LogInResponce в User
                 var configAccount = new MapperConfiguration(cfg => cfg.CreateMap<Account, LogInResponce>());
                 var mapperAccount = configAccount.CreateMapper();
                 var account = mapperAccount.Map<LogInResponce>(result);
