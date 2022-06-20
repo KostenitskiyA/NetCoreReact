@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Requests;
@@ -72,6 +73,11 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос CreateGroup получен");
 
+                // Маппим CreateGroupRequest в Group
+                var configCreateGroupRequest = new MapperConfiguration(cfg => cfg.CreateMap<CreateGroupRequest, Group>());
+                var mapperCreateGroupRequest = configCreateGroupRequest.CreateMapper();
+                var userRequest = mapperCreateGroupRequest.Map<Group>(request);
+
                 var result = await _groupService.CreateGroupAsync(
                     new Group() { 
                         Name = request.Name, 
@@ -79,9 +85,14 @@ namespace NetCore.Server.Controllers
                         OwnerId = request.OwnerId 
                     });
 
+                // Маппим CreateGroupResponce в Group
+                var configCreateGroupResponce = new MapperConfiguration(cfg => cfg.CreateMap<CreateGroupResponce, Group>());
+                var mapperCreateGroupResponce = configCreateGroupResponce.CreateMapper();
+                var userResponce = mapperCreateGroupResponce.Map<CreateGroupResponce>(result);
+
                 _logger.LogInformation("Запрос CreateGroup обработан");
 
-                return Ok(result);
+                return Ok(userResponce);
             }
             catch (Exception ex)
             {
@@ -99,11 +110,22 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос Signin получен");
 
+                // Маппим UpdateGroupRequest в Group
+                var configUpdateGroupRequest = new MapperConfiguration(cfg => cfg.CreateMap<UpdateGroupRequest, Group>());
+                var mapperUpdateGroupRequest = configUpdateGroupRequest.CreateMapper();
+                var userRequest = mapperUpdateGroupRequest.Map<Group>(request);
+
+
                 var result = await _groupService.UpdateGroupAsync(new Group());
+
+                // Маппим UpdateGroupResponce в Group
+                var configUpdateGroupResponce = new MapperConfiguration(cfg => cfg.CreateMap<UpdateGroupResponce, Group>());
+                var mapperUpdateGroupResponce = configUpdateGroupResponce.CreateMapper();
+                var userResponce = mapperUpdateGroupResponce.Map<UpdateGroupResponce>(result);
 
                 _logger.LogInformation("Запрос Signin обработан");
 
-                return Ok(result);
+                return Ok(userResponce);
             }
             catch (Exception ex)
             {

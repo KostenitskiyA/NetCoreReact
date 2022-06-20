@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
+using NetCore.Server.Models.Requests;
+using NetCore.Server.Models.Responces;
 
 namespace NetCore.Server.Controllers
 {
@@ -104,26 +107,27 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Todo>> CreateTodo(Todo todo)
+        public async Task<ActionResult<CreateTodoResponce>> CreateTodo([FromBody] CreateToDoRequest request)
         {
             try
             {
                 _logger.LogInformation("Запрос CreateTodo получен");
 
-                var createdTodo = new Todo()
-                {
-                    Id = 0,
-                    Title = todo.Title,
-                    Description = todo.Description,
-                    StatusId = todo.StatusId,
-                    CreateDate = DateTime.Now,
-                    ChangeDate = DateTime.Now,
-                };
-                var result = await _todoProvider.CreteTodoAsync(createdTodo);
+                // Маппим CreateTodoRequest в Todo
+                var configCreateTodoRequest = new MapperConfiguration(cfg => cfg.CreateMap<CreateToDoRequest, Todo>());
+                var mapperCreateTodoRequest = configCreateTodoRequest.CreateMapper();
+                var todoRequest = mapperCreateTodoRequest.Map<Todo>(request);
+
+                var result = await _todoProvider.CreteTodoAsync(todoRequest);
+
+                // Маппим CreateTodoResponce в Todo
+                var configCreateTodoResponce = new MapperConfiguration(cfg => cfg.CreateMap<CreateTodoResponce, Todo>());
+                var mapperCreateTodoResponce = configCreateTodoResponce.CreateMapper();
+                var todoResponce = mapperCreateTodoResponce.Map<SignInResponce>(result);
 
                 _logger.LogInformation("Запрос CreateTodo обработан");
 
-                return Ok(result);
+                return Ok(todoResponce);
             }
             catch (Exception ex)
             {
@@ -134,17 +138,28 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("edit")]
-        public async Task<ActionResult<Todo>> UpdateTodo(Todo todo)
+        public async Task<ActionResult<UpdateTodoResponce>> UpdateTodo([FromBody] UpdateTodoRequest request)
         {
             try
             {
                 _logger.LogInformation("Запрос EditTodo получен");
 
-                var result = await _todoProvider.UpdateTodoAsync(todo);
+                // Маппим UpdateTodoRequest в Todo
+                var configEditToDoRequest = new MapperConfiguration(cfg => cfg.CreateMap<UpdateTodoRequest, Todo>());
+                var mapperEditToDoRequest = configEditToDoRequest.CreateMapper();
+                var todoRequest = mapperEditToDoRequest.Map<Todo>(request);
+
+                var result = await _todoProvider.UpdateTodoAsync(todoRequest);
+
+                // Маппим UpdateTodoResponce в Todo
+                var configEditToDoResponce = new MapperConfiguration(cfg => cfg.CreateMap<UpdateTodoResponce, Todo>());
+                var mapperEditToDoResponce = configEditToDoResponce.CreateMapper();
+                var todoResponce = mapperEditToDoResponce.Map<UpdateTodoResponce>(result);
+
 
                 _logger.LogInformation("Запрос EditTodo обработан");
 
-                return Ok(result);
+                return Ok(todoResponce);
             }
             catch (Exception ex)
             {
