@@ -107,29 +107,18 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<Todo>> CreateTodo(Todo todo)
+        public async Task<ActionResult<CreateTodoResponce>> CreateTodo([FromBody] CreateToDoRequest request)
         {
             try
             {
-
                 _logger.LogInformation("Запрос CreateTodo получен");
 
                 // Маппим CreateTodoRequest в Todo
                 var configCreateTodoRequest = new MapperConfiguration(cfg => cfg.CreateMap<CreateToDoRequest, Todo>());
                 var mapperCreateTodoRequest = configCreateTodoRequest.CreateMapper();
-                var todoRequest = mapperCreateTodoRequest.Map<Todo>(todo);
+                var todoRequest = mapperCreateTodoRequest.Map<Todo>(request);
 
-                var createdTodo = new Todo()
-                {
-                    Id = 0,
-                    Title = todo.Title,
-                    Description = todo.Description,
-                    StatusId = todo.StatusId,
-                    CreateDate = DateTime.Now,
-                    ChangeDate = DateTime.Now,
-                };
-
-                var result = await _todoProvider.CreteTodoAsync(createdTodo);
+                var result = await _todoProvider.CreteTodoAsync(todoRequest);
 
                 // Маппим CreateTodoResponce в Todo
                 var configCreateTodoResponce = new MapperConfiguration(cfg => cfg.CreateMap<CreateTodoResponce, Todo>());
@@ -149,7 +138,7 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("edit")]
-        public async Task<ActionResult<Todo>> UpdateTodo(Todo todo)
+        public async Task<ActionResult<UpdateTodoResponce>> UpdateTodo([FromBody] UpdateTodoRequest request)
         {
             try
             {
@@ -158,7 +147,7 @@ namespace NetCore.Server.Controllers
                 // Маппим UpdateTodoRequest в Todo
                 var configEditToDoRequest = new MapperConfiguration(cfg => cfg.CreateMap<UpdateTodoRequest, Todo>());
                 var mapperEditToDoRequest = configEditToDoRequest.CreateMapper();
-                var todoRequest = mapperEditToDoRequest.Map<Todo>(todo);
+                var todoRequest = mapperEditToDoRequest.Map<Todo>(request);
 
                 var result = await _todoProvider.UpdateTodoAsync(todoRequest);
 

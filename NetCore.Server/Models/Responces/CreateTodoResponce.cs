@@ -1,5 +1,8 @@
 ﻿namespace NetCore.Server.Models.Responces
 {
+    /// <summary>
+    /// Ответ на запрос Создания задачи
+    /// </summary>
     public class CreateTodoResponce
     {
         /// <summary>

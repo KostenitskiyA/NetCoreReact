@@ -1,5 +1,8 @@
 ﻿namespace NetCore.Server.Models.Requests
 {
+    /// <summary>
+    /// Запрос создания задачи
+    /// </summary>
     public class CreateToDoRequest
     {
         /// <summary>
