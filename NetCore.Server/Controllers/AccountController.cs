@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
+using NetCore.Server.Models.Responces;
+using NetCore.Server.Utilities;
 
 namespace NetCore.Server.Controllers
 {
@@ -20,28 +22,30 @@ namespace NetCore.Server.Controllers
 
         [HttpGet]
         [Route("account/{id}")]
-        public async Task<ActionResult<Account>> GetAccount(int id)
+        public async Task<ActionResult<GetAccountResponce>> GetAccount(int id)
         {
             try
             {
                 _logger.LogInformation("Запрос GetAccount получен");
 
                 var result = await _accountProvider.GetAccountAsync(id);
-
+                var responce = AutoMapperUtility<Account, GetAccountResponce>.Map(result);
+                               
                 _logger.LogInformation("Запрос GetAccount обработан");
 
-                return Ok(result);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
         [Route("accounts/{id}")]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAccountsByGroup(int id)
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByGroup(int id)
         {
             try
             {
@@ -49,13 +53,19 @@ namespace NetCore.Server.Controllers
 
                 var result = await _accountProvider.GetAccountsByGroupAsync(id);
 
+                var newResult = new List<GetAccountResponce>();
+
+                foreach (var account in result)
+                    newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
+
                 _logger.LogInformation("Запрос GetAccountsByGroup обработан");
 
-                return Ok(result);
+                return Ok(newResult);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }

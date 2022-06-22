@@ -3,7 +3,7 @@
     /// <summary>
     /// Запрос создания задачи
     /// </summary>
-    public class CreateToDoRequest
+    public class CreateTodoRequest
     {
         /// <summary>
         /// Заголовок

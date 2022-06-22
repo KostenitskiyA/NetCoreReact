@@ -17,7 +17,8 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var foundAccount = await _context.Accounts.SingleOrDefaultAsync(u => u.Id == id);
+                var foundAccount = await _context.Accounts
+                    .SingleOrDefaultAsync(u => u.Id == id);
 
                 if (foundAccount == null)
                     throw new Exception("Аккаунт не найден");
@@ -30,12 +31,7 @@ namespace NetCore.Server.Services
             }
         }
 
-        public Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        /*public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
+        public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
         {
             try
             {
@@ -55,6 +51,6 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }*/
+        }
     }
 }

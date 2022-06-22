@@ -41,14 +41,14 @@
         public Account? Creator { get; set; }
 
         /// <summary>
-        /// Идентификатор исполнителя
+        /// Идентификатор группы
         /// </summary>
-        public int ExecutorId { get; set; }
+        public int GroupId { get; set; }
 
         /// <summary>
-        /// Исполнитель задачи
+        /// Группа
         /// </summary>
-        public Account? Executor { get; set; }
+        public Group? Group { get; set; }
 
         /// <summary>
         /// Дата создания

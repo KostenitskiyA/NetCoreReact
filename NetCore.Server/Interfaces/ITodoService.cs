@@ -49,7 +49,7 @@ namespace NetCore.Server.Interfaces
         public Task<Todo> UpdateTodoAsync(Todo todo);
 
         /// <summary>
-        /// Удаление задача
+        /// Удаление задачи
         /// </summary>
         /// <param name="id">Идентификатор удаляемой задачи</param>
         public Task DeleteTodoAsync(int id);
