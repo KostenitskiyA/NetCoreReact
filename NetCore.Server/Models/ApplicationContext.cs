@@ -4,26 +4,28 @@ namespace NetCore.Server.Models
 {
     public class ApplicationContext : DbContext
     {
-        //public DbSet<Group> Groups { get; set; }
+        public DbSet<Group> Groups { get; set; }
               
         public DbSet<Account> Accounts { get; set; }
 
         public DbSet<User> Users { get; set; }
 
-        //public DbSet<TodoStatus> TodoStatuses { get; set; }
+        public DbSet<TodoStatus> TodoStatuses { get; set; }
 
-        //public DbSet<Todo> Todos { get; set; }
+        public DbSet<Todo> Todos { get; set; }
+
+        public DbSet<GroupAccount> GroupsAccounts { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*var group1 = new Group() { 
+            var group1 = new Group() { 
                 Id = 1, 
                 Name = "КДСофт", 
                 Code = "kds"                
@@ -31,13 +33,13 @@ namespace NetCore.Server.Models
             var group2 = new Group() { 
                 Id = 2, 
                 Name = "ГКИнтеграция", 
-                Code = "gki" 
+                Code = "gki"
             };
             var groups = new List<Group>() 
             { 
                 group1, 
                 group2 
-            };*/
+            };
 
             var account1 = new Account() 
             { 
@@ -89,7 +91,7 @@ namespace NetCore.Server.Models
                 user3
             };
 
-            /*var todoStatus1 = new TodoStatus()
+            var todoStatus1 = new TodoStatus()
             {
                 Id = 1,
                 Name = "Backlog"
@@ -118,7 +120,7 @@ namespace NetCore.Server.Models
                 Description = "Бебра",
                 StatusId = 1,
                 CreatorId = 1,
-                ExecutorId = 2,
+                GroupId = 1,
                 CreateDate = new DateTime(2022, 03, 27),
                 ChangeDate = new DateTime(2022, 03, 27)
             };
@@ -129,7 +131,7 @@ namespace NetCore.Server.Models
                 Description = "Пипикс",
                 StatusId = 2,
                 CreatorId = 2,
-                ExecutorId = 3,
+                GroupId = 2,
                 CreateDate = new DateTime(2022, 03, 27),
                 ChangeDate = new DateTime(2022, 03, 27)                
             };
@@ -140,7 +142,7 @@ namespace NetCore.Server.Models
                 Description = "Шарамба",
                 StatusId = 3,
                 CreatorId = 3,
-                ExecutorId = 1,
+                GroupId = 2,
                 CreateDate = new DateTime(2022, 03, 27),
                 ChangeDate = new DateTime(2022, 03, 27)
             };
@@ -148,47 +150,53 @@ namespace NetCore.Server.Models
              {
                  todo1,
                  todo2,
-                 todo3
-             };*/
+                 //todo3
+             };
 
-            /*modelBuilder.Entity<Group>().HasData(groups);*/
+            modelBuilder.Entity<Group>().HasData(groups);
             modelBuilder.Entity<Account>().HasData(accounts);
             modelBuilder.Entity<User>().HasData(users);
-            /*modelBuilder.Entity<TodoStatus>().HasData(todoStatuses);
-            modelBuilder.Entity<Todo>().HasData(todos);*/
+            modelBuilder.Entity<TodoStatus>().HasData(todoStatuses);
+            modelBuilder.Entity<Todo>().HasData(todos);
 
-            /*modelBuilder.Entity<Group>()
+            modelBuilder.Entity<Group>()
                 .HasMany(g => g.Accounts)
                 .WithMany(a => a.Groups)
                 .UsingEntity<GroupAccount>(
                     e => e
                     .HasOne(ga => ga.Account)
-                    .WithMany(a => a.GroupAccounts)
-                    .HasForeignKey(ga => ga.AccountId),
+                    .WithMany(a => a.GroupsAccounts)
+                    .HasForeignKey(ga => ga.AccountId)
+                    .OnDelete(DeleteBehavior.NoAction),
                     e => e
                     .HasOne(ga => ga.Group)
-                    .WithMany(g => g.GroupAccounts)
-                    .HasForeignKey(ga => ga.GroupId));*/
+                    .WithMany(g => g.GroupsAccounts)
+                    .HasForeignKey(ga => ga.GroupId)
+                    .OnDelete(DeleteBehavior.NoAction));
 
             modelBuilder.Entity<Account>()
                 .HasOne(a => a.User)
                 .WithOne(u => u.Account)
-                .HasForeignKey<User>(u => u.AccountId);
+                .HasForeignKey<User>(u => u.AccountId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            /*modelBuilder.Entity<Todo>()
+            modelBuilder.Entity<Todo>()
                 .HasOne(t => t.Status)
                 .WithMany(s => s.Todos)
-                .HasForeignKey(t => t.StatusId);
+                .HasForeignKey(t => t.StatusId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Todo>()
                 .HasOne(t => t.Creator)
                 .WithMany(c => c.Todos)
-                .HasForeignKey(t => t.CreatorId);*/
+                .HasForeignKey(t => t.CreatorId)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            /*modelBuilder.Entity<Todo>()
-                .HasOne(t => t.Executor)
-                .WithMany(e => e.Todos)
-                .HasForeignKey(t => t.ExecutorId);*/
+            modelBuilder.Entity<Todo>()
+                .HasOne(t => t.Group)
+                .WithMany(g => g.Todos)
+                .HasForeignKey(t => t.GroupId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

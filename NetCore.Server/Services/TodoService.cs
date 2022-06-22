@@ -13,42 +13,7 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public Task<Todo> CreteTodoAsync(Todo todo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteTodoAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<TodoStatus>> GetStatuses()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Todo> GetTodoAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Todo> UpdateTodoAsync(Todo todo)
-        {
-            throw new NotImplementedException();
-        }
-
-        /*public async Task<IEnumerable<TodoStatus>> GetStatuses()
+        public async Task<IEnumerable<TodoStatus>> GetStatuses()
         {
             try
             {
@@ -79,10 +44,10 @@ namespace NetCore.Server.Services
             catch (Exception ex)
             {
                 throw;
-            }   
+            }
         }
 
-        public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
+        /*public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
         {
             try
             {
@@ -102,7 +67,7 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }
+        }*/
 
         public async Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id)
         {
@@ -139,7 +104,7 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }        
+        }
 
         public async Task<Todo> UpdateTodoAsync(Todo todo)
         {
@@ -173,6 +138,11 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }        */
+        }
+
+        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

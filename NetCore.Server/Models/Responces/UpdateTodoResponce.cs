@@ -8,25 +8,25 @@
         /// <summary>
         /// Заголовок
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = String.Empty;
 
         /// <summary>
         /// Описание
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; set; } = String.Empty;
 
         /// <summary>
-        /// Id статуса
+        /// Идентификатор статуса
         /// </summary>
         public int StatusId { get; set; }
 
         /// <summary>
-        /// Id создателя задачи
+        /// Идентификатор создателя задачи
         /// </summary>
         public int CreatorId { get; set; }
 
         /// <summary>
-        /// Id исполнителя задачи
+        /// Идентификатор исполнителя задачи
         /// </summary>
         public int ExecutorId { get; set; }
     }

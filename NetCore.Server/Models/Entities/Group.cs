@@ -21,28 +21,18 @@
         public string Code { get; set; } = string.Empty;
 
         /// <summary>
-        /// Идентификатор владелеца группы
-        /// </summary>
-        public int OwnerId { get; set; }
-
-        /// <summary>
-        /// Владелец группы
-        /// </summary>
-        public Account Owner { get; set; }
-
-        /*/// <summary>
         /// Аккаунты группы
         /// </summary>
         public IEnumerable<Account> Accounts { get; set; }
-              
-        /// <summary>
-        /// Задачи группы
-        /// </summary>
-        public IEnumerable<Todo> Todos { get; set; }
 
         /// <summary>
         /// Составная таблица Группы-Аккаунты
         /// </summary>
-        public IEnumerable<GroupAccount> GroupAccounts { get; set; }*/
+        public IEnumerable<GroupAccount> GroupsAccounts { get; set; }
+
+        /// <summary>
+        /// Задачи группы
+        /// </summary>
+        public IEnumerable<Todo> Todos { get; set; }        
     }
 }

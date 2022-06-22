@@ -82,7 +82,7 @@ namespace NetCore.Server.Controllers
                     new Group() { 
                         Name = request.Name, 
                         Code = request.Code, 
-                        OwnerId = request.OwnerId 
+                        //OwnerId = request.OwnerId 
                     });
 
                 // Маппим CreateGroupResponce в Group
