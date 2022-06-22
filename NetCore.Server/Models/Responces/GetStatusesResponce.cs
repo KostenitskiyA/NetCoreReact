@@ -1,9 +1,9 @@
 ﻿namespace NetCore.Server.Models.Responces
 {
     /// <summary>
-    /// Ответ получения группы
+    /// Ответ получения статусов
     /// </summary>
-    public class GetGroupResponce
+    public class GetStatusesResponce
     {
         /// <summary>
         /// Идентификатор
@@ -14,10 +14,5 @@
         /// Название
         /// </summary>
         public string Name { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Код
-        /// </summary>
-        public string Code { get; set; } = string.Empty;
     }
 }

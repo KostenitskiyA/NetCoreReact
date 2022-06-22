@@ -17,7 +17,8 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var foundTodoStatuses = await _context.TodoStatuses.ToListAsync();
+                var foundTodoStatuses = await _context.TodoStatuses
+                    .ToListAsync();
 
                 if (foundTodoStatuses == null)
                     throw new Exception("Статусы не найдены");
@@ -34,7 +35,8 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var foundTodo = await _context.Todos.SingleOrDefaultAsync(t => t.Id == id);
+                var foundTodo = await _context.Todos
+                    .SingleOrDefaultAsync(t => t.Id == id);
 
                 if (foundTodo == null)
                     throw new Exception("Задача не найдена");
@@ -47,7 +49,7 @@ namespace NetCore.Server.Services
             }
         }
 
-        /*public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
+        public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
         {
             try
             {
@@ -67,7 +69,7 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }*/
+        }
 
         public async Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id)
         {
@@ -125,24 +127,19 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var foundTodo = await _context.Todos.SingleOrDefaultAsync(t => t.Id == id);
+                var foundTodo = await _context.Todos
+                    .SingleOrDefaultAsync(t => t.Id == id);
 
                 if (foundTodo == null)
                     throw new Exception("Задача не найдена");
 
                 _context.Todos.Remove(foundTodo);
-
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 throw;
             }
-        }
-
-        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

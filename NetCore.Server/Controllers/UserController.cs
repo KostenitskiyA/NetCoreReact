@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -9,6 +8,7 @@ using NetCore.Server.Models;
 using NetCore.Server.Models.Configurations;
 using NetCore.Server.Models.Requests;
 using NetCore.Server.Models.Responces;
+using NetCore.Server.Utilities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -39,52 +39,40 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос Signin получен");
 
-                // Маппим SignInRequest в User
-                var configSignInRequest = new MapperConfiguration(cfg => cfg.CreateMap<SignInRequest, User>());
-                var mapperSignInRequest = configSignInRequest.CreateMapper();
-                var user = mapperSignInRequest.Map<User>(request);
-
+                var user = AutoMapperUtility<SignInRequest, User>.Map(request);
                 var result = await _userProvider.SignInAsync(user);
+                var responce = AutoMapperUtility<Account, SignInResponce>.Map(result);
 
-                // Маппим SignInResponce в User
-                var configSignInResponce = new MapperConfiguration(cfg => cfg.CreateMap<SignInResponce, User>());
-                var mapperSignInResponce = configSignInResponce.CreateMapper();
-                var userResponce = mapperSignInResponce.Map<SignInResponce>(result);
                 _logger.LogInformation("Запрос Signin обработан");
 
 
-                return Ok(userResponce);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpPost]
         [Route("login")]
+        // TODO: Доработать
         public async Task<ActionResult<LogInResponce>> LogIn([FromBody] LogInRequest request)
         {
             try
             {
                 _logger.LogInformation("Запрос Login получен");
 
-                // Маппим LogInRequest в User
-                var configLogInRequest = new MapperConfiguration(cfg => cfg.CreateMap<LogInRequest, User>());
-                var mapperLogInRequest = configLogInRequest.CreateMapper();
-                var user = mapperLogInRequest.Map<User>(request);
-
-                // Сам сервис аутентификации
+                var user = AutoMapperUtility<LogInRequest, User>.Map(request);
                 var result = await _userProvider.LogInAsync(user);
+                var responce = AutoMapperUtility<Account, LogInResponce>.Map(result);
 
-                // Создание JWT-токена
                 var authParams = _authOptions.Value;
                 var securityKey = authParams.GetSymmetricSecurityKey();
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
                 var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.Name, result.Name) };
-
                 var token = new JwtSecurityToken(
                     issuer: authParams.Issuer,
                     audience: authParams.Audience,
@@ -93,28 +81,23 @@ namespace NetCore.Server.Controllers
                     signingCredentials: credentials);
 
                 var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
-
-                // Запись JWT-токена в кукки
                 HttpContext.Response.Cookies.Append("Token", generatedToken);
-
-                // Маппим LogInResponce в User
-                var configAccount = new MapperConfiguration(cfg => cfg.CreateMap<Account, LogInResponce>());
-                var mapperAccount = configAccount.CreateMapper();
-                var account = mapperAccount.Map<LogInResponce>(result);
 
                 _logger.LogInformation("Запрос Login обработан");
 
-                return Ok(account);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message + ex.InnerException + ex.StackTrace);
+                _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpPost]
         [Route("logout")]
+        // TODO: Доработать
         public async Task<ActionResult> LogOut([FromBody] Account user)
         {
             try
@@ -130,6 +113,7 @@ namespace NetCore.Server.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }

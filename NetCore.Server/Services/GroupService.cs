@@ -13,34 +13,9 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public Task<Group> CreateGroupAsync(Group group)
+        public async Task<Group> GetGroupAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteGroupAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Group> GetGroupAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Group>> GetGroupsByAccountAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Group> UpdateGroupAsync(Group group)
-        {
-            throw new NotImplementedException();
-        }
-
-        /*public async Task<Group> GetGroupAsync(int id)
-        {
-            try 
+            try
             {
                 var foundGroup = await _context.Groups
                     .SingleOrDefaultAsync(g => g.Id == id);
@@ -50,7 +25,7 @@ namespace NetCore.Server.Services
 
                 return foundGroup;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 throw;
             }
@@ -64,7 +39,7 @@ namespace NetCore.Server.Services
                     .Include(a => a.Groups)
                     .SingleOrDefaultAsync(a => a.Id == id);
 
-                if (foundUser == null) 
+                if (foundUser == null)
                     throw new Exception("Пользователь не найден");
 
                 if (foundUser.Groups == null)
@@ -96,7 +71,7 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }        
+        }
 
         public async Task<Group> UpdateGroupAsync(Group group)
         {
@@ -130,7 +105,7 @@ namespace NetCore.Server.Services
             {
                 var foundGroup = await _context.Groups
                     .SingleOrDefaultAsync(g => g.Id == id);
-                
+
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
 
@@ -143,6 +118,6 @@ namespace NetCore.Server.Services
             {
                 throw;
             }
-        }*/
+        }
     }
 }
