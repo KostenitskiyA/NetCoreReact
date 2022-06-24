@@ -25,7 +25,9 @@ class LogIn extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  onSubmit() {
+  onSubmit(e) {
+	e.preventDefault();
+	
     const data = {
       id: 0,
       name: "",
@@ -43,7 +45,7 @@ class LogIn extends React.Component {
 
   render() {
     return (
-      <form className="login-form" onSubmit={this.onSubmit}>
+      <form className="login-form" onSubmit={(e) => this.onSubmit(e)}>
         <label>Логин</label>
         <input
           type="text"

@@ -1,20 +1,38 @@
 import {
+  GET_STATUSES_API,
   GET_TODO_API,
-  GET_TODOS_API,
+  GET_TODOS_BY_GROUP_API,
+  GET_TODOS_BY_ACCOUNT_API,
   CREATE_TODO_API,
-  EDIT_TODO_API,
+  UPDATE_TODO_API,
   DELETE_TODO_API,
 } from "../api.js";
 
 import {
+  GET_STATUSES,
   GET_TODO,
-  GET_ALL_TODOS,
-  ADD_TODO,
-  EDIT_TODO,
+  GET_TODOS_BY_GROUP,
+  GET_TODOS_BY_ACCOUNT,
+  CREATE_TODO,
+  UPDATE_TODO,
   DELETE_TODO,
   ADD_NOTIFICATION,
 } from "../constants.js";
 
+// Получение статусов
+export const getStatuses = () => {
+  return async (dispatch) => {
+    const responce = await fetch(GET_STATUSES_API, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const json = await responce.json();
+
+    dispatch({ type: GET_STATUSES, payload: json });
+  };
+};
+
+// Получение задачи
 export const getTodo = (id) => {
   return async (dispatch) => {
     const responce = await fetch(GET_TODO_API + "/" + id, {
@@ -31,7 +49,8 @@ export const getTodo = (id) => {
   };
 };
 
-export const getAllTodos = () => {
+// Получение задач группы
+export const getTodosByGroup = (id) => {
   return async (dispatch) => {
     const responce = await fetch(GET_TODOS_API, {
       method: "GET",
@@ -43,7 +62,20 @@ export const getAllTodos = () => {
   };
 };
 
-// Добавление задачи
+// Получение задач аккаунта
+export const getTodosByAccount = (id) => {
+  return async (dispatch) => {
+    const responce = await fetch(GET_TODOS_API, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const json = await responce.json();
+
+    dispatch({ type: GET_ALL_TODOS, payload: json });
+  };
+};
+
+// Создание задачи
 export const addTodo = (data) => {
   return async (dispatch) => {
     await fetch(CREATE_TODO_API, {
@@ -67,8 +99,8 @@ export const addTodo = (data) => {
   };
 };
 
-// Редактирование задачи
-export const editTodo = (data) => {
+// Обновление задачи
+export const updateTodo = (data) => {
   return async (dispatch) => {
     await fetch(EDIT_TODO_API, {
       method: "POST",

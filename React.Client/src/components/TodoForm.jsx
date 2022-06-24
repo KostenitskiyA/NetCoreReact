@@ -1,4 +1,7 @@
 import React from "react";
+
+import { Navigate } from "react-router-dom";
+
 import { connect } from "react-redux";
 import { getStatuses } from "../stores/status/actions";
 import { addTodo } from "../stores/todo/actions";
@@ -47,7 +50,10 @@ class TodoForm extends React.Component {
   }
 
   render() {
-    const { statuses } = this.props;
+    const { user, statuses } = this.props;
+
+	if (!user.isLogin)
+		return(<Navigate to="/" />);
 
     return (
       <form className="form" onSubmit={(e) => this.onSubmit(e)}>
@@ -102,6 +108,7 @@ class TodoForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+	user: state.user,
     statuses: state.status.statuses,
   };
 };

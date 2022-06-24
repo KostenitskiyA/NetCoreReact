@@ -23,84 +23,102 @@ namespace NetCore.Server.Controllers
 
         [HttpGet]
         [Route("statuses")]
-        public async Task<ActionResult<IEnumerable<Todo>>> GetStatuses()
+        public async Task<ActionResult<IEnumerable<GetStatusesResponce>>> GetStatuses()
         {
             try
             {
                 _logger.LogInformation("Запрос GetStatuses получен");
 
                 var result = await _todoProvider.GetStatuses();
+                var responce = new List<GetStatusesResponce>();
+
+                foreach (var status in result)
+                    responce.Add(AutoMapperUtility<TodoStatus, GetStatusesResponce>.Map(status));
 
                 _logger.LogInformation("Запрос GetStatuses обработан");
 
-                return Ok(result);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Todo>> GetTodo(int id)
+        public async Task<ActionResult<GetTodoResponce>> GetTodo(int id)
         {
             try
             {
-                _logger.LogInformation("Запрос Todo получен");
+                _logger.LogInformation("Запрос GetTodo получен");
 
                 var result = await _todoProvider.GetTodoAsync(id);
+                var responce = AutoMapperUtility<Todo, GetTodoResponce>.Map(result);
 
-                _logger.LogInformation("Запрос Todo обработан");
+                _logger.LogInformation("Запрос GetTodo обработан");
 
-                return Ok(result);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
         [Route("byGroup/{id}")]
-        public async Task<ActionResult<IEnumerable<Todo>>> GetTodosByGroup(int id)
+        public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByGroup(int id)
         {
             try
             {
-                _logger.LogInformation("Запрос Todos получен");
+                _logger.LogInformation("Запрос GetTodosByGroup получен");
 
                 var result = await _todoProvider.GetTodosByGroupAsync(id);
+                var responce = new List<GetTodoResponce>();
 
-                _logger.LogInformation("Запрос Todos обработан");
+                foreach (var todo in result)
+                    responce.Add(AutoMapperUtility<Todo, GetTodoResponce>.Map(todo));
 
-                return Ok(result);
+
+                _logger.LogInformation("Запрос GetTodosByGroup обработан");
+
+                return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpGet]
         [Route("byAccount/{id}")]
-        public async Task<ActionResult<IEnumerable<Todo>>> GetTodosByAccount(int id)
+        public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByAccount(int id)
         {
             try
             {
-                _logger.LogInformation("Запрос Todos получен");
+                _logger.LogInformation("Запрос GetTodosByAccount получен");
 
                 var result = await _todoProvider.GetTodosByAccountAsync(id);
+                var responce = new List<GetTodoResponce>();
 
-                _logger.LogInformation("Запрос Todos обработан");
+                foreach (var todo in result)
+                    responce.Add(AutoMapperUtility<Todo, GetTodoResponce>.Map(todo));
 
-                return Ok(result);
+                _logger.LogInformation("Запрос GetTodosByAccount обработан");
+
+                return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }
@@ -114,43 +132,41 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос CreateTodo получен");
 
                 var todo = AutoMapperUtility<CreateTodoRequest, Todo>.Map(request);
-
                 var result = await _todoProvider.CreteTodoAsync(todo);
-
-                var todoResponce = AutoMapperUtility<Todo, CreateTodoResponce>.Map(result);
+                var responce = AutoMapperUtility<Todo, CreateTodoResponce>.Map(result);
 
                 _logger.LogInformation("Запрос CreateTodo обработан");
-
-                return Ok(todoResponce);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost]
-        [Route("edit")]
-        public async Task<ActionResult<UpdateTodoResponce>> UpdateTodo([FromBody] UpdateTodoRequest request)
-        {
-            try
-            {
-                _logger.LogInformation("Запрос EditTodo получен");
-
-                var todo = AutoMapperUtility<UpdateTodoRequest, Todo>.Map(request);
-
-                var result = await _todoProvider.UpdateTodoAsync(todo);
-
-                var responce = AutoMapperUtility<Todo, UpdateTodoResponce>.Map(result);
-
-                _logger.LogInformation("Запрос EditTodo обработан");
 
                 return Ok(responce);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<ActionResult<UpdateTodoResponce>> UpdateTodo([FromBody] UpdateTodoRequest request)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос UpdateTodo получен");
+
+                var todo = AutoMapperUtility<UpdateTodoRequest, Todo>.Map(request);
+                var result = await _todoProvider.UpdateTodoAsync(todo);
+                var responce = AutoMapperUtility<Todo, UpdateTodoResponce>.Map(result);
+
+                _logger.LogInformation("Запрос UpdateTodo обработан");
+
+                return Ok(responce);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
                 return BadRequest(ex.Message);
             }
         }

@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Requests;
 using NetCore.Server.Models.Responces;
+using NetCore.Server.Utilities;
 
 namespace NetCore.Server.Controllers
 {
@@ -30,10 +30,11 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос GetGroup получен");
 
                 var result = await _groupService.GetGroupAsync(id);
+                var responce = AutoMapperUtility<Group, GetGroupResponce>.Map(result);
 
                 _logger.LogInformation("Запрос GetGroup обработан");
 
-                return Ok(result);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
@@ -44,18 +45,22 @@ namespace NetCore.Server.Controllers
         }
 
         [HttpGet]
-        [Route("groups/{id}")]
-        public async Task<ActionResult<GetGroupsResponce>> GetGroupsByAccount(int id)
+        [Route("byAccount/{id}")]
+        public async Task<ActionResult<IEnumerable<GetGroupResponce>>> GetGroupsByAccount(int id)
         {
             try
             {
                 _logger.LogInformation("Запрос GetGroupsByAccount получен");
 
                 var result = await _groupService.GetGroupsByAccountAsync(id);
+                var responce = new List<GetGroupResponce>();
+
+                foreach (var group in result)
+                    responce.Add(AutoMapperUtility<Group, GetGroupResponce>.Map(group));
 
                 _logger.LogInformation("Запрос GetGroupsByAccount обработан");
 
-                return Ok(result);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
@@ -73,26 +78,13 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос CreateGroup получен");
 
-                // Маппим CreateGroupRequest в Group
-                var configCreateGroupRequest = new MapperConfiguration(cfg => cfg.CreateMap<CreateGroupRequest, Group>());
-                var mapperCreateGroupRequest = configCreateGroupRequest.CreateMapper();
-                var userRequest = mapperCreateGroupRequest.Map<Group>(request);
-
-                var result = await _groupService.CreateGroupAsync(
-                    new Group() { 
-                        Name = request.Name, 
-                        Code = request.Code, 
-                        //OwnerId = request.OwnerId 
-                    });
-
-                // Маппим CreateGroupResponce в Group
-                var configCreateGroupResponce = new MapperConfiguration(cfg => cfg.CreateMap<CreateGroupResponce, Group>());
-                var mapperCreateGroupResponce = configCreateGroupResponce.CreateMapper();
-                var userResponce = mapperCreateGroupResponce.Map<CreateGroupResponce>(result);
+                var group = AutoMapperUtility<CreateGroupRequest, Group>.Map(request);
+                var result = await _groupService.CreateGroupAsync(group);
+                var responce = AutoMapperUtility<Group, CreateGroupResponce>.Map(result);
 
                 _logger.LogInformation("Запрос CreateGroup обработан");
 
-                return Ok(userResponce);
+                return Ok(responce);
             }
             catch (Exception ex)
             {
@@ -108,24 +100,15 @@ namespace NetCore.Server.Controllers
         {
             try
             {
-                _logger.LogInformation("Запрос Signin получен");
+                _logger.LogInformation("Запрос UpdateGroup получен");
 
-                // Маппим UpdateGroupRequest в Group
-                var configUpdateGroupRequest = new MapperConfiguration(cfg => cfg.CreateMap<UpdateGroupRequest, Group>());
-                var mapperUpdateGroupRequest = configUpdateGroupRequest.CreateMapper();
-                var userRequest = mapperUpdateGroupRequest.Map<Group>(request);
+                var group = AutoMapperUtility<UpdateGroupRequest, Group>.Map(request);
+                var result = await _groupService.UpdateGroupAsync(group);
+                var responce = AutoMapperUtility<Group, UpdateGroupResponce>.Map(result);
 
+                _logger.LogInformation("Запрос UpdateGroup обработан");
 
-                var result = await _groupService.UpdateGroupAsync(new Group());
-
-                // Маппим UpdateGroupResponce в Group
-                var configUpdateGroupResponce = new MapperConfiguration(cfg => cfg.CreateMap<UpdateGroupResponce, Group>());
-                var mapperUpdateGroupResponce = configUpdateGroupResponce.CreateMapper();
-                var userResponce = mapperUpdateGroupResponce.Map<UpdateGroupResponce>(result);
-
-                _logger.LogInformation("Запрос Signin обработан");
-
-                return Ok(userResponce);
+                return Ok(responce);
             }
             catch (Exception ex)
             {

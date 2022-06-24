@@ -21,7 +21,7 @@ namespace NetCore.Server.Controllers
         }
 
         [HttpGet]
-        [Route("account/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<GetAccountResponce>> GetAccount(int id)
         {
             try
@@ -52,7 +52,6 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос GetAccountsByGroup получен");
 
                 var result = await _accountProvider.GetAccountsByGroupAsync(id);
-
                 var newResult = new List<GetAccountResponce>();
 
                 foreach (var account in result)

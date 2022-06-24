@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Configurations;
@@ -16,6 +18,24 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .WithOrigins("http://localhost:5500");
         }));
+
+
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = Configuration["Jwt:Issuer"],
+        ValidAudience = Configuration["Jwt:Issuer"],
+        IssuerSigningKey = new
+        SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+    };
+});
 
 var connection = builder.Configuration.GetConnectionString("DefaultDatabase");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection, options => options.EnableRetryOnFailure()));
@@ -42,6 +62,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
