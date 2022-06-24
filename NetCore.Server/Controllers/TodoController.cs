@@ -148,7 +148,7 @@ namespace NetCore.Server.Controllers
         }
 
         [HttpPost]
-        [Route("edit")]
+        [Route("update")]
         public async Task<ActionResult<UpdateTodoResponce>> UpdateTodo([FromBody] UpdateTodoRequest request)
         {
             try

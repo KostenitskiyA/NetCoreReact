@@ -45,7 +45,7 @@ namespace NetCore.Server.Controllers
         }
 
         [HttpGet]
-        [Route("groups/{id}")]
+        [Route("byAccount/{id}")]
         public async Task<ActionResult<IEnumerable<GetGroupResponce>>> GetGroupsByAccount(int id)
         {
             try

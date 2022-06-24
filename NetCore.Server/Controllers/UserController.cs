@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -81,7 +82,9 @@ namespace NetCore.Server.Controllers
                     signingCredentials: credentials);
 
                 var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
-                HttpContext.Response.Cookies.Append("Token", generatedToken);
+                //HttpContext.Response.Cookies.Append("Token", generatedToken);
+
+                await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);
 
                 _logger.LogInformation("Запрос Login обработан");
 
