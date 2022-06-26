@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import { connect } from "react-redux";
-import { getStatuses } from "../stores/status/actions";
-import { getAllTodos } from "../stores/todo/actions";
+import { getStatuses } from "../stores/todo/actions";
 
 import "../styles/index";
 import "bootstrap-icons/font/bootstrap-icons";
@@ -23,7 +22,6 @@ class TodoTable extends React.Component {
 
   componentDidMount() {
     this.props.getStatuses();
-    this.props.getAllTodos();
     this.setState({ isLoaded: true });
   }
 
@@ -33,14 +31,14 @@ class TodoTable extends React.Component {
 
   render() {
     const { isLoaded, searchName } = this.state;
-    const { statuses, todos } = this.props;
+    const { isLogin, statuses, todos } = this.props;
+
+    if (isLogin) return <Navigate to="/login" />;
 
     let filteredTodos = [];
 
     if (searchName) {
-      filteredTodos = todos.filter((todo) =>
-        todo.title.includes(searchName)
-      );
+      filteredTodos = todos.filter((todo) => todo.title.includes(searchName));
     } else {
       filteredTodos = todos;
     }
@@ -110,14 +108,14 @@ class TodoTable extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    statuses: state.status.statuses,
+    user: state.user.isLogin,
+    statuses: state.todo.statuses,
     todos: state.todo.todos,
   };
 };
 
 const mapDispatchToProps = {
   getStatuses,
-  getAllTodos,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoTable);

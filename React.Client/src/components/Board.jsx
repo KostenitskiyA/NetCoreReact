@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getStatuses } from "../stores/status/actions";
-import { getAllTodos } from "../stores/todo/actions";
+import { getStatuses, getTodosByGroup } from "../stores/todo/actions";
 import BoardColumn from "./BoardColumn";
 import "../styles/board";
 import "bootstrap-icons/font/bootstrap-icons";
+import { Navigate } from "react-router-dom";
 
 class Board extends React.Component {
   constructor(props) {
@@ -17,17 +17,20 @@ class Board extends React.Component {
 
   componentDidMount() {
     this.props.getStatuses();
-    this.props.getAllTodos();
+    this.props.getTodosByGroup(this.props.userId);
   }
 
   render() {
     const { isLoaded } = this.state;
-    const { stauses } = this.props;
+    const { userId, isLogin, statuses } = this.props;
 
-    if (isLoaded && stauses) {
+    if (!isLogin)
+    return(<Navigate to="/login" />);
+
+    if (isLoaded && statuses) {
       return (
         <div className="row">
-          {stauses.map((status, key) => (
+          {statuses.map((status, key) => (
             <BoardColumn
               key={key}
               status={status}
@@ -43,13 +46,15 @@ class Board extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    stauses: state.status.statuses,
+    userId: state.user.id,
+    isLogin: state.user.isLogin,
+    statuses: state.todo.statuses,
   };
 };
 
 const mapDispatchToProps = {
   getStatuses,
-  getAllTodos,
+  getTodosByGroup
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

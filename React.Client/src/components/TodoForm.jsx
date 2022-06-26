@@ -3,8 +3,8 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { getStatuses } from "../stores/status/actions";
-import { addTodo } from "../stores/todo/actions";
+import { getStatuses } from "../stores/todo/actions";
+import { createTodo } from "../stores/todo/actions";
 import "../styles/index";
 
 class TodoForm extends React.Component {
@@ -46,14 +46,13 @@ class TodoForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     console.log(this.state);
-    this.props.addTodo(this.state);
+    this.props.createTodo(this.state);
   }
 
   render() {
     const { user, statuses } = this.props;
 
-	if (!user.isLogin)
-		return(<Navigate to="/" />);
+    if (!user.isLogin) return <Navigate to="/" />;
 
     return (
       <form className="form" onSubmit={(e) => this.onSubmit(e)}>
@@ -108,14 +107,14 @@ class TodoForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-	user: state.user,
-    statuses: state.status.statuses,
+    user: state.user,
+    statuses: state.todo.statuses,
   };
 };
 
 const mapDispatchToProps = {
   getStatuses,
-  addTodo,
+  createTodo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);

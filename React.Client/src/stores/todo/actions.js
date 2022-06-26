@@ -26,8 +26,8 @@ export const getStatuses = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const json = await responce.json();
 
+    const json = await responce.json();
     dispatch({ type: GET_STATUSES, payload: json });
   };
 };
@@ -35,48 +35,44 @@ export const getStatuses = () => {
 // Получение задачи
 export const getTodo = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODO_API + "/" + id, {
+    const responce = await fetch(GET_TODO_API + id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const json = await responce.json();
 
+    const json = await responce.json();
     dispatch({ type: GET_TODO, payload: json });
-    dispatch({
-      type: ADD_NOTIFICATION,
-      payload: { title: json.title, description: json.description },
-    });
   };
 };
 
 // Получение задач группы
 export const getTodosByGroup = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODOS_API, {
+    const responce = await fetch(GET_TODOS_BY_GROUP_API + id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const json = await responce.json();
 
-    dispatch({ type: GET_ALL_TODOS, payload: json });
+    const json = await responce.json();
+    dispatch({ type: GET_TODOS_BY_GROUP, payload: json });
   };
 };
 
 // Получение задач аккаунта
 export const getTodosByAccount = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODOS_API, {
+    const responce = await fetch(GET_TODOS_BY_ACCOUNT_API + id, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const json = await responce.json();
 
-    dispatch({ type: GET_ALL_TODOS, payload: json });
+    const json = await responce.json();
+    dispatch({ type: GET_TODOS_BY_ACCOUNT, payload: json });
   };
 };
 
 // Создание задачи
-export const addTodo = (data) => {
+export const createTodo = (data) => {
   return async (dispatch) => {
     await fetch(CREATE_TODO_API, {
       method: "POST",
@@ -86,7 +82,7 @@ export const addTodo = (data) => {
       .then((responce) => responce.json())
       .then((json) =>
         dispatch({
-          type: ADD_TODO,
+          type: CREATE_TODO,
           payload: json,
         })
       )
@@ -102,7 +98,7 @@ export const addTodo = (data) => {
 // Обновление задачи
 export const updateTodo = (data) => {
   return async (dispatch) => {
-    await fetch(EDIT_TODO_API, {
+    await fetch(UPDATE_TODO_API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -110,7 +106,7 @@ export const updateTodo = (data) => {
       .then((responce) => responce.json())
       .then((json) =>
         dispatch({
-          type: EDIT_TODO,
+          type: UPDATE_TODO,
           payload: json,
         })
       )
@@ -124,17 +120,16 @@ export const updateTodo = (data) => {
 };
 
 // Удаление задачи
-export const deleteTodo = (data) => {
+export const deleteTodo = (id) => {
   return async (dispatch) => {
-    await fetch(DELETE_TODO_API, {
+    await fetch(DELETE_TODO_API + id, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
     })
       .then((responce) =>
         dispatch({
           type: DELETE_TODO,
-          payload: data,
+          payload: id,
         })
       )
       .catch((error) =>

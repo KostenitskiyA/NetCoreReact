@@ -19,8 +19,8 @@ namespace NetCore.Server.Models
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            /*Database.EnsureDeleted();
+            Database.EnsureCreated();*/
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -146,11 +146,23 @@ namespace NetCore.Server.Models
                 CreateDate = new DateTime(2022, 03, 27),
                 ChangeDate = new DateTime(2022, 03, 27)
             };
+            var todo4 = new Todo()
+            {
+                Id = 4,
+                Title = "Шарамба",
+                Description = "Шарамба",
+                StatusId = 3,
+                CreatorId = 3,
+                GroupId = 2,
+                CreateDate = new DateTime(2022, 03, 27),
+                ChangeDate = new DateTime(2022, 03, 27)
+            };
             var todos = new List<Todo>()
              {
                  todo1,
                  todo2,
-                 //todo3
+                 todo3,
+                 todo4
              };
 
             modelBuilder.Entity<Group>().HasData(groups);

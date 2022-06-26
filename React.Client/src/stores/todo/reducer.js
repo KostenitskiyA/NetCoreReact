@@ -17,19 +17,19 @@ export const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     // Получение статусов
     case GET_STATUSES: {
-      return { statuses: action.payload };
+      return { ...state, statuses: action.payload };
     }
     // Получение задачи
     case GET_TODO: {
-      return state;
+      return { ...state, todos: action.payload };
     }
     // Получение задач группы
     case GET_TODOS_BY_GROUP: {
-      return { todos: action.payload };
+      return { ...state, todos: action.payload };
     }
     // Получение задач аккаунта
     case GET_TODOS_BY_ACCOUNT: {
-      return { todos: action.payload };
+      return { ...state, todos: action.payload };
     }
     // Создание задачи
     case CREATE_TODO: {
@@ -40,20 +40,22 @@ export const todoReducer = (state = initialState, action) => {
     }
     // Обновление задачи
     case UPDATE_TODO: {
+      const newTodos = [...state.todos];
       const index = state.todos.findIndex(
         (todo) => todo.id == action.payload.id
       );
-      const newTodos = [...state.todos];
       newTodos[index] = action.payload;
+
       return { ...state, todos: newTodos };
     }
     // Удаление задачи
     case DELETE_TODO: {
+      const newTodos = [...state.todos];
       const index = state.todos.findIndex(
         (todo) => todo.id == action.payload.id
       );
-      const newTodos = [...state.todos];
       newTodos.slice(index, 1);
+
       return { ...state, todos: newTodos };
     }
   }
