@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { editTodo } from "../stores/todo/actions";
+import { updateTodo } from "../stores/todo/actions";
 
 import "../styles/board";
 import "bootstrap-icons/font/bootstrap-icons";
@@ -28,7 +28,7 @@ export const BoardColumnHook = (props) => {
     console.log(editedTodo);
     editedTodo.statusId = props.status.id;
     editedTodo.status = null;
-    dispatch(editTodo(editedTodo));
+    dispatch(updateTodo(editedTodo));
   };
 
   return (

@@ -17,7 +17,7 @@ export const userReducer = (state = initialState, action) => {
       };
     case LOGOUT:
       return {
-        initialState
+        initialState,
       };
   }
 

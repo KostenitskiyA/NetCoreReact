@@ -1,3 +1,20 @@
 {
-  "editor.tabSize": 4
+  "editor.tabSize": 2,
+  "workbench.startupEditor": "welcomePageInEmptyWorkbench",
+  "editor.smoothScrolling": true,
+  "workbench.list.smoothScrolling": true,
+  "editor.minimap.enabled": false,
+  "files.defaultLanguage": "html",
+  "editor.detectIndentation": false,
+  "editor.glyphMargin": false,
+  "explorer.confirmDelete": false,
+  "security.workspace.trust.enabled": false,
+  "editor.linkedEditing": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

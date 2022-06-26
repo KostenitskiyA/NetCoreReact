@@ -26,18 +26,11 @@ class LogIn extends React.Component {
   }
 
   onSubmit(e) {
-	e.preventDefault();
-	
+    e.preventDefault();
+
     const data = {
-      id: 0,
-      name: "",
-      authentication: {
-        id: 0,
-        login: this.state.login,
-        password: this.state.password,
-        userId: 0,
-        user: null,
-      },
+      login: this.state.login,
+      password: this.state.password,
     };
 
     this.props.login(data);

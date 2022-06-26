@@ -12,13 +12,13 @@ namespace NetCore.Server.Controllers
     public class TodoController : ControllerBase
     {
         private readonly ILogger<TodoController> _logger;
-        private ITodoService _todoProvider;
+        private ITodoService _todoService;
 
         public TodoController(ILogger<TodoController> logger,
-            ITodoService todoProvider)
+            ITodoService todoService)
         {
             _logger = logger;
-            _todoProvider = todoProvider;
+            _todoService = todoService;
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос GetStatuses получен");
 
-                var result = await _todoProvider.GetStatuses();
+                var result = await _todoService.GetStatuses();
                 var responce = new List<GetStatusesResponce>();
 
                 foreach (var status in result)
@@ -55,7 +55,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос GetTodo получен");
 
-                var result = await _todoProvider.GetTodoAsync(id);
+                var result = await _todoService.GetTodoAsync(id);
                 var responce = AutoMapperUtility<Todo, GetTodoResponce>.Map(result);
 
                 _logger.LogInformation("Запрос GetTodo обработан");
@@ -78,7 +78,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос GetTodosByGroup получен");
 
-                var result = await _todoProvider.GetTodosByGroupAsync(id);
+                var result = await _todoService.GetTodosByGroupAsync(id);
                 var responce = new List<GetTodoResponce>();
 
                 foreach (var todo in result)
@@ -105,7 +105,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос GetTodosByAccount получен");
 
-                var result = await _todoProvider.GetTodosByAccountAsync(id);
+                var result = await _todoService.GetTodosByAccountAsync(id);
                 var responce = new List<GetTodoResponce>();
 
                 foreach (var todo in result)
@@ -132,7 +132,7 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос CreateTodo получен");
 
                 var todo = AutoMapperUtility<CreateTodoRequest, Todo>.Map(request);
-                var result = await _todoProvider.CreteTodoAsync(todo);
+                var result = await _todoService.CreteTodoAsync(todo);
                 var responce = AutoMapperUtility<Todo, CreateTodoResponce>.Map(result);
 
                 _logger.LogInformation("Запрос CreateTodo обработан");
@@ -156,7 +156,7 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос UpdateTodo получен");
 
                 var todo = AutoMapperUtility<UpdateTodoRequest, Todo>.Map(request);
-                var result = await _todoProvider.UpdateTodoAsync(todo);
+                var result = await _todoService.UpdateTodoAsync(todo);
                 var responce = AutoMapperUtility<Todo, UpdateTodoResponce>.Map(result);
 
                 _logger.LogInformation("Запрос UpdateTodo обработан");
@@ -179,7 +179,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос DeleteTodo получен");
 
-                await _todoProvider.DeleteTodoAsync(id);
+                await _todoService.DeleteTodoAsync(id);
 
                 _logger.LogInformation("Запрос DeleteTodo обработан");
 

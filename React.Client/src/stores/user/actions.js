@@ -1,5 +1,14 @@
-import { SIGNIN_API, LOGIN_API, LOGOUT_API } from "../api.js";
-import { LOGIN, LOGOUT, ADD_NOTIFICATION } from "../constants.js";
+import { 
+	SIGNIN_API, 
+	LOGIN_API, 
+	LOGOUT_API 
+} from "../api.js";
+
+import { 
+	LOGIN, 
+	LOGOUT, 
+	ADD_NOTIFICATION 
+} from "../constants.js";
 
 export const signin = (data) => {
   return async (dispatch) => {
@@ -47,9 +56,9 @@ export const logout = () => {
     });
 
     dispatch({ type: LOGOUT, payload: json });
-    dispatch({
-      type: ADD_NOTIFICATION,
-      payload: { title: "Выход", description: "Идите нахуй" },
-    });
+    // dispatch({
+    //   type: ADD_NOTIFICATION,
+    //   payload: { title: "Выход", description: "Идите нахуй" },
+    // });
   };
 };

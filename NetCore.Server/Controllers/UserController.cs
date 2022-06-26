@@ -70,7 +70,7 @@ namespace NetCore.Server.Controllers
                 var result = await _userProvider.LogInAsync(user);
                 var responce = AutoMapperUtility<Account, LogInResponce>.Map(result);
 
-                var authParams = _authOptions.Value;
+                /*var authParams = _authOptions.Value;
                 var securityKey = authParams.GetSymmetricSecurityKey();
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
                 var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.Name, result.Name) };
@@ -81,10 +81,10 @@ namespace NetCore.Server.Controllers
                     expires: DateTime.Now.AddSeconds(authParams.TokenLifetime),
                     signingCredentials: credentials);
 
-                var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
+                var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);*/
                 //HttpContext.Response.Cookies.Append("Token", generatedToken);
 
-                await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);
+                /*await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);*/
 
                 _logger.LogInformation("Запрос Login обработан");
 
@@ -107,7 +107,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос Logout получен");
 
-                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                /*await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);*/
 
                 _logger.LogInformation("Запрос Logout обработан");
 

@@ -7,6 +7,12 @@ import "../styles/navigation";
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
+
+    this.onLogout = this.onLogout.bind(this);
+  }
+
+  onLogout() {
+    this.props.logout();
   }
 
   render() {
@@ -18,12 +24,14 @@ class Navigation extends React.Component {
       ? (items = (
           <React.Fragment>
             <li className="item">
-              <Link className="link" to="/logout">
+              <button className="link" onClick={this.onLogout}>
                 Logout
-              </Link>
+              </button>
             </li>
             <li className="item">
-              <div className="link">{name}</div>
+              <Link className="link" to={"/profile/" + id}>
+                {name}
+              </Link>
             </li>
           </React.Fragment>
         ))
@@ -60,10 +68,18 @@ class Navigation extends React.Component {
               Crete Todo
             </Link>
           </li>
+          <li className="item">
+            <Link className="link" to="/">
+              Groups
+            </Link>
+          </li>
+          <li className="item">
+            <Link className="link" to="/">
+              New group
+            </Link>
+          </li>
         </ul>
-        <ul className="list">
-          {items}
-        </ul>
+        <ul className="list">{items}</ul>
       </nav>
     );
   }
@@ -79,11 +95,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = () => {
-  return {
-    login: login,
-    logout: logout,
-  };
+const mapDispatchToProps = {
+  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

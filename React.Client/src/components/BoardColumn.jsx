@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editTodo } from "../stores/todo/actions";
+import { updateTodo } from "../stores/todo/actions";
 import BoardCard from "../components/BoardCard";
 import "../styles/board";
 import "bootstrap-icons/font/bootstrap-icons";
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  editTodo,
+  updateTodo,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoardColumn);
