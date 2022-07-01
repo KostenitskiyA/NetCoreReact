@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import "../styles/index";
+import "bootstrap-icons/font/bootstrap-icons";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -11,21 +12,32 @@ class Profile extends React.Component {
   render() {
     const { id, name, isLogin } = this.props;
 
-    if (!isLogin) return;
-      <Navigate to="/login" />;
+    if (!isLogin) return <Navigate to="/login" />;
 
     return (
-      <div className="container">
-        <div className="profile-img"></div>
-        <div className="profile-info">
-          <div className="login">
-            <input type="text" readOnly value={id}></input>
-          </div>
-          <div className="name">
-            <input type="text" readOnly value={name}></input>
+      <div className="container col">
+        <div className="container row">
+          <div className="profile-img">
+            <div className="avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
           </div>
         </div>
-        <div className="profile-statistics"></div>
+        <div className="container row">
+          <div className="profile-info">
+            <div className="login">
+              <input type="text" readOnly value={id}></input>
+            </div>
+            <div className="name">
+              <input type="text" readOnly value={name}></input>
+            </div>
+          </div>
+          <div className="profile-statistics">
+            <Link to="/settings">
+              Settings
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

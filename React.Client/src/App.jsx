@@ -19,6 +19,7 @@ import NotificationContainer from "./components/NotificationContainer";
 
 import "./styles/index.scss";
 import "./styles/navigation.scss";
+import Settings from "./components/Settings.jsx";
 
 
 const store = configureStore({ reducer: reducers, middleware: [thunk] });
@@ -40,7 +41,8 @@ class App extends React.Component {
               <Route path="/login" element={<LogIn />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/profile/:id" element={<Profile />} />
-
+              <Route path="/settings" element={<Settings />} />
+      
               <Route path="/todotable" element={<TodoTable />} />
               <Route path="/todotable/:id" element={<Todo />} />
               <Route path="/board" element={<Board />} />
@@ -48,7 +50,7 @@ class App extends React.Component {
             </Routes>
           </div>
 
-          <NotificationContainer />
+          {/* <NotificationContainer /> */}
         </BrowserRouter>
       </Provider>
     );

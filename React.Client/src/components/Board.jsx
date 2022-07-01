@@ -24,17 +24,13 @@ class Board extends React.Component {
     const { isLoaded } = this.state;
     const { userId, isLogin, statuses } = this.props;
 
-    if (!isLogin)
-    return(<Navigate to="/login" />);
+    if (!isLogin) return <Navigate to="/login" />;
 
     if (isLoaded && statuses) {
       return (
         <div className="row">
           {statuses.map((status, key) => (
-            <BoardColumn
-              key={key}
-              status={status}
-            />
+            <BoardColumn key={key} status={status} />
           ))}
         </div>
       );
@@ -54,7 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getStatuses,
-  getTodosByGroup
+  getTodosByGroup,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

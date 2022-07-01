@@ -52,7 +52,7 @@ class TodoForm extends React.Component {
   render() {
     const { user, statuses } = this.props;
 
-    if (!user.isLogin) return <Navigate to="/" />;
+    if (!user.isLogin) return <Navigate to="/login" />;
 
     return (
       <form className="form" onSubmit={(e) => this.onSubmit(e)}>

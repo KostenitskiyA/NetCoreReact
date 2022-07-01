@@ -50,12 +50,12 @@ export const login = (data) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    const responce = await fetch(LOGOUT_API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
+    // const responce = await fetch(LOGOUT_API, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    // });
 
-    dispatch({ type: LOGOUT, payload: json });
+    dispatch({ type: LOGOUT, payload: null });
     // dispatch({
     //   type: ADD_NOTIFICATION,
     //   payload: { title: "Выход", description: "Идите нахуй" },
