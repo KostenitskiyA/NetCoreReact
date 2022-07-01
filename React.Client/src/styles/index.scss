@@ -26,9 +26,11 @@ body {
 
 .main {
   display: grid;
+  justify-content: center;
+  width: fit-content;
 
-  margin: 0;
-  padding: 1% 10% 0 10%;
+  margin: 1% auto;
+  padding: 0;
 }
 
 .container {
@@ -232,4 +234,18 @@ body {
 
 .w-5 {
   width: 5%;
+}
+
+.avatar {
+  display: flex;
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 64px;
+  width: 64px;
+  align-content: center;
+    justify-content: center;
+}
+
+.bi-person-fill {
+  font-size: 58px;
 }

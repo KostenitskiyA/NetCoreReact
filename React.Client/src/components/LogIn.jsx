@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login, logout } from "../stores/user/actions";
+import { login } from "../stores/user/actions";
+import { Navigate } from "react-router-dom";
 import "../styles/forms";
 
 class LogIn extends React.Component {
@@ -37,6 +38,11 @@ class LogIn extends React.Component {
   }
 
   render() {
+    const { isLogin } = this.props;
+
+    if (isLogin) 
+      return <Navigate to="/" />;
+
     return (
       <form className="login-form" onSubmit={(e) => this.onSubmit(e)}>
         <label>Логин</label>
@@ -71,7 +77,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   login,
-  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

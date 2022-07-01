@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { signin, login, logout } from "../stores/user/actions";
+import { Navigate } from "react-router-dom";
+import { signin } from "../stores/user/actions";
 
 import "../styles/forms";
 
@@ -34,21 +35,20 @@ class SignIn extends React.Component {
 
   onSubmit() {
     const data = {
-      id: 0,
       name: "",
-      authentication: {
-        id: 0,
-        login: this.state.login,
-        password: this.state.password,
-        userId: 0,
-        user: null,
-      },
+      login: this.state.login,
+      password: this.state.password,
     };
 
     this.props.signin(data);
   }
 
   render() {
+    const { isLogin } = this.props;
+
+    if (isLogin) 
+      return <Navigate to="/" />;
+
     return (
       <div className="signin-form">
         <label>Имя пользователя</label>
@@ -95,8 +95,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = () => {
   return {
     signin,
-    login,
-    logout,
   };
 };
 

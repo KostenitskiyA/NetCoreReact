@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { login, logout } from "../stores/user/actions";
+import { logout } from "../stores/user/actions";
 import "../styles/navigation";
 
 class Navigation extends React.Component {
@@ -13,6 +13,7 @@ class Navigation extends React.Component {
 
   onLogout() {
     this.props.logout();
+    return(<Navigate to="/" />);
   }
 
   render() {
