@@ -10,7 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss'],
+    extensions: [".js", ".jsx", ".scss"],
   },
   devServer: {
     port: 5500,

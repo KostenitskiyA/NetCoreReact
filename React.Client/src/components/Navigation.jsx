@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../stores/user/actions";
-import "../styles/navigation";
+import "../styles/style";
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class Navigation extends React.Component {
 
   onLogout() {
     this.props.logout();
-    return(<Navigate to="/" />);
+    return <Navigate to="/" />;
   }
 
   render() {
@@ -55,6 +55,11 @@ class Navigation extends React.Component {
       <nav className="nav">
         <ul className="list">
           <li className="item">
+            <Link className="link" to="/">
+              Home
+            </Link>
+          </li>
+          <li className="item">
             <Link className="link" to="/todotable">
               Todo Table
             </Link>
@@ -66,7 +71,7 @@ class Navigation extends React.Component {
           </li>
           <li className="item">
             <Link className="link" to="/createTodo">
-              Crete Todo
+              Create Todo
             </Link>
           </li>
           <li className="item">
@@ -75,8 +80,8 @@ class Navigation extends React.Component {
             </Link>
           </li>
           <li className="item">
-            <Link className="link" to="/">
-              New group
+            <Link className="link" to="/createGroup">
+              Create group
             </Link>
           </li>
         </ul>

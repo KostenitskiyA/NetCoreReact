@@ -16,18 +16,18 @@
         public string Description { get; set; }
 
         /// <summary>
-        /// Id статуса
+        /// Идентификатор статуса
         /// </summary>
         public int StatusId { get; set; }
 
         /// <summary>
-        /// Id создателя задачи
+        /// Идентификатор создателя
         /// </summary>
         public int CreatorId { get; set; }
 
         /// <summary>
-        /// Id исполнителя задачи
+        /// Идентификатор группы
         /// </summary>
-        public int ExecutorId { get; set; }
+        public int GroupId { get; set; }
     }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../stores/user/actions";
 import { Navigate } from "react-router-dom";
-import "../styles/forms";
+import "../styles/style";
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -40,28 +40,36 @@ class LogIn extends React.Component {
   render() {
     const { isLogin } = this.props;
 
-    if (isLogin) 
-      return <Navigate to="/" />;
+    if (isLogin) return <Navigate to="/" />;
 
     return (
       <form className="login-form" onSubmit={(e) => this.onSubmit(e)}>
-        <label>Логин</label>
-        <input
-          type="text"
-          value={this.state.login}
-          onChange={(event) => {
-            this.onChangeLogin(event);
-          }}
-        />
-        <label>Пароль</label>
-        <input
-          type="password"
-          value={this.state.password}
-          onChange={(event) => {
-            this.onChangePassword(event);
-          }}
-        />
-        <button type="submit">Вход</button>
+        <div className="title">Login</div>
+        <div className="inputs">
+          <div className="input">
+            <label>Username</label>
+            <input
+              type="text"
+              value={this.state.login}
+              onChange={(event) => {
+                this.onChangeLogin(event);
+              }}
+            />
+          </div>
+          <div className="input">
+            <label>Password</label>
+            <input
+              type="password"
+              value={this.state.password}
+              onChange={(event) => {
+                this.onChangePassword(event);
+              }}
+            />
+          </div>
+        </div>
+        <div className="button">
+          <button type="submit">Login</button>
+        </div>
       </form>
     );
   }

@@ -27,9 +27,8 @@ body {
 .main {
   display: grid;
   justify-content: center;
-  width: fit-content;
 
-  margin: 1% auto;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -46,24 +45,22 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-
   margin-bottom: 5px;
-}
 
-.row:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .col {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-
   margin-right: 5px;
-}
 
-.col:last-child {
-  margin-right: 0;
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .form {
@@ -156,6 +153,10 @@ body {
   background-color: #197e00;
 }
 
+.liquid {
+  width: -webkit-fill-available;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -236,16 +237,9 @@ body {
   width: 5%;
 }
 
-.avatar {
-  display: flex;
-  border-radius: 50%;
-  border: 2px solid black;
-  height: 64px;
-  width: 64px;
-  align-content: center;
-    justify-content: center;
-}
 
-.bi-person-fill {
-  font-size: 58px;
+.block {
+  margin: 0;
+  border: 1px solid grey;
+  padding: 10px;
 }

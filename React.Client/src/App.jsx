@@ -15,10 +15,10 @@ import TodoTable from "./components/TodoTable";
 import { Todo } from "./components/Todo";
 import Board from "./components/Board";
 import TodoForm from "./components/TodoForm";
+import GroupForm from "./components/GroupForm";
 import NotificationContainer from "./components/NotificationContainer";
 
 import "./styles/index.scss";
-import "./styles/navigation.scss";
 import Settings from "./components/Settings.jsx";
 
 
@@ -47,6 +47,7 @@ class App extends React.Component {
               <Route path="/todotable/:id" element={<Todo />} />
               <Route path="/board" element={<Board />} />
               <Route path="/createTodo" element={<TodoForm />} />
+              <Route path="/createGroup" element={<GroupForm />} />
             </Routes>
           </div>
 

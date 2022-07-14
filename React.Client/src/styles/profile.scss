@@ -1,0 +1,83 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .container {
+    display: flex;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+
+    margin: 0 0 10px 0;
+    border: none;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 5px -2px #7a7a7a;
+    padding: 15px;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    .avatar {
+      margin: 0;
+      border: 0.1px solid #7a7a7a25;
+      border-radius: 100%;
+      box-shadow: 0 2px 5px -2px #7a7a7a;
+      outline: none;
+      padding: 5px 10px;
+    }
+
+    .avatar-change {
+      position: absolute;
+      display: flex;
+      background-color: #7a7a7a25;
+
+      margin: 0;
+      border-radius: 100%;
+      outline: none;
+      padding: 5px 10px;
+
+      opacity: 0;
+
+      &:hover {
+        opacity: 100%;
+      }
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+
+      .input-form {
+        display: flex;
+        flex-direction: column;
+        margin: 0 0 10px 0;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .input-label {
+          color: rgb(49, 49, 49);
+          margin: 0 0 5px 0;
+        }
+
+        input {
+          margin: 0;
+          border: 0.1px solid #7a7a7a25;
+          border-radius: 0.25rem;
+          box-shadow: 0 2px 5px -2px #7a7a7a;
+          outline: none;
+          padding: 5px 10px;
+        }
+      }
+    }
+  }
+}
+
+.bi-person-fill {
+  font-size: 58px;
+}
+
+.bi-pencil {
+  font-size: 58px;
+}

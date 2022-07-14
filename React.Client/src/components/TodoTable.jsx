@@ -1,12 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Loading from "./Loading";
+import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { getStatuses } from "../stores/todo/actions";
+import { getStatuses, getTodosByAccount } from "../stores/todo/actions";
 
-import "../styles/index";
 import "bootstrap-icons/font/bootstrap-icons";
-import "../styles/table";
+import "../styles/style";
 
 class TodoTable extends React.Component {
   constructor(props) {
@@ -18,15 +16,21 @@ class TodoTable extends React.Component {
     };
 
     this.onChangeSearch = this.onChangeSearch.bind(this);
+    this.onTaskOpen = this.onTaskOpen.bind(this);
   }
 
   componentDidMount() {
+    this.props.getTodosByAccount(this.props.userId);
     this.props.getStatuses();
     this.setState({ isLoaded: true });
   }
 
   onChangeSearch(e) {
     this.setState({ searchName: e.target.value });
+  }
+
+  onTaskOpen(id) {
+    return <Navigate to={"/todotable/" + id} />;
   }
 
   render() {
@@ -37,71 +41,66 @@ class TodoTable extends React.Component {
 
     let filteredTodos = [];
 
-    if (searchName) {
-      filteredTodos = todos.filter((todo) => todo.title.includes(searchName));
-    } else {
-      filteredTodos = todos;
+    if (todos) {
+      if (searchName) {
+        filteredTodos = todos.filter((todo) => todo.title.includes(searchName));
+      } else {
+        filteredTodos = todos;
+      }
     }
 
     if (isLoaded && statuses && todos) {
       return (
-        <div className="container">
-          <div className="container col">
-            <div className="container row">
-              <div className="container col w-70">
-                <input
-                  className="input-text"
-                  type="search"
-                  onChange={this.onChangeSearch}
-                />
-              </div>
-              <div className="container col w-15">
-                <input className="input-date" type="date" />
-              </div>
-              <div className="container col w-15">
-                <input className="input-date" type="date" />
-              </div>
+        <div className="todo-table">
+          <div className="filters">
+            <div className="input search">
+              <label>Search</label>
+              <input type="search" onChange={this.onChangeSearch} />
             </div>
-            <div className="container col">
-              <table className="table">
-                <thead className="table-thead">
-                  <tr className="table-thead-tr">
-                    <th className="table-thead-tr-th">Название</th>
-                    <th className="table-thead-tr-th">Описание</th>
-                    <th className="table-thead-tr-th">Статус</th>
-                    <th className="table-thead-tr-th">Дата создания</th>
-                    <th className="table-tbody-tr-th"></th>
+            <div className="input date">
+              <label>From</label>
+              <input type="date" />
+            </div>
+            <div className="input date">
+              <label>To</label>
+              <input type="date" />
+            </div>
+          </div>
+          <div className="table">
+            <table className="table">
+              <thead className="thead">
+                <tr className="tr">
+                  <th className="th">Название</th>
+                  <th className="th">Описание</th>
+                  <th className="th">Статус</th>
+                  <th className="th">Дата создания</th>
+                </tr>
+              </thead>
+              <tbody className="tbody">
+                {filteredTodos.map((todo, key) => (
+                  <tr
+                    className="tr"
+                    key={key}
+                    onClick={() => this.onTaskOpen(todo.id)}
+                  >
+                    <td className="td">{todo.title}</td>
+                    <td className="td">{todo.description}</td>
+                    <td className="td">
+                      {
+                        statuses.find((status) => status.id == todo.statusId)
+                          .name
+                      }
+                    </td>
+                    <td className="td">{todo.createDate}</td>
                   </tr>
-                </thead>
-                <tbody className="table-tbody">
-                  {filteredTodos.map((todo, key) => (
-                    <tr className="table-tbody-tr" key={key}>
-                      <td className="table-tbody-tr-td">{todo.title}</td>
-                      <td className="table-tbody-tr-td">{todo.description}</td>
-                      <td className="table-tbody-tr-td">
-                        {
-                          statuses.find((status) => status.id == todo.statusId)
-                            .name
-                        }
-                      </td>
-                      <td className="table-tbody-tr-td">{todo.createDate}</td>
-                      <td className="table-tbody-tr-td">
-                        <Link to={"/todotable/" + todo.id}>
-                          <button>
-                            <i className="bi bi-search" />
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       );
     } else {
-      return <Loading />;
+      return <div>Loading...</div>;
     }
   }
 }
@@ -109,12 +108,14 @@ class TodoTable extends React.Component {
 const mapStateToProps = (state) => {
   return {
     user: state.user.isLogin,
+    userId: state.user.id,
     statuses: state.todo.statuses,
     todos: state.todo.todos,
   };
 };
 
 const mapDispatchToProps = {
+  getTodosByAccount,
   getStatuses,
 };
 

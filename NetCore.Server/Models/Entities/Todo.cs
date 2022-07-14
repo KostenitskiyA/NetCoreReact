@@ -21,6 +21,16 @@
         public string Description { get; set; } = string.Empty;
 
         /// <summary>
+        /// Дата создания
+        /// </summary>
+        public DateTime CreateDate { get; set; }
+
+        /// <summary>
+        /// Дата изменения
+        /// </summary>
+        public DateTime ChangeDate { get; set; }
+
+        /// <summary>
         /// Идентификатор статуса задачи
         /// </summary>
         public int StatusId { get; set; }
@@ -28,7 +38,7 @@
         /// <summary>
         /// Статус задачи
         /// </summary>
-        public TodoStatus? Status { get; set; }
+        public TodoStatus Status { get; set; }
             
         /// <summary>
         /// Идентификатор создателя
@@ -38,7 +48,7 @@
         /// <summary>
         /// Создатель задачи
         /// </summary>
-        public Account? Creator { get; set; }
+        public Account Creator { get; set; }
 
         /// <summary>
         /// Идентификатор группы
@@ -48,16 +58,6 @@
         /// <summary>
         /// Группа
         /// </summary>
-        public Group? Group { get; set; }
-
-        /// <summary>
-        /// Дата создания
-        /// </summary>
-        public DateTime CreateDate { get; set; }
-
-        /// <summary>
-        /// Дата изменения
-        /// </summary>
-        public DateTime ChangeDate { get; set; }
+        public Group Group { get; set; }        
     }
 }
