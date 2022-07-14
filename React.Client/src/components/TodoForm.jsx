@@ -12,13 +12,11 @@ class TodoForm extends React.Component {
     super(props);
 
     this.state = {
-      id: 0,
       title: "",
       description: "",
       statusId: 0,
-      status: null,
-      createDate: new Date(),
-      changeDate: new Date(),
+      creatorId: 0,
+      executorId: 0,
     };
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -32,20 +30,24 @@ class TodoForm extends React.Component {
   }
 
   onChangeTitle(e) {
+    e.preventDefault();
     this.setState({ title: e.target.value });
   }
 
   onChangeDescription(e) {
+    e.preventDefault();
     this.setState({ description: e.target.value });
   }
 
   onChangeStatus(e) {
-    this.setState({ statusId: e.target.value });
+    e.preventDefault();
+    this.setState({ statusId: parseInt(e.target.value) });
+    console.log(this.state);
   }
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    this.setState({ creatorId: this.props.user.id });
     this.props.createTodo(this.state);
   }
 

@@ -1,9 +1,19 @@
-import { CREATE_GROUP, UPDATE_GROUP, DELETE_GROUP } from "../constants.js";
+import {
+  GET_GROUPS_BY_ACCOUNT,
+  CREATE_GROUP,
+  UPDATE_GROUP,
+  DELETE_GROUP,
+} from "../constants.js";
 
 const initialState = { groups: [] };
 
 export const groupReducer = (state = initialState, action) => {
   switch (action.type) {
+    // Получение групп аккаунта
+    case GET_GROUPS_BY_ACCOUNT: {
+      return { ...state, groups: action.payload };
+    }
+
     // Добавление группы
     case CREATE_GROUP: {
       const newGroups = [...state.groups];

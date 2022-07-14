@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { signin } from "../stores/user/actions";
 
-import "../styles/forms";
+import "../styles/style";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -50,36 +50,44 @@ class SignIn extends React.Component {
       return <Navigate to="/" />;
 
     return (
-      <div className="signin-form">
-        <label>Имя пользователя</label>
-        <input
-          type="text"
-          value={this.state.name}
-          onChange={(event) => {
-            this.onChangeName(event);
-          }}
-        />
-
-        <label>Логин</label>
-        <input
-          type="text"
-          value={this.state.login}
-          onChange={(event) => {
-            this.onChangeLogin(event);
-          }}
-        />
-
-        <label>Пароль</label>
-        <input
-          type="password"
-          value={this.state.password}
-          onChange={(event) => {
-            this.onChangePassword(event);
-          }}
-        />
-
-        <button onClick={this.onSubmit}>Регистрация</button>
-      </div>
+      <form className="signin-form" onSubmit={(e) => this.onSubmit(e)}>
+        <div className="title">SignIn</div>
+        <div className="inputs">
+          <div className="input">
+            <label>Name</label>
+            <input
+              type="text"
+              value={this.state.name}
+              onChange={(event) => {
+                this.onChangeName(event);
+              }}
+            />
+          </div>
+          <div className="input">
+            <label>Username</label>
+            <input
+              type="text"
+              value={this.state.login}
+              onChange={(event) => {
+                this.onChangeLogin(event);
+              }}
+            />
+          </div>
+          <div className="input">
+            <label>Password</label>
+            <input
+              type="password"
+              value={this.state.password}
+              onChange={(event) => {
+                this.onChangePassword(event);
+              }}
+            />
+          </div>
+        </div>
+        <div className="button">
+          <button type="submit">Signin</button>
+        </div>
+      </form>
     );
   }
 }

@@ -63,6 +63,28 @@ namespace NetCore.Server.Models
                 account3
             };
 
+            var groupAccount1 = new GroupAccount()
+            {
+                GroupId = 1,
+                AccountId = 1
+            };
+            var groupAccount2 = new GroupAccount()
+            {
+                GroupId = 2,
+                AccountId = 2
+            };
+            var groupAccount3 = new GroupAccount()
+            {
+                GroupId = 2,
+                AccountId = 3
+            };
+            var groupAccount = new List<GroupAccount>()
+            {
+                groupAccount1,
+                groupAccount2,
+                groupAccount3
+            };
+
             var user1 = new User()
             {
                 Id = 1,
@@ -167,6 +189,7 @@ namespace NetCore.Server.Models
 
             modelBuilder.Entity<Group>().HasData(groups);
             modelBuilder.Entity<Account>().HasData(accounts);
+            modelBuilder.Entity<GroupAccount>().HasData(groupAccount);
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<TodoStatus>().HasData(todoStatuses);
             modelBuilder.Entity<Todo>().HasData(todos);
@@ -178,37 +201,31 @@ namespace NetCore.Server.Models
                     e => e
                     .HasOne(ga => ga.Account)
                     .WithMany(a => a.GroupsAccounts)
-                    .HasForeignKey(ga => ga.AccountId)
-                    .OnDelete(DeleteBehavior.NoAction),
+                    .HasForeignKey(ga => ga.AccountId),
                     e => e
                     .HasOne(ga => ga.Group)
                     .WithMany(g => g.GroupsAccounts)
-                    .HasForeignKey(ga => ga.GroupId)
-                    .OnDelete(DeleteBehavior.NoAction));
+                    .HasForeignKey(ga => ga.GroupId));
 
             modelBuilder.Entity<Account>()
                 .HasOne(a => a.User)
                 .WithOne(u => u.Account)
-                .HasForeignKey<User>(u => u.AccountId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey<User>(u => u.AccountId);
 
             modelBuilder.Entity<Todo>()
                 .HasOne(t => t.Status)
                 .WithMany(s => s.Todos)
-                .HasForeignKey(t => t.StatusId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(t => t.StatusId);
 
             modelBuilder.Entity<Todo>()
                 .HasOne(t => t.Creator)
                 .WithMany(c => c.Todos)
-                .HasForeignKey(t => t.CreatorId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(t => t.CreatorId);
 
             modelBuilder.Entity<Todo>()
                 .HasOne(t => t.Group)
                 .WithMany(g => g.Todos)
-                .HasForeignKey(t => t.GroupId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(t => t.GroupId);
         }
     }
 }

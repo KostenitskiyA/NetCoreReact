@@ -19,6 +19,6 @@
         /// <summary>
         /// Задачи статуса
         /// </summary>
-        public IEnumerable<Todo>? Todos { get; set; }
+        public IEnumerable<Todo> Todos { get; set; }
     }
 }

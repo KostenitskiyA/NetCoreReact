@@ -31,10 +31,9 @@ export const getGroup = (data) => {
 // Получение групп аккаунта
 export const getGroupsByAccount = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_GROUPS_BY_ACCOUNT_API, {
-      method: "POST",
+    const responce = await fetch(GET_GROUPS_BY_ACCOUNT_API + data, {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
     });
 
     const json = await responce.json();

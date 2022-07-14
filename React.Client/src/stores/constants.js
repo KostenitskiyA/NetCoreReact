@@ -1,3 +1,5 @@
+export const GET_GROUP = "GET_GROUP";
+export const GET_GROUPS_BY_ACCOUNT = "GET_GROUPS_BY_ACCOUNT";
 export const CREATE_GROUP = "CREATE_GROUP";
 export const UPDATE_GROUP = "UPDATE_GROUP";
 export const DELETE_GROUP = "DELETE_GROUP";

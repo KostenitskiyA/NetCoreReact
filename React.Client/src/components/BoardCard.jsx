@@ -37,6 +37,11 @@ class BoardCard extends React.Component {
     const { todo } = this.props;
     const className = this.state.isSelected ? "card selected" : "card";
 
+    const year = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(todo.createDate);
+    const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(todo.createDate);
+    const day = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(todo.createDate);
+    const date = day + " " + month + " " + year;
+
     return (
       <div
         className={className}
@@ -44,11 +49,20 @@ class BoardCard extends React.Component {
         onDragStart={(e) => this.onDragStart(e, todo.id)}
         onDragEnd={(e) => this.onDragEnd(e)}
       >
-        <div className="title">{todo.title}</div>
+        <div className="col">
+          <div className="tags"></div>
+          <div className="title">{todo.title}</div>
+          <div className="row">
+            <div className="date">{date}</div>
+            <div className="code">{todo.code}</div>
+            <div className="avatar"></div>
+          </div>          
+        </div>
+
+        {/* <div ></div>
         <div className="description">{todo.description}</div>
         <div className="dates">
-          <div className="date">
-            {new Date(todo.createDate).toLocaleDateString("ru-RU")}
+          <div className="date">            
           </div>
           <div className="date">
             {new Date(todo.changeDate).toLocaleDateString("ru-RU")}
@@ -56,7 +70,7 @@ class BoardCard extends React.Component {
         </div>
         <button onClick={this.onDelete}>
           <i className="bi bi-x" />
-        </button>
+        </button> */}
       </div>
     );
   }
