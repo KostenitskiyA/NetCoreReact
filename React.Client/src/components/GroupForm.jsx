@@ -4,7 +4,6 @@ import { Navigate } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { createGroup } from "../stores/group/actions";
-import "../styles/index";
 
 class GroupForm extends React.Component {
   constructor(props) {

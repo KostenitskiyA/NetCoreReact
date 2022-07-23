@@ -9,7 +9,7 @@ input[type="search"] {
   border: none;
   border-radius: 0.25em;
   box-shadow: 0 1px 5px -2px #7a7a7a;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Ubuntu Mono";
 }
 
 input[type="date"] {
@@ -22,8 +22,60 @@ input[type="date"] {
   border: none;
   border-radius: 0.25em;
   box-shadow: 0 1px 5px -2px #7a7a7a;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Ubuntu Mono";
   text-align: center;
+}
+
+.filters {
+  margin-bottom: 5px;
+}
+
+.todo-table {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  justify-content: space-between;
+  align-items: stretch;
+
+  .filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .search {
+      width: -webkit-fill-available;
+    }
+
+    .date {
+    }
+
+    .input {
+      display: flex;
+      flex-direction: column;
+
+      margin: 0 5px 0 0;
+      padding: 0;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      label {
+        float: left;
+        font-family: "Ubuntu Mono";
+        font-weight: 500;
+        font-size: 12px;
+
+        margin: 0 0 5px 0;
+        border: 0;
+        padding: 0 0 0 5px;
+      }
+    }
+  }
 }
 
 .table {
@@ -55,7 +107,7 @@ input[type="date"] {
       .th {
         display: table-cell;
 
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Ubuntu Mono";
 
         margin: 0;
         padding: 10px;

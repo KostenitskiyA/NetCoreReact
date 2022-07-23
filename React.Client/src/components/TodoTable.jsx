@@ -5,6 +5,7 @@ import { getStatuses, getTodosByAccount } from "../stores/todo/actions";
 
 import "bootstrap-icons/font/bootstrap-icons";
 import "../styles/style";
+import "../styles/todoTable";
 
 class TodoTable extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class TodoTable extends React.Component {
     if (isLoaded && statuses && todos) {
       return (
         <div className="todo-table">
-          <div className="filters">
+          <div className="filters row">
             <div className="input search">
               <label>Search</label>
               <input type="search" onChange={this.onChangeSearch} />
@@ -71,7 +72,6 @@ class TodoTable extends React.Component {
               <thead className="thead">
                 <tr className="tr">
                   <th className="th">Название</th>
-                  <th className="th">Описание</th>
                   <th className="th">Статус</th>
                   <th className="th">Дата создания</th>
                 </tr>
@@ -84,14 +84,13 @@ class TodoTable extends React.Component {
                     onClick={() => this.onTaskOpen(todo.id)}
                   >
                     <td className="td">{todo.title}</td>
-                    <td className="td">{todo.description}</td>
                     <td className="td">
                       {
                         statuses.find((status) => status.id == todo.statusId)
                           .name
                       }
                     </td>
-                    <td className="td">{todo.createDate}</td>
+                    <td className="td">{new Date(todo.createDate).getFullYear()}</td>
                   </tr>
                 ))}
               </tbody>

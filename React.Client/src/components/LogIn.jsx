@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../stores/user/actions";
 import { Navigate } from "react-router-dom";
-import "../styles/style";
+import "../styles/loginForm";
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -68,7 +68,9 @@ class LogIn extends React.Component {
           </div>
         </div>
         <div className="button">
-          <button type="submit">Login</button>
+          <button type="submit">
+            Login
+          </button>
         </div>
       </form>
     );

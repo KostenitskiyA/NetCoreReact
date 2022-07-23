@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import "../styles/board";
+import "../styles/groupCard";
 import "bootstrap-icons/font/bootstrap-icons";
 
 class GroupCard extends React.Component {
