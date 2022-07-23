@@ -7,6 +7,17 @@ import "bootstrap-icons/font/bootstrap-icons";
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      image: "",
+    };
+
+    this.imageChange = this.imageChange.bind(this);
+  }
+
+  imageChange(e) {
+    const img = URL.createObjectURL(e.target.files[0]);
+    this.setState({ image: img });
   }
 
   render() {
@@ -14,15 +25,26 @@ class Profile extends React.Component {
 
     if (!isLogin) return <Navigate to="/login" />;
 
+    let avatarImg;
+
+    this.state.image == "" ? (
+      <i className="bi bi-person-fill"></i>
+    ) : (
+      <img src={this.state.image} />
+    );
+
     return (
       <div className="wrapper">
         <div className="container">
-          <div className="avatar">
-            <i class="bi bi-person-fill"></i>
-          </div>
-          <div className="avatar-change">
-            <i class="bi bi-pencil"></i>
-          </div>
+          <div className="avatar">{avatarImg}</div>
+          <label className="avatar-change" htmlFor="avatar-input">
+            <i className="bi bi-pencil"></i>
+          </label>
+          <input
+            type="file"
+            id="avatar-input"
+            onChange={(e) => this.imageChange(e)}
+          />
         </div>
         <div className="container">
           <div className="col">
@@ -33,6 +55,11 @@ class Profile extends React.Component {
             <div className="input-form">
               <label className="input-label">Name</label>
               <input type="text" readOnly value={name}></input>
+            </div>
+            <div className="input-form">
+              <Link to="settings">
+                <button>Change password</button>
+              </Link>
             </div>
           </div>
         </div>

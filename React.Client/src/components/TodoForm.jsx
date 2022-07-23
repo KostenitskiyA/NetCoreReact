@@ -5,7 +5,8 @@ import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { getStatuses } from "../stores/todo/actions";
 import { createTodo } from "../stores/todo/actions";
-import "../styles/index";
+
+import "../styles/todoForm";
 
 class TodoForm extends React.Component {
   constructor(props) {
@@ -54,12 +55,13 @@ class TodoForm extends React.Component {
   render() {
     const { user, statuses } = this.props;
 
-    if (!user.isLogin) return <Navigate to="/login" />;
+    //if (!user.isLogin) return <Navigate to="/login" />;
 
     return (
       <form className="form" onSubmit={(e) => this.onSubmit(e)}>
-        <div className="container row">
-          <div className="container col w-75">
+        <div className="inputs">
+        <div className="row">
+          <div className="input liquid">
             <label className="label">Заголовок</label>
             <input
               className="input-text"
@@ -69,7 +71,7 @@ class TodoForm extends React.Component {
               onChange={this.onChangeTitle}
             />
           </div>
-          <div className="container col w-25">
+          <div className="input">
             <label className="label">Статус</label>
             <select
               className="input-select"
@@ -85,8 +87,8 @@ class TodoForm extends React.Component {
             </select>
           </div>
         </div>
-        <div className="container row">
-          <div className="container col w-100">
+        <div className="row">
+          <div className="input w-100">
             <label className="label">Описание</label>
             <textarea
               className="input-textarea"
@@ -97,8 +99,9 @@ class TodoForm extends React.Component {
             />
           </div>
         </div>
-        <div className="container">
-          <button className="input-button" type="submit">
+        </div>        
+        <div className="buttons row">
+          <button type="submit">
             Сохранить
           </button>
         </div>

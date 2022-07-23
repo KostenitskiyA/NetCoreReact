@@ -1,0 +1,88 @@
+.login-form,
+.signin-form {
+  display: flex;
+  flex-direction: column;
+  font-family: "Ubuntu Mono";
+
+  background-color: white;
+  box-shadow: 0 2px 5px -2px #7a7a7a;
+
+  margin: 0;
+  border: 1px solid #7a7a7a25;
+  border-radius: 0.5rem;
+  padding: 20px;
+
+  .title {
+    text-align: center;
+
+    font-size: xx-large;
+
+    margin: 0;
+    border: 0;
+    padding: 40px 20px;
+  }
+
+  .inputs {
+    margin: 0 0 20px 0;
+    border: 0;
+    padding: 0;
+
+    .input {
+      display: flex;
+      flex-direction: column;
+
+      margin: 0 0 10px 0;
+      padding: 0 0 0 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      label {
+        margin: 0 0 5px 0;
+        padding: 0 0 0 10px;
+      }
+
+      input {
+        font-family: "Ubuntu Mono";
+
+        margin: 0;
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  .button {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    border: 0;
+    padding: 0;
+
+    button {
+      font-family: "Ubuntu Mono";
+    
+      box-shadow: 0 2px 5px -2px #7a7a7a;
+      outline: none;
+    
+      margin: 0;
+      border: 0.1px solid #7a7a7a25;
+      border-radius: 0.25rem;
+      padding: 5px 10px;
+    
+      &:hover {
+        background-color: aqua;
+      }
+    
+      &:active {
+        background-color: rgb(0, 255, 42);
+        transform: translateY(1px);
+      }
+    }
+  }
+}
