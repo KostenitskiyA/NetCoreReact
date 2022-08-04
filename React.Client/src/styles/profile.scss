@@ -4,13 +4,17 @@
 
   .container {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: center;
     align-items: center;
     background-color: rgb(255, 255, 255);
 
     margin: 0 0 10px 0;
     border: none;
     border-radius: 0.25rem;
-    box-shadow: 0 2px 5px -2px #7a7a7a;
+    //box-shadow: 0 2px 5px -2px #7a7a7a;
     padding: 15px;
 
     &:last-child {
@@ -24,12 +28,21 @@
       box-shadow: 0 2px 5px -2px #7a7a7a;
       outline: none;
       padding: 5px 10px;
+
+      img {        
+        width: 80px;
+        height: 80px;
+
+        border-radius: 100%;
+      }
     }
 
     .avatar-change {
       position: absolute;
       display: flex;
       background-color: #7a7a7a25;
+
+      box-sizing: content-box;
 
       margin: 0;
       border-radius: 100%;

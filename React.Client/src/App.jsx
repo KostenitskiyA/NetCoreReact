@@ -16,7 +16,9 @@ import { Todo } from "./components/Todo";
 import Board from "./components/Board";
 import TodoForm from "./components/TodoForm";
 import GroupForm from "./components/GroupForm";
+import GroupMenu from "./components/GroupMenu";
 import NotificationContainer from "./components/NotificationContainer";
+import Modal from "./components/Modal.jsx";
 
 
 const store = configureStore({ reducer: reducers, middleware: [thunk] });
@@ -33,6 +35,7 @@ class App extends React.Component {
           <Navigation />
 
           <div className="main">
+            <GroupMenu />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<LogIn />} />
@@ -48,6 +51,8 @@ class App extends React.Component {
           </div>
 
           {/* <NotificationContainer /> */}
+
+          {/* <Modal /> */}
         </BrowserRouter>
       </Provider>
     );

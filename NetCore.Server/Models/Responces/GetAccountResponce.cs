@@ -14,5 +14,10 @@
         /// Имя
         /// </summary>
         public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Аватар
+        /// </summary>
+        public string Avatar { get; set; } = string.Empty;
     }
 }

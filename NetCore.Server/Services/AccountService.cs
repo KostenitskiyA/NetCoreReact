@@ -52,5 +52,24 @@ namespace NetCore.Server.Services
                 throw;
             }
         }
+
+        public async Task UpdateAvatarAsync(int accountId, string avatar)
+        {
+            try
+            {
+                var foundAccount = await _context.Accounts
+                    .SingleOrDefaultAsync(a => a.Id == accountId);
+
+                if (foundAccount == null)
+                    throw new Exception("Аккаунт не найден");
+
+                foundAccount.Avatar = avatar;
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

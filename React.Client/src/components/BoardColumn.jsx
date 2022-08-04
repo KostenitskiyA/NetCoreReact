@@ -50,8 +50,8 @@ class BoardColumn extends React.Component {
         >
           {todos
             .filter((todo) => todo.statusId == status.id)
-            .map((todo) => {
-              return <BoardCard todo={todo} />;
+            .map((todo, key) => {
+              return <BoardCard key={key} todo={todo} />;
             })}
         </div>
       </div>

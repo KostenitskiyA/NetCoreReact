@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Navigate, Link } from "react-router-dom";
+import { updateAvatar } from "../stores/user/actions";
 import "../styles/profile";
 import "bootstrap-icons/font/bootstrap-icons";
 
@@ -13,25 +14,37 @@ class Profile extends React.Component {
     };
 
     this.imageChange = this.imageChange.bind(this);
+    this.avatarChange = this.avatarChange.bind(this);
   }
 
   imageChange(e) {
     const img = URL.createObjectURL(e.target.files[0]);
     this.setState({ image: img });
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.avatarChange(reader.result);
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  }
+
+  avatarChange(img) {
+    this.props.updateAvatar({ accountId: this.props.id, avatar: img });
   }
 
   render() {
-    const { id, name, isLogin } = this.props;
+    const { id, name, isLogin } = this.props.user;
 
     if (!isLogin) return <Navigate to="/login" />;
 
     let avatarImg;
 
-    this.state.image == "" ? (
-      <i className="bi bi-person-fill"></i>
-    ) : (
-      <img src={this.state.image} />
-    );
+    avatarImg =
+      this.state.image == "" ? (
+        <i className="bi bi-person-fill"></i>
+      ) : (
+        <img src={this.state.image} />
+      );
 
     return (
       <div className="wrapper">
@@ -70,14 +83,12 @@ class Profile extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    id: state.user.id,
-    name: state.user.name,
-    isLogin: state.user.isLogin,
+    user: state.user,
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = {
+  updateAvatar,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

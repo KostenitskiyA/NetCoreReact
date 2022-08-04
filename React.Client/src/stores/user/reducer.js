@@ -1,8 +1,9 @@
-import { LOGIN, LOGOUT } from "../constants.js";
+import { LOGIN, LOGOUT, UPDATE_ACCOUNT_AVATAR } from "../constants.js";
 
 const initialState = {
   id: 0,
   name: "",
+  avatar: "",
   isLogin: false,
 };
 
@@ -13,11 +14,15 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         id: action.payload.id,
         name: action.payload.name,
+        avatar: action.payload.avatar,
         isLogin: true,
       };
     case LOGOUT:
+      return initialState;
+    case UPDATE_ACCOUNT_AVATAR:
       return {
-        initialState,
+        ...state,
+        avatar: action.payload,
       };
   }
 

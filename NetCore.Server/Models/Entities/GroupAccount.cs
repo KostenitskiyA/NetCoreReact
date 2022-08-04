@@ -6,6 +6,11 @@
     public class GroupAccount
     {
         /// <summary>
+        /// Создатель группы
+        /// </summary>
+        public bool IsCreator { get; set; }
+
+        /// <summary>
         /// Идентификатор группы
         /// </summary>
         public int GroupId { get; set; }

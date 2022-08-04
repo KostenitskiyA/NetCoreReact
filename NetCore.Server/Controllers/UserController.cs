@@ -14,7 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace NetCore.Server.Controllers
-{    
+{
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -23,7 +23,7 @@ namespace NetCore.Server.Controllers
         private IOptions<AuthOptions> _authOptions;
         private IUserService _userProvider;
 
-        public UserController(ILogger<UserController> logger, 
+        public UserController(ILogger<UserController> logger,
             IOptions<AuthOptions> authOptions,
             IUserService userProvider)
         {
@@ -86,6 +86,21 @@ namespace NetCore.Server.Controllers
 
                 /*await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);*/
 
+                HttpContext.Response.Cookies.Append("124214", "214");
+
+                var claims = new List<Claim>
+                {
+                    new Claim("Id", responce.Id.ToString()),
+                    new Claim(ClaimTypes.Name, responce.Name)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(
+                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+
                 _logger.LogInformation("Запрос Login обработан");
 
                 return Ok(responce);
@@ -101,13 +116,13 @@ namespace NetCore.Server.Controllers
         [HttpPost]
         [Route("logout")]
         // TODO: Доработать
-        public async Task<ActionResult> LogOut([FromBody] Account user)
+        public async Task<ActionResult> LogOut()
         {
             try
             {
                 _logger.LogInformation("Запрос Logout получен");
 
-                /*await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);*/
+               await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
                 _logger.LogInformation("Запрос Logout обработан");
 
