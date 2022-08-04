@@ -5,11 +5,14 @@ import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { createGroup } from "../stores/group/actions";
 
+import "../styles/groupForm";
+
 class GroupForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isAdmin: true,
       name: "",
       code: "",
     };
@@ -35,40 +38,40 @@ class GroupForm extends React.Component {
   }
 
   render() {
-    const { user, statuses } = this.props;
+    const { user } = this.props;
 
     //if (!user.isLogin) return <Navigate to="/login" />;
 
     return (
-      <form className="form" onSubmit={(e) => this.onSubmit(e)}>
-        <div className="container row">
-          <div className="container col w-75">
-            <label className="label">Название</label>
-            <input
-              className="input-text"
-              type="text"
-              required
-              value={this.state.name}
-              onChange={this.onChangeName}
-            />
+      <form className="group-form" onSubmit={(e) => this.onSubmit(e)}>
+        <div className="inputs">
+          <div className="row">
+            <div className="input">
+              <label className="label">Название</label>
+              <input
+                className="input-text"
+                type="text"
+                required
+                value={this.state.name}
+                onChange={this.onChangeName}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="input">
+              <label className="label">Код</label>
+              <input
+                className="input-text"
+                type="text"
+                required
+                value={this.state.code}
+                onChange={this.onChangeCode}
+              />
+            </div>
           </div>
         </div>
-        <div className="container row">
-          <div className="container col w-100">
-            <label className="label">Код</label>
-            <input
-              className="input-text"
-              type="text"
-              required
-              value={this.state.сщву}
-              onChange={this.onChangeCode}
-            />
-          </div>
-        </div>
-        <div className="container">
-          <button className="input-button" type="submit">
-            Сохранить
-          </button>
+        <div className="buttons row">
+          <button type="submit">Сохранить</button>
         </div>
       </form>
     );

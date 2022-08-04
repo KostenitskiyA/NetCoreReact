@@ -15,6 +15,7 @@ export const LOGOUT_API = BASE_URL + USER_CONTROLLER + "/logout";
 const ACCOUNT_CONTROLLER = "/account";
 export const GET_ACCOUNT_API = BASE_URL + ACCOUNT_CONTROLLER + "/";
 export const GET_ACCOUNTS_BY_GROUP_API = BASE_URL + ACCOUNT_CONTROLLER + "/accounts/";
+export const UPDATE_ACCOUNT_AVATAR_API = BASE_URL + ACCOUNT_CONTROLLER + "/updateAvatar";
 
 const TODO_CONTROLLER = "/todo";
 export const GET_STATUSES_API = BASE_URL + TODO_CONTROLLER + "/statuses";

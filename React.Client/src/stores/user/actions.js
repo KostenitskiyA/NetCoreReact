@@ -1,14 +1,6 @@
-import { 
-	SIGNIN_API, 
-	LOGIN_API, 
-	LOGOUT_API 
-} from "../api.js";
+import { SIGNIN_API, LOGIN_API, LOGOUT_API, UPDATE_ACCOUNT_AVATAR_API } from "../api.js";
 
-import { 
-	LOGIN, 
-	LOGOUT, 
-	ADD_NOTIFICATION 
-} from "../constants.js";
+import { LOGIN, LOGOUT, ADD_NOTIFICATION, UPDATE_ACCOUNT_AVATAR } from "../constants.js";
 
 export const signin = (data) => {
   return async (dispatch) => {
@@ -60,5 +52,19 @@ export const logout = () => {
     //   type: ADD_NOTIFICATION,
     //   payload: { title: "Выход", description: "Идите нахуй" },
     // });
+  };
+};
+
+export const updateAvatar = (data) => {
+  return async (dispatch) => {
+    const responce = await fetch(UPDATE_ACCOUNT_AVATAR_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (responce.ok) {
+      dispatch({ type: UPDATE_ACCOUNT_AVATAR, payload: data.avatar });
+    }
   };
 };

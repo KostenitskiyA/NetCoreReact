@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
+using NetCore.Server.Models.Requests;
 using NetCore.Server.Models.Responces;
 using NetCore.Server.Utilities;
 
@@ -68,5 +69,27 @@ namespace NetCore.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost]
+        [Route("updateAvatar")]
+        public async Task<ActionResult> UpdateAvatar(UpdateAvatarRequest request)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос UpdateAvatar получен");
+
+                await _accountProvider.UpdateAvatarAsync(request.AccountId, request.Avatar);
+
+                _logger.LogInformation("Запрос UpdateAvatar обработан");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }        
     }
 }

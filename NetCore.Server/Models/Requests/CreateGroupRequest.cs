@@ -14,10 +14,5 @@
         /// Код
         /// </summary>
         public string Code { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Идентификатор владелеца группы
-        /// </summary>
-        public int OwnerId { get; set; }
     }
 }

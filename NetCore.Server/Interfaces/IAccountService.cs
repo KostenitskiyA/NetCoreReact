@@ -20,5 +20,12 @@ namespace NetCore.Server.Interfaces
         /// <param name="id">Идентификатор группы</param>
         /// <returns>Коллекция аккаунтов группы</returns>
         public Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id);
+
+        /// <summary>
+        /// Изменение аватара аккаунта
+        /// </summary>
+        /// <param name="accountId">Идентификатор аккаунта</param>
+        /// <param name="avatar">Аватар</param>
+        public Task UpdateAvatarAsync(int accountId, string avatar);
     }
 }

@@ -16,10 +16,7 @@ class Home extends React.Component {
     if (!isLogin) return <Navigate to="/login" />;
     
     return (
-      <div>
-        <div>Home</div>
-        <GroupСarousel />
-      </div>
+      <GroupСarousel />
     );
   }
 }

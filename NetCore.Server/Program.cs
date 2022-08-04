@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
@@ -22,8 +23,16 @@ builder.Services.ConfigureApplicationCookie(o => { o.Cookie.Domain = "http://loc
 var connection = builder.Configuration.GetConnectionString("DefaultDatabase");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection, options => options.EnableRetryOnFailure()));
 
-var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
-builder.Services.Configure<AuthOptions>(authOptionsConfiguration);
+/*var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
+builder.Services.Configure<AuthOptions>(authOptionsConfiguration);*/
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        options.SlidingExpiration = true;
+        options.AccessDeniedPath = "/Forbidden/";
+    });
 
 /*builder.Services.AddAuthentication(options =>
 {
@@ -59,6 +68,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IAccountService, AccountService>();
+builder.Services.AddTransient<IGroupAccountService, GroupAccountService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITodoService, TodoService>();
 

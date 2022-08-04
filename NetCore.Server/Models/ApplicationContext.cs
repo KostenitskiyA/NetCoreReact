@@ -65,16 +65,19 @@ namespace NetCore.Server.Models
 
             var groupAccount1 = new GroupAccount()
             {
+                IsCreator = true,
                 GroupId = 1,
                 AccountId = 1
             };
             var groupAccount2 = new GroupAccount()
             {
+                IsCreator = true,
                 GroupId = 2,
                 AccountId = 2
             };
             var groupAccount3 = new GroupAccount()
             {
+                IsCreator = false,
                 GroupId = 2,
                 AccountId = 3
             };

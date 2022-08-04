@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Requests;
@@ -13,12 +14,15 @@ namespace NetCore.Server.Controllers
     {
         private readonly ILogger<GroupController> _logger;
         private IGroupService _groupService;
+        private IGroupAccountService _groupAccountService;
 
         public GroupController(ILogger<GroupController> logger,
-            IGroupService groupService)
+            IGroupService groupService,
+            IGroupAccountService groupAccountService)
         {
             _logger = logger;
             _groupService = groupService;
+            _groupAccountService = groupAccountService;
         }
 
         [HttpGet]
@@ -50,7 +54,7 @@ namespace NetCore.Server.Controllers
         {
             try
             {
-                _logger.LogInformation("Запрос GetGroupsByAccount получен");
+                _logger.LogInformation("Запрос GetGroupsByAccount получен");                
 
                 var result = await _groupService.GetGroupsByAccountAsync(id);
                 var responce = new List<GetGroupResponce>();
@@ -81,6 +85,13 @@ namespace NetCore.Server.Controllers
                 var group = AutoMapperUtility<CreateGroupRequest, Group>.Map(request);
                 var result = await _groupService.CreateGroupAsync(group);
                 var responce = AutoMapperUtility<Group, CreateGroupResponce>.Map(result);
+
+                var groupAccount = new GroupAccount() {
+                    IsCreator = true,
+                    GroupId = result.Id,
+                    AccountId = Convert.ToInt32(User.Claims.SingleOrDefault(c => c.Type == "Id").Value)
+                };
+                await _groupAccountService.CreateGroupAccountAsync(groupAccount);
 
                 _logger.LogInformation("Запрос CreateGroup обработан");
 
@@ -127,6 +138,7 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос DeleteGroup получен");
 
                 await _groupService.DeleteGroupAsync(id);
+                await _groupAccountService.DeleteAllGroupAccountByGroupAsync(id);
 
                 _logger.LogInformation("Запрос DeleteGroup обработан");
 

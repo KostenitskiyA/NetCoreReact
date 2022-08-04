@@ -37,10 +37,10 @@ class BoardCard extends React.Component {
     const { todo } = this.props;
     const className = this.state.isSelected ? "card selected" : "card";
 
-    const year = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(todo.createDate);
-    const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(todo.createDate);
-    const day = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(todo.createDate);
-    const date = day + " " + month + " " + year;
+    //const year = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(todo.createDate);
+    //const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(todo.createDate);
+    //const day = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(todo.createDate);
+    //const date = day + " " + month + " " + year;
 
     return (
       <div
@@ -53,7 +53,7 @@ class BoardCard extends React.Component {
           <div className="tags"></div>
           <div className="title">{todo.title}</div>
           <div className="row">
-            <div className="date">{date}</div>
+            <div className="date">DATE</div>
             <div className="code">{todo.code}</div>
             <div className="avatar"></div>
           </div>          

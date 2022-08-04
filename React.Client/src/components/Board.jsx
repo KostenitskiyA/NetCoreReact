@@ -5,6 +5,7 @@ import BoardColumn from "./BoardColumn";
 import "../styles/board";
 import "bootstrap-icons/font/bootstrap-icons";
 import { Navigate } from "react-router-dom";
+import Modal from "./Modal";
 
 class Board extends React.Component {
   constructor(props) {
@@ -12,6 +13,8 @@ class Board extends React.Component {
 
     this.state = {
       isLoaded: true,
+      isModalShow: false,
+      selectTodo: null,
     };
   }
 
@@ -26,12 +29,21 @@ class Board extends React.Component {
 
     if (!isLogin) return <Navigate to="/login" />;
 
+    var modal =
+      this.state.selectTodo != null ? (
+        <Modal title={"Задача"} isModalShow={this.state.isModalShow} />
+      ) : null;
+
     if (isLoaded && statuses) {
       return (
-        <div className="row">
-          {statuses.map((status, key) => (
-            <BoardColumn key={key} status={status} />
-          ))}
+        <div className="board">
+          <div className="row">
+            {statuses.map((status, key) => (
+              <BoardColumn key={key} status={status} />
+            ))}
+          </div>
+
+          {modal}
         </div>
       );
     } else {

@@ -58,7 +58,7 @@ class TodoForm extends React.Component {
     //if (!user.isLogin) return <Navigate to="/login" />;
 
     return (
-      <form className="form" onSubmit={(e) => this.onSubmit(e)}>
+      <form className="todo-form" onSubmit={(e) => this.onSubmit(e)}>
         <div className="inputs">
         <div className="row">
           <div className="input liquid">

@@ -7,6 +7,7 @@ import {
 } from "../api.js";
 
 import {
+  CHANGE_CURRENT_GROUP,
   GET_GROUP,
   GET_GROUPS_BY_ACCOUNT,
   CREATE_GROUP,
@@ -14,13 +15,25 @@ import {
   DELETE_GROUP,
 } from "../constants.js";
 
+// Изменение текущей группы
+export const changeCurrentGroup = (data) => {
+  return async (dispatch) => {
+    const responce = await fetch(GET_GROUP_API + data, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const json = await responce.json();
+    dispatch({ type: CHANGE_CURRENT_GROUP, payload: json });
+  };
+};
+
 // Получение группы
 export const getGroup = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_GROUP_API, {
-      method: "POST",
+    const responce = await fetch(GET_GROUP_API + data, {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
     });
 
     const json = await responce.json();

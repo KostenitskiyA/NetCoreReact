@@ -17,7 +17,7 @@ class Navigation extends React.Component {
   }
 
   render() {
-    const { id, name, isLogin } = this.props.user;
+    const { id, name, avatar, isLogin } = this.props.user;
 
     let items;
 
@@ -31,7 +31,7 @@ class Navigation extends React.Component {
             </li>
             <li className="item">
               <Link className="link" to={"/profile/" + id}>
-                {name}
+                {name}<img className="avatar-img" src={avatar} />
               </Link>
             </li>
           </React.Fragment>
@@ -60,26 +60,6 @@ class Navigation extends React.Component {
             </Link>
           </li>
           <li className="item">
-            <Link className="link" to="/todotable">
-              Todo Table
-            </Link>
-          </li>
-          <li className="item">
-            <Link className="link" to="/board">
-              Todo Board
-            </Link>
-          </li>
-          <li className="item">
-            <Link className="link" to="/createTodo">
-              Create Todo
-            </Link>
-          </li>
-          <li className="item">
-            <Link className="link" to="/">
-              Groups
-            </Link>
-          </li>
-          <li className="item">
             <Link className="link" to="/createGroup">
               Create group
             </Link>
@@ -96,6 +76,7 @@ const mapStateToProps = (state) => {
     user: {
       id: state.user.id,
       name: state.user.name,
+      avatar: state.user.avatar,
       isLogin: state.user.isLogin,
     },
   };
