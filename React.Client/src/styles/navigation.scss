@@ -1,0 +1,82 @@
+@import "../styles/constants.scss";
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap");
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  justify-content: space-between;
+  align-items: stretch;
+
+  background-color: $PrimaryColor;
+  box-sizing: border-box;
+
+  margin: 0 0 20px 0;
+  border: 0;
+  padding: 10px;
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: left;
+    align-items: stretch;
+
+    margin: 0;
+    padding: 0;
+
+    .item {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: left;
+      align-items: stretch;
+
+      list-style-type: none;
+
+      margin: 0;
+      padding: 0;
+
+      .link {
+        display: flex;
+        flex-direction: row;
+
+        color: $PrimaryFontColor;
+        text-decoration: none;
+        font-family: "Ubuntu Mono";
+        font-weight: 400;
+        line-height: 24px;
+
+        margin: 0;
+        padding: 0 5px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        .avatar-img {
+          width: 24px;
+          height: 24px;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          border-radius: 100%;
+
+          img {
+            width: 24px;
+            height: 24px;
+
+            border-radius: 100%;
+
+            object-fit: fill;
+          }
+        }
+      }
+    }
+  }
+}

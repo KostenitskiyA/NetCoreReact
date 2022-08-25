@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
+
 import { signin } from "../stores/user/actions";
 
-import "../styles/style";
+import "../styles/loginForm";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -33,9 +34,11 @@ class SignIn extends React.Component {
     this.setState({ password: event.target.value });
   }
 
-  onSubmit() {
+  onSubmit(e) {
+    e.preventDefault();
+
     const data = {
-      name: "",
+      name: this.state.name,
       login: this.state.login,
       password: this.state.password,
     };
@@ -46,12 +49,11 @@ class SignIn extends React.Component {
   render() {
     const { isLogin } = this.props;
 
-    if (isLogin) 
-      return <Navigate to="/" />;
+    if (isLogin) return <Navigate to="/" />;
 
     return (
       <form className="signin-form" onSubmit={(e) => this.onSubmit(e)}>
-        <div className="title">SignIn</div>
+        <div className="title">Sign In</div>
         <div className="inputs">
           <div className="input">
             <label>Name</label>
@@ -94,16 +96,12 @@ class SignIn extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.user.userId,
-    userName: state.user.userName,
-    isLogin: state.user.isLogin,
+    user: state.user,
   };
 };
 
-const mapDispatchToProps = () => {
-  return {
-    signin,
-  };
+const mapDispatchToProps = {
+  signin,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

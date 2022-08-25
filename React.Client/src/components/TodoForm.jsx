@@ -93,7 +93,7 @@ class TodoForm extends React.Component {
             <textarea
               className="input-textarea"
               type="textarea"
-              rows="10"
+              rows="15"
               value={this.state.description}
               onChange={this.onChangeDescription}
             />

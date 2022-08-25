@@ -17,10 +17,12 @@ namespace NetCore.Server.Services
         {
             try
             {
-                var createdUser = await _context.Users
-                    .AddAsync(user);
                 var createdAccount = await _context.Accounts
                     .AddAsync(user.Account);
+
+                var createdUser = await _context.Users
+                    .AddAsync(user);
+
                 await _context.SaveChangesAsync();
 
                 var created = await _context.Users

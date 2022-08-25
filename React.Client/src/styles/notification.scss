@@ -1,73 +1,92 @@
 .notification-container {
-    position: absolute;
-    bottom: 25px;
-    right: 25px;
+  width: 100%;
 
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column-reverse;
+  position: absolute;
+  bottom: 25px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: stretch;
 }
 
 .notification {
-    width: 200px;
+  width: 200px;
 
-    background-color: #ffffff;
+  box-shadow: 0 2px 5px -2px #7a7a7a;
 
-    margin: 0 0 10px 0;
-    border: 1px solid black;
-    border-radius: .4rem;
-    padding: 10px;
+  background-color: #d1e7dd;
+  color: #0f5132;
+
+  margin: 0 0 10px 0;
+  border-radius: 0.5rem;
+  padding: 10px;
+
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 2s;
+}
+
+@keyframes example {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: 100px;
+  }
 }
 
 .notification:first-child {
-    margin: 0;
+  margin: 0;
 }
 
 .notification > .title {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .notification > .title > span {
-    margin: 0;
-    border: 0;
-    padding: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
-.notification > .title > input[type="button"] {   
-    background: none;
+.notification > .title > input[type="button"] {
+  background: none;
 
-    margin: 0;
-    border: 0;
-    padding: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
-.notification > .description {  
-    width: 100%;
+.notification > .description {
+  width: 100%;
 
-    margin: 0;
-    border: 0;
-    padding: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
-.notification > .description > span {  
-    margin: 0;
-    border: 0;
-    padding: 0;
+.notification > .description > span {
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
-.notification > .timeline > span {  
-    margin: 0;
-    border: 0;
-    padding: 0;
+.notification > .timeline > span {
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 .notification > .timeline > progress {
-    width: 100%;
+  width: 100%;
 
-    margin: 0;
-    outline: none;
-    padding: 0;
+  margin: 0;
+  outline: none;
+  padding: 0;
 }
