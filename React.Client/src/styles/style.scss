@@ -7,90 +7,48 @@ html {
 }
 
 body {
+  height: 100%;
+  width: 100%;
+
   background-color: $BodyBackgroudColor;
 
   margin: 0;
   padding: 0;
 }
 
+.root {
+  height: 100%;
+  width: 100%;
+}
+
 .main {
-  position: relative;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-content: flex-start;
   justify-content: space-around;
   align-items: flex-start;
 
-  margin: 0 auto;
-  padding: 0;
+  margin: 0;
+  padding: 0 5%;
 }
 
-.nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: stretch;
-  justify-content: space-between;
-  align-items: stretch;
+.sidebar {
+  min-width: 150px;
 
-  background-color: $PrimaryColor;
-  box-sizing: border-box;
-
-  margin: 0 0 20px 0;
-  border: 0;
-  padding: 10px;
-
-  .list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: left;
-
-    margin: 0;
-    padding: 0;
-
-    .item {
-      list-style-type: none;
-
-      margin: 0 10px 0 0;
-      padding: 0;
-
-      .link {
-        color: $PrimaryFontColor;
-        text-decoration: none;
-        font-family: "Ubuntu Mono";
-        font-weight: 400;
-
-        margin: 0;
-        padding: 0;
-      }
-
-      .link:hover {
-        border-bottom: 2px solid $SecondaryColor;
-
-        margin: 0;
-        padding: 0;
-      }
-    }
-
-    .item:last-child {
-      margin: 0;
-    }
-  }
+  padding: 0 5px;
 }
 
-.avatar-img {
-  width: 28px;
-  height: 28px;
-
-  border-radius: 100%;
+.content {
+  padding: 0 5px;
 }
 
 input[type="text"],
 input[type="search"],
 input[type="password"],
-input[type="date"] {
+input[type="date"],
+select,
+textarea {
   height: 100%;
   font-family: "Ubuntu Mono";
 
@@ -101,33 +59,10 @@ input[type="date"] {
   border: 1px solid #7a7a7a25;
   border-radius: 0.25rem;
   padding: 5px 10px;
-}
-
-select { 
-  height: 100%;
-  min-width: 100px;
-  font-family: "Ubuntu Mono";
-
-  box-shadow: 0 2px 5px -2px #7a7a7a;
-  outline: none;
-
-  margin: 0;
-  border: 1px solid #7a7a7a25;
-  border-radius: 0.25rem;
-  padding: 5px 10px;
-
-  
 }
 
 textarea {
   resize: none;
-  box-shadow: 0 2px 5px -2px #7a7a7a;
-  outline: none;
-
-  margin: 0;
-  border: 0.1px solid #7a7a7a25;
-  border-radius: 0.25rem;
-  padding: 5px 10px;
 }
 
 .row {
@@ -137,6 +72,10 @@ textarea {
 
   margin: 0;
   padding: 0;
+
+  &:last-child {
+    margin-right: 0px;
+  }
 }
 
 .column {
@@ -146,6 +85,10 @@ textarea {
 
   margin: 0;
   padding: 0;
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
 }
 
 .liquid {

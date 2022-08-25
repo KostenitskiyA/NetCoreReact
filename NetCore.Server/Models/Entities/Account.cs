@@ -1,4 +1,6 @@
-﻿namespace NetCore.Server.Models
+﻿using NetCore.Server.Models.Entities;
+
+namespace NetCore.Server.Models
 {
     /// <summary>
     /// Аккаунт
@@ -24,6 +26,11 @@
         /// Пользователь аккаунта
         /// </summary>
         public User User { get; set; }
+
+        /// <summary>
+        /// Составная таблица Аккаунты-Аккаунты
+        /// </summary>
+        public IEnumerable<AccountAccount> AccountsAccounts { get; set; }
 
         /// <summary>
         /// Группы аккаунты

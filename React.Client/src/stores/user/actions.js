@@ -18,13 +18,16 @@ export const signin = (data) => {
 export const login = (data) => {
   return async (dispatch) => {
     const responce = await fetch(LOGIN_API, {
-      method: "POST",
+      method: "POST",      
       headers: { "Content-Type": "application/json" },
+      credentials: 'include',
       body: JSON.stringify(data),
     });
 
     if (responce.ok) {
       const json = await responce.json();
+
+      sessionStorage.setItem("Id", json.id);
 
       dispatch({ type: LOGIN, payload: json });
       dispatch({
@@ -46,6 +49,8 @@ export const logout = () => {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
     // });
+
+    sessionStorage.clear();
 
     dispatch({ type: LOGOUT, payload: null });
     // dispatch({

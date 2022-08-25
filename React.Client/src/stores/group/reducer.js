@@ -7,7 +7,7 @@ import {
   DELETE_GROUP,
 } from "../constants.js";
 
-const initialState = { groups: [], currentGroupId: 0 };
+const initialState = { groups: [], currentGroupId: "" };
 
 export const groupReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -26,7 +26,7 @@ export const groupReducer = (state = initialState, action) => {
 
       newGroups.push(action.payload).id;
 
-      return { ...state, groups: newGroups, currentGroupId: action.payload };
+      return { groups: newGroups, currentGroup: action.payload };
     }
 
     // Получение групп аккаунта

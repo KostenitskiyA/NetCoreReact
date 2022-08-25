@@ -5,6 +5,8 @@ import { deleteTodo } from "../stores/todo/actions";
 
 import "../styles/board";
 import "bootstrap-icons/font/bootstrap-icons";
+import Modal from "./Modal";
+import Todo from "./Todo";
 
 class BoardCard extends React.Component {
   constructor(props) {
@@ -12,11 +14,14 @@ class BoardCard extends React.Component {
 
     this.state = {
       isSelected: false,
+      isOpen: false,
     };
 
     this.onDragStart = this.onDragStart.bind(this);
     this.onDragEnd = this.onDragEnd.bind(this);
     this.onDelete = this.onDelete.bind(this);
+
+    this.onToggleModal = this.onToggleModal.bind(this);
   }
 
   onDragStart(e, id) {
@@ -31,6 +36,10 @@ class BoardCard extends React.Component {
 
   onDelete() {
     this.props.deleteTodo(this.props.todo);
+  }
+
+  onToggleModal() {
+    this.setState({ ...this.state, isOpen: !this.state.isOpen });
   }
 
   render() {
@@ -48,6 +57,7 @@ class BoardCard extends React.Component {
         draggable
         onDragStart={(e) => this.onDragStart(e, todo.id)}
         onDragEnd={(e) => this.onDragEnd(e)}
+        onClick={() => this.onToggleModal()}
       >
         <div className="col">
           <div className="tags"></div>
@@ -56,8 +66,16 @@ class BoardCard extends React.Component {
             <div className="date">DATE</div>
             <div className="code">{todo.code}</div>
             <div className="avatar"></div>
-          </div>          
+          </div>
         </div>
+
+        <Modal
+          title={todo.title}
+          isModalOpen={this.state.isOpen}
+          onCloseModal={() => this.onToggleModal()}
+        >
+          <Todo todo={todo} />
+        </Modal>
 
         {/* <div ></div>
         <div className="description">{todo.description}</div>

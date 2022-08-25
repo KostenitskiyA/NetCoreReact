@@ -32,7 +32,7 @@ class BoardColumn extends React.Component {
     var editedTodo = this.props.todos.find((todo) => todo.id == id);
     editedTodo.statusId = this.props.status.id;
     editedTodo.status = null;
-    this.props.editTodo(editedTodo);
+    this.props.updateTodo(editedTodo);
   }
 
   render() {

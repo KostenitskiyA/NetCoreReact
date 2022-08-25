@@ -1,25 +1,91 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
+import { getStatuses } from "../stores/todo/actions";
+import "../styles/style";
+import "../styles/modal";
 
-export const Todo = () => {
-  let { id } = useParams();
-  const todo = useSelector((state) => state.todo.todos.find(todo => todo.id == id));
-  const status = useSelector((state) => state.status.statuses.find(status => status.id == todo.statusId));
+class Todo extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <div className="todo">
-      <div className="title">
-        <input type="text" readOnly="true" value={todo.title} />
-        <input type="text" readOnly="true" value={status.name} />
+  componentDidMount() {
+    this.props.getStatuses();
+  }
+
+  render() {
+    const { todo, statuses } = this.props;
+
+    return (
+      <div className="todo row">
+        <div className="description col w-60">
+          <div className="input">
+            <label className="label">Описание</label>
+            <textarea
+              className="input-textarea"
+              type="textarea"
+              rows="10"
+              value={todo.description}
+            />
+          </div>
+        </div>
+        <div className="details col w-40">
+          <div className="input">
+            <label className="label">Статус</label>
+            <select
+              className="input-select"
+              required
+              value={todo.statusId}
+              onChange={this.onChangeStatus}
+            >
+              {statuses.map((status, key) => (
+                <option key={key} value={status.id}>
+                  {status.name}<i className="bi bi-person-fill"></i>
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="input">
+            <label className="label">Автор</label>
+            {/* <input
+              className="input-text"
+              type="text"
+              readOnly="true"
+              value={this.props.statuses.filter((s) => s.Id == todo.statusId)}
+            /> */}
+          </div>
+          <div className="input">
+            <label className="label">Дата создания</label>
+            <input
+              className="input-date"
+              type="date"
+              readOnly="true"
+              value={todo.createDate}
+            />
+          </div>
+          <div className="input">
+            <label className="label">Дата изменения</label>
+            <input
+              className="input-date"
+              type="date"
+              readOnly="true"
+              value={todo.changeDate}
+            />
+          </div>
+        </div>
       </div>
-      <div className="description">
-        <input type="text" readOnly="true" value={todo.description} />
-      </div>
-      <div className="dates">
-        <input type="date" readOnly="true" defaultValue={new Date(todo.createDate)} />
-        <input type="date" readOnly="true" defaultValue={new Date(todo.changeDate)} />
-      </div>
-    </div>
-  );
+    );
+  }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    statuses: state.todo.statuses,
+  };
+};
+
+const mapDispatchToProps = {
+  getStatuses,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

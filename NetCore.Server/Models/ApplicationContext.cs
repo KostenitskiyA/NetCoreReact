@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetCore.Server.Models.Entities;
 
 namespace NetCore.Server.Models
 {
     public class ApplicationContext : DbContext
     {
         public DbSet<Group> Groups { get; set; }
-              
+
         public DbSet<Account> Accounts { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -14,7 +15,9 @@ namespace NetCore.Server.Models
 
         public DbSet<Todo> Todos { get; set; }
 
-        public DbSet<GroupAccount> GroupsAccounts { get; set; }
+        public DbSet<AccountAccount> GroupsAccounts { get; set; }
+
+        /*public DbSet<GroupAccount> AccountsAccounts { get; set; }*/
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
@@ -25,28 +28,30 @@ namespace NetCore.Server.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var group1 = new Group() { 
-                Id = 1, 
-                Name = "КДСофт", 
-                Code = "kds"                
+            var group1 = new Group()
+            {
+                Id = 1,
+                Name = "КДСофт",
+                Code = "kds"
             };
-            var group2 = new Group() { 
-                Id = 2, 
-                Name = "ГКИнтеграция", 
+            var group2 = new Group()
+            {
+                Id = 2,
+                Name = "ГКИнтеграция",
                 Code = "gki"
             };
-            var groups = new List<Group>() 
-            { 
-                group1, 
-                group2 
+            var groups = new List<Group>()
+            {
+                group1,
+                group2
             };
 
-            var account1 = new Account() 
-            { 
-                Id = 1, 
+            var account1 = new Account()
+            {
+                Id = 1,
                 Name = "Сашка"
             };
-            var account2 = new Account() 
+            var account2 = new Account()
             {
                 Id = 2,
                 Name = "ВлаDick"
@@ -56,11 +61,51 @@ namespace NetCore.Server.Models
                 Id = 3,
                 Name = "Соффка"
             };
-            var accounts = new List<Account>() 
+            var accounts = new List<Account>()
             {
                 account1,
                 account2,
                 account3
+            };
+
+            var accountAccount1 = new AccountAccount()
+            {
+                AccountId = 1,
+                FriendId = 2
+            };
+            var accountAccount2 = new AccountAccount()
+            {
+                AccountId = 2,
+                FriendId = 1
+            };
+            var accountAccount3 = new AccountAccount()
+            {
+                AccountId = 2,
+                FriendId = 3
+            };
+            var accountAccount4 = new AccountAccount()
+            {
+                AccountId = 3,
+                FriendId = 2
+            };
+            var accountAccount5 = new AccountAccount()
+            {
+                AccountId = 1,
+                FriendId = 3
+            };
+            var accountAccount6 = new AccountAccount()
+            {
+                AccountId = 3,
+                FriendId = 1
+            };
+            var accountAccount = new List<AccountAccount>()
+            {
+                accountAccount1,
+                accountAccount2,
+                accountAccount3,
+                accountAccount4,
+                accountAccount5,
+                accountAccount6
             };
 
             var groupAccount1 = new GroupAccount()
@@ -158,7 +203,7 @@ namespace NetCore.Server.Models
                 CreatorId = 2,
                 GroupId = 2,
                 CreateDate = new DateTime(2022, 03, 27),
-                ChangeDate = new DateTime(2022, 03, 27)                
+                ChangeDate = new DateTime(2022, 03, 27)
             };
             var todo3 = new Todo()
             {
@@ -192,10 +237,24 @@ namespace NetCore.Server.Models
 
             modelBuilder.Entity<Group>().HasData(groups);
             modelBuilder.Entity<Account>().HasData(accounts);
+            modelBuilder.Entity<AccountAccount>().HasData(accountAccount);
             modelBuilder.Entity<GroupAccount>().HasData(groupAccount);
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<TodoStatus>().HasData(todoStatuses);
             modelBuilder.Entity<Todo>().HasData(todos);
+
+            /*modelBuilder.Entity<Account>()
+                .HasMany(a => a.AccountsAccounts)
+                .WithMany()
+                .UsingEntity<AccountAccount>(
+                    e => e
+                    .HasOne(ga => ga.Account)
+                    .WithMany(a => a.GroupsAccounts)
+                    .HasForeignKey(ga => ga.AccountId),
+                    e => e
+                    .HasOne(ga => ga.Group)
+                    .WithMany(g => g.GroupsAccounts)
+                    .HasForeignKey(ga => ga.GroupId));*/
 
             modelBuilder.Entity<Group>()
                 .HasMany(g => g.Accounts)

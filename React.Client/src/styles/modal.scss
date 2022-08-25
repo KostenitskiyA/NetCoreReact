@@ -6,14 +6,11 @@
   height: 100%;
 
   .content {
-    width: 100px;
-    height: 100px;
-
     z-index: 1;
     background-color: white;
     box-shadow: 0 2px 5px -2px #7a7a7a;
 
-    margin: 100px auto 0 auto;
+    margin: 100px 10% 0 10%;
     border: 1px solid #7a7a7a25;
     border-radius: 0.5rem;
     padding: 0;
@@ -67,5 +64,29 @@
 
     z-index: -1;
     background-color: #00000050;
+  }
+}
+
+.description {
+  margin-right: 10px;
+}
+
+.todo {
+  .input {
+    display: flex;
+    flex-direction: column;
+    font-family: "Ubuntu Mono";
+
+    margin: 0 0 10px 0;
+    padding: 0;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    label {
+      margin: 0 0 5px 0;
+      padding: 0 0 0 10px;
+    }
   }
 }

@@ -9,56 +9,71 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      image: "",
-    };
-
-    this.imageChange = this.imageChange.bind(this);
+    this.imageUpload = this.imageUpload.bind(this);
     this.avatarChange = this.avatarChange.bind(this);
+    this.deleteAvatar = this.deleteAvatar.bind(this);
   }
 
-  imageChange(e) {
-    const img = URL.createObjectURL(e.target.files[0]);
-    this.setState({ image: img });
-
+  imageUpload(e) {
     const reader = new FileReader();
+
     reader.onloadend = () => {
       this.avatarChange(reader.result);
     };
+
     reader.readAsDataURL(e.target.files[0]);
   }
 
-  avatarChange(img) {
-    this.props.updateAvatar({ accountId: this.props.id, avatar: img });
+  avatarChange(image) {
+    this.props.updateAvatar({ accountId: this.props.user.id, avatar: image });
+  }
+
+  deleteAvatar() {
+    this.props.updateAvatar({ accountId: this.props.user.id, avatar: "" });
   }
 
   render() {
-    const { id, name, isLogin } = this.props.user;
+    const { id, name, avatar, isLogin } = this.props.user;
 
     if (!isLogin) return <Navigate to="/login" />;
 
-    let avatarImg;
+    const avatarImg = avatar ? (
+      <img className="avatar-img" src={avatar} />
+    ) : (
+      <div className="avatar-img">
+        <i className="bi bi-person-fill avatar-icon" />
+      </div>
+    );
 
-    avatarImg =
-      this.state.image == "" ? (
-        <i className="bi bi-person-fill"></i>
-      ) : (
-        <img src={this.state.image} />
-      );
+    const avatarLoaded = avatar != "" ? true : false;
 
     return (
       <div className="wrapper">
         <div className="container">
-          <div className="avatar">{avatarImg}</div>
-          <label className="avatar-change" htmlFor="avatar-input">
-            <i className="bi bi-pencil"></i>
-          </label>
+          <div className="col">
+            <div className="avatar">{avatarImg}</div>
+            <div className="row">
+              <button disabled={avatarLoaded}>
+                <label htmlFor="avatar-input">
+                  <i className="bi bi-plus-lg"></i>
+                </label>
+              </button>
+              <button
+                disabled={!avatarLoaded}
+                onClick={this.deleteAvatar}
+              >
+                <i className="bi bi-trash"></i>
+              </button>
+            </div>
+          </div>
+
           <input
             type="file"
             id="avatar-input"
-            onChange={(e) => this.imageChange(e)}
+            onChange={(e) => this.imageUpload(e)}
           />
         </div>
+
         <div className="container">
           <div className="col">
             <div className="input-form">
@@ -69,11 +84,11 @@ class Profile extends React.Component {
               <label className="input-label">Name</label>
               <input type="text" readOnly value={name}></input>
             </div>
-            <div className="input-form">
+            {/* <div className="input-form">
               <Link to="settings">
                 <button>Change password</button>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

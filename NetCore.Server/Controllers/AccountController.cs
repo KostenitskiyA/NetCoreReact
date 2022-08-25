@@ -28,7 +28,7 @@ namespace NetCore.Server.Controllers
             try
             {
                 _logger.LogInformation("Запрос GetAccount получен");
-
+                
                 var result = await _accountProvider.GetAccountAsync(id);
                 var responce = AutoMapperUtility<Account, GetAccountResponce>.Map(result);
                                

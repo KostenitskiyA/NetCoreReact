@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { changeCurrentGroup } from "../stores/group/actions";
 
@@ -9,24 +10,20 @@ import "bootstrap-icons/font/bootstrap-icons";
 class GroupCard extends React.Component {
   constructor(props) {
     super(props);
-
-    this.onOpenGroup = this.onOpenGroup.bind(this);
-  }
-
-  onOpenGroup(id) {    
-    this.props.changeCurrentGroup(id);
   }
 
   render() {
     const { group } = this.props;
 
     return (
-      <div className="card" onClick={() => this.onOpenGroup(group.id)}>
-        <div className="col">
-          <div className="name">{group.name}</div>
-          <div className="code">{group.code}</div>
+      <Link to={"/group/" + group.id}>
+        <div className="card">
+          <div className="col">
+            <div className="name">{group.name}</div>
+            <div className="code">{group.code}</div>
+          </div>
         </div>
-      </div>
+      </Link>
     );
   }
 }
@@ -36,7 +33,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  changeCurrentGroup
+  changeCurrentGroup,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupCard);

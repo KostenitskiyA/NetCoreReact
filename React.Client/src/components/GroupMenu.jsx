@@ -1,44 +1,52 @@
 import React from "react";
+import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
-import { getStatuses, getTodosByGroup } from "../stores/todo/actions";
 import "../styles/groupMenu";
 import "bootstrap-icons/font/bootstrap-icons";
-import { Link, Navigate } from "react-router-dom";
 
 class GroupMenu extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {}
-
   render() {
-    const currentGroupId = this.props.currentGroupId;
-    const { id, name, isLogin } = this.props.user;
+    //const user = this.props.user;
+    //const group = this.props.group;
 
-    if (!isLogin) return <Navigate to="/login" />;
-
-    const sidebar =
-      currentGroupId != 0 ? (
-        <div className="menu col">
-          <Link to="/board">Todo Board</Link>
-          <Link to="/todotable">Todo Table</Link>
-          <Link to="/createTodo">Create Todo</Link>
-        </div>
-      ) : null;
-
-    return sidebar;
+    return (
+      <div className="menu col">
+        <ul>
+          {/* <li>
+            <span>{group.name}</span>
+          </li> */}
+          <li>
+            <Link to="board">
+              <i className="bi bi-kanban" />
+              <span>Board</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="todotable">
+              <i className="bi bi-table" />
+              <span>Table</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="createTodo">
+              <i className="bi bi-clipboard-plus" />
+              <span>Create todo</span>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: {
-      id: state.user.id,
-      name: state.user.name,
-      isLogin: state.user.isLogin,
-    },
-    currentGroupId: state.group.currentGroupId,
+    user: state.user,
+    group: state.group.currentGroup,
   };
 };
 

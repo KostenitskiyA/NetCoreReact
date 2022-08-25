@@ -31,6 +31,28 @@ namespace NetCore.Server.Services
             }
         }
 
+        public async Task<IEnumerable<Account>> GetAccountsByFriendsAsync(int id)
+        {
+            try
+            {
+                var foundGroup = await _context.Groups
+                    .Include(g => g.Accounts)
+                    .SingleOrDefaultAsync(g => g.Id == id);
+
+                if (foundGroup == null)
+                    throw new Exception("Группа не найдена");
+
+                if (foundGroup.Accounts == null)
+                    throw new Exception("Аккаунты не найдены");
+
+                return foundGroup.Accounts;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
         {
             try
@@ -64,6 +86,7 @@ namespace NetCore.Server.Services
                     throw new Exception("Аккаунт не найден");
 
                 foundAccount.Avatar = avatar;
+
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

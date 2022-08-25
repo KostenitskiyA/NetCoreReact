@@ -1,3 +1,5 @@
+@import "./style";
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -11,10 +13,11 @@
     align-items: center;
     background-color: rgb(255, 255, 255);
 
+    box-shadow: 0 2px 5px -2px #7a7a7a;
+
     margin: 0 0 10px 0;
     border: none;
-    border-radius: 0.25rem;
-    //box-shadow: 0 2px 5px -2px #7a7a7a;
+    border-radius: 0.5rem;    
     padding: 15px;
 
     &:last-child {
@@ -22,79 +25,57 @@
     }
 
     .avatar {
-      margin: 0;
-      border: 0.1px solid #7a7a7a25;
+      margin: 0 0 5px 0;
+      border: 1px solid #7a7a7a25;
       border-radius: 100%;
+      padding: 0;
       box-shadow: 0 2px 5px -2px #7a7a7a;
-      outline: none;
-      padding: 5px 10px;
 
-      img {        
+      .avatar-img {
         width: 80px;
         height: 80px;
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         border-radius: 100%;
-      }
-    }
-
-    .avatar-change {
-      position: absolute;
-      display: flex;
-      background-color: #7a7a7a25;
-
-      box-sizing: content-box;
-
-      margin: 0;
-      border-radius: 100%;
-      outline: none;
-      padding: 5px 10px;
-
-      opacity: 0;
-
-      &:hover {
-        opacity: 100%;
-      }
+      }      
     }
 
     #avatar-input {
       display: none;
     }
 
-    .col {
+    .input-form {
       display: flex;
       flex-direction: column;
-
-      .input-form {
-        display: flex;
-        flex-direction: column;
-        margin: 0 0 10px 0;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        .input-label {
-          color: rgb(49, 49, 49);
-          margin: 0 0 5px 0;
-        }
-
-        input {
-          margin: 0;
-          border: 0.1px solid #7a7a7a25;
-          border-radius: 0.25rem;
-          box-shadow: 0 2px 5px -2px #7a7a7a;
-          outline: none;
-          padding: 5px 10px;
-        }
-      }
+      margin: 0 0 10px 0;
     }
   }
 }
 
-.bi-person-fill {
+.avatar-icon {
   font-size: 58px;
 }
 
-.bi-pencil {
-  font-size: 58px;
+button {
+  font-family: "Ubuntu Mono";
+
+  box-shadow: 0 2px 5px -2px #7a7a7a;
+  outline: none;
+
+  margin: 0 5px 0 0;
+  border: 0.1px solid #7a7a7a25;
+  border-radius: 0.25rem;
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: aqua;
+  }
+
+  &:active {
+    background-color: rgb(0, 255, 42);
+    transform: translateY(1px);
+  }
 }

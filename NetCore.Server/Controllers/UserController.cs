@@ -41,6 +41,10 @@ namespace NetCore.Server.Controllers
                 _logger.LogInformation("Запрос Signin получен");
 
                 var user = AutoMapperUtility<SignInRequest, User>.Map(request);
+                var account = AutoMapperUtility<SignInRequest, Account>.Map(request);
+
+                user.Account = account;
+
                 var result = await _userProvider.SignInAsync(user);
                 var responce = AutoMapperUtility<Account, SignInResponce>.Map(result);
 
@@ -59,7 +63,6 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("login")]
-        // TODO: Доработать
         public async Task<ActionResult<LogInResponce>> LogIn([FromBody] LogInRequest request)
         {
             try
@@ -86,7 +89,7 @@ namespace NetCore.Server.Controllers
 
                 /*await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);*/
 
-                HttpContext.Response.Cookies.Append("124214", "214");
+                HttpContext.Response.Cookies.Append("124214", "214", new CookieOptions() { SameSite = SameSiteMode.None, Domain = "http://localhost:5500", Secure = false });
 
                 var claims = new List<Claim>
                 {
@@ -115,7 +118,6 @@ namespace NetCore.Server.Controllers
 
         [HttpPost]
         [Route("logout")]
-        // TODO: Доработать
         public async Task<ActionResult> LogOut()
         {
             try

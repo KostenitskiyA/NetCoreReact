@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../stores/user/actions";
-import "../styles/style";
+import "../styles/navigation";
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -19,19 +19,26 @@ class Navigation extends React.Component {
   render() {
     const { id, name, avatar, isLogin } = this.props.user;
 
-    let items;
+    const avatarImg = avatar ? (
+      <img src={avatar} />
+    ) : (
+      <i className="bi bi-person-fill"></i>
+    );
+
+    var items;
 
     isLogin
       ? (items = (
           <React.Fragment>
             <li className="item">
-              <button className="link" onClick={this.onLogout}>
+              <a className="link" onClick={this.onLogout}>
                 Logout
-              </button>
+              </a>
             </li>
             <li className="item">
               <Link className="link" to={"/profile/" + id}>
-                {name}<img className="avatar-img" src={avatar} />
+                {name}
+                <div className="avatar-img">{avatarImg}</div>
               </Link>
             </li>
           </React.Fragment>
@@ -73,12 +80,7 @@ class Navigation extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: {
-      id: state.user.id,
-      name: state.user.name,
-      avatar: state.user.avatar,
-      isLogin: state.user.isLogin,
-    },
+    user: state.user
   };
 };
 

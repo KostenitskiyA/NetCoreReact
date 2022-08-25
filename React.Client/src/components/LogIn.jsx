@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login } from "../stores/user/actions";
 import { Navigate } from "react-router-dom";
+
+import { login } from "../stores/user/actions";
+
 import "../styles/loginForm";
 
 class LogIn extends React.Component {
@@ -38,7 +40,7 @@ class LogIn extends React.Component {
   }
 
   render() {
-    const { isLogin } = this.props;
+    const { isLogin } = this.props.user;
 
     if (isLogin) return <Navigate to="/" />;
 
@@ -68,9 +70,7 @@ class LogIn extends React.Component {
           </div>
         </div>
         <div className="button">
-          <button type="submit">
-            Login
-          </button>
+          <button type="submit">Login</button>
         </div>
       </form>
     );
@@ -79,9 +79,7 @@ class LogIn extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.user.userId,
-    userName: state.user.userName,
-    isLogin: state.user.isLogin,
+    user: state.user,
   };
 };
 

@@ -15,6 +15,13 @@ namespace NetCore.Server.Interfaces
         public Task<Account> GetAccountAsync(int id);
 
         /// <summary>
+        /// Получение аккаунтов друзей
+        /// </summary>
+        /// <param name="id">Идентификатор аккаунта</param>
+        /// <returns>Коллекция аккаунтов друзей</returns>
+        public Task<IEnumerable<Account>> GetAccountsByFriendsAsync(int id);
+
+        /// <summary>
         /// Получение аккаунтов группы
         /// </summary>
         /// <param name="id">Идентификатор группы</param>
