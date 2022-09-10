@@ -1,4 +1,6 @@
-﻿namespace NetCore.Server.Models.Requests
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NetCore.Server.Models.Requests
 {
     /// <summary>
     /// Запрос входа пользователя

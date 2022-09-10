@@ -15,9 +15,9 @@ namespace NetCore.Server.Models
 
         public DbSet<Todo> Todos { get; set; }
 
-        public DbSet<AccountAccount> GroupsAccounts { get; set; }
+        /*public DbSet<FriendsRelationship> FriendsRelationships { get; set; }*/
 
-        /*public DbSet<GroupAccount> AccountsAccounts { get; set; }*/
+        public DbSet<GroupAccount> GroupsAccounts { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
@@ -68,44 +68,44 @@ namespace NetCore.Server.Models
                 account3
             };
 
-            var accountAccount1 = new AccountAccount()
+            var friendsRelationship1 = new FriendsRelationship()
             {
                 AccountId = 1,
                 FriendId = 2
             };
-            var accountAccount2 = new AccountAccount()
+            var friendsRelationship2 = new FriendsRelationship()
             {
                 AccountId = 2,
                 FriendId = 1
             };
-            var accountAccount3 = new AccountAccount()
+            var friendsRelationship3 = new FriendsRelationship()
             {
                 AccountId = 2,
                 FriendId = 3
             };
-            var accountAccount4 = new AccountAccount()
+            var friendsRelationship4 = new FriendsRelationship()
             {
                 AccountId = 3,
                 FriendId = 2
             };
-            var accountAccount5 = new AccountAccount()
+            var friendsRelationship5 = new FriendsRelationship()
             {
                 AccountId = 1,
                 FriendId = 3
             };
-            var accountAccount6 = new AccountAccount()
+            var friendsRelationship6 = new FriendsRelationship()
             {
                 AccountId = 3,
                 FriendId = 1
             };
-            var accountAccount = new List<AccountAccount>()
+            var friendsRelationship = new List<FriendsRelationship>()
             {
-                accountAccount1,
-                accountAccount2,
-                accountAccount3,
-                accountAccount4,
-                accountAccount5,
-                accountAccount6
+                friendsRelationship1,
+                friendsRelationship2,
+                friendsRelationship3,
+                friendsRelationship4,
+                friendsRelationship5,
+                friendsRelationship6
             };
 
             var groupAccount1 = new GroupAccount()
@@ -237,7 +237,7 @@ namespace NetCore.Server.Models
 
             modelBuilder.Entity<Group>().HasData(groups);
             modelBuilder.Entity<Account>().HasData(accounts);
-            modelBuilder.Entity<AccountAccount>().HasData(accountAccount);
+            /*modelBuilder.Entity<FriendsRelationship>().HasData(friendsRelationship);*/
             modelBuilder.Entity<GroupAccount>().HasData(groupAccount);
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<TodoStatus>().HasData(todoStatuses);
@@ -245,16 +245,27 @@ namespace NetCore.Server.Models
 
             /*modelBuilder.Entity<Account>()
                 .HasMany(a => a.AccountsAccounts)
-                .WithMany()
-                .UsingEntity<AccountAccount>(
+                .WithOne(aa => aa.Account)
+                .HasForeignKey(a => a.AccountId);
+
+            modelBuilder.Entity<FriendsRelationship>()
+                .HasOne(a => a.Friend)
+                .WithMany(f => f.AccountsAccounts)
+                .HasForeignKey(a => a.FriendId);*/
+
+            /*modelBuilder.Entity<Account>()
+                .HasMany(a => a.Accounts)
+                .WithMany(f => f.Accounts)
+                .UsingEntity<FriendsRelationship>(
                     e => e
-                    .HasOne(ga => ga.Account)
-                    .WithMany(a => a.GroupsAccounts)
-                    .HasForeignKey(ga => ga.AccountId),
+                    .HasOne(a => a.Account)
+                    .WithMany(b => b.Friends)
+                    .HasForeignKey(fr => fr.AccountId),
                     e => e
-                    .HasOne(ga => ga.Group)
-                    .WithMany(g => g.GroupsAccounts)
-                    .HasForeignKey(ga => ga.GroupId));*/
+                    .HasOne(a => a.Account)
+                    .WithMany(b => b.Friends)
+                    .HasForeignKey(fr => fr.FriendId)
+                );*/
 
             modelBuilder.Entity<Group>()
                 .HasMany(g => g.Accounts)

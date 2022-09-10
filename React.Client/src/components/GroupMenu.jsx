@@ -37,6 +37,24 @@ class GroupMenu extends React.Component {
               <span>Create todo</span>
             </Link>
           </li>
+          <li>
+            <Link to="createTodo">
+              <i className="bi bi-pie-chart-fill" />
+              <span>Statistics</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="createTodo">
+              <i className="bi bi-people-fill" />
+              <span>Users</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="createTodo">
+              <i className="bi bi-trash3" />
+              <span>Delete group</span>
+            </Link>
+          </li>
         </ul>
       </div>
     );

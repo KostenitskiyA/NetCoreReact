@@ -16,7 +16,7 @@ class GroupCard extends React.Component {
     const { group } = this.props;
 
     return (
-      <Link to={"/group/" + group.id}>
+      <Link to={"/group/" + group.id + "/board"}>
         <div className="card">
           <div className="col">
             <div className="name">{group.name}</div>

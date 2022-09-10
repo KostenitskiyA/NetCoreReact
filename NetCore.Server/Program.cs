@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:5500");
         }));
 
-builder.Services.ConfigureApplicationCookie(o => { o.Cookie.SameSite = SameSiteMode.None; o.Cookie.Domain = "http://localhost:5500"; o.Cookie.SecurePolicy = CookieSecurePolicy.None; });
+builder.Services.ConfigureApplicationCookie(o => { o.Cookie.SameSite = SameSiteMode.Strict; o.Cookie.Domain = "localhost"; o.Cookie.SecurePolicy = CookieSecurePolicy.None; });
 
 var connection = builder.Configuration.GetConnectionString("DefaultDatabase");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection, options => options.EnableRetryOnFailure()));
@@ -33,8 +33,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
         options.SlidingExpiration = true;
         options.AccessDeniedPath = "/Forbidden/";
-        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SameSite = SameSiteMode.Strict;
         options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+        options.Cookie.Domain = "localhost";
     });
 
 builder.Services.AddControllers();
@@ -60,8 +61,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
-    MinimumSameSitePolicy = SameSiteMode.None,
-    HttpOnly = HttpOnlyPolicy.None,
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always,
+    // Always при HTTPS 
     Secure = CookieSecurePolicy.None
 });
 

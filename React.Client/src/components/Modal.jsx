@@ -12,7 +12,7 @@ class Modal extends React.Component {
   render() {
     var title = this.props.title;
     var isOpen = this.props.isModalOpen;
-    var onClose = this.props.onModalClose;
+    var onClose = this.props.onCloseModal;
 
     if (!isOpen) return null;
 

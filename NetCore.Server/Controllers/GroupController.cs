@@ -113,7 +113,7 @@ namespace NetCore.Server.Controllers
             {
                 _logger.LogInformation("Запрос UpdateGroup получен");
 
-                var group = AutoMapperUtility<UpdateGroupRequest, Group>.Map(request);
+                var group = AutoMapperUtility<UpdateGroupRequest, Group>.Map(request);                               
                 var result = await _groupService.UpdateGroupAsync(group);
                 var responce = AutoMapperUtility<Group, UpdateGroupResponce>.Map(result);
 

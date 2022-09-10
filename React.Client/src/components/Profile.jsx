@@ -58,10 +58,7 @@ class Profile extends React.Component {
                   <i className="bi bi-plus-lg"></i>
                 </label>
               </button>
-              <button
-                disabled={!avatarLoaded}
-                onClick={this.deleteAvatar}
-              >
+              <button disabled={!avatarLoaded} onClick={this.deleteAvatar}>
                 <i className="bi bi-trash"></i>
               </button>
             </div>

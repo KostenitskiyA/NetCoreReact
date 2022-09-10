@@ -1,3 +1,9 @@
+@media (min-width: 1001px) {
+  .menu {
+    min-width: 150px;
+  }
+}
+
 .menu {
   display: flex;
   flex-direction: column;
@@ -12,7 +18,7 @@
   margin: 0;
   border: 1px solid #7a7a7a25;
   border-radius: 0.5rem;
-  padding: 0;
+  padding: 0;  
 
   ul {
     width: 100%;
@@ -29,7 +35,7 @@
       &:hover {
         background-color: #7a7a7a25;
       }
-    }    
+    }
   }
 
   a {
@@ -42,6 +48,12 @@
 
     i {
       margin-right: 5px;
+    }
+
+    @media (max-width: 1000px) {
+      span {
+        display: none;
+      }
     }
   }
 }
