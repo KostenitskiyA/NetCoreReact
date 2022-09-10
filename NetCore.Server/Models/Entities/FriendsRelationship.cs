@@ -1,9 +1,9 @@
 ﻿namespace NetCore.Server.Models.Entities
 {
     /// <summary>
-    /// Аккаунт-Аккаунт
+    /// Дружеские отношения
     /// </summary>
-    public class AccountAccount
+    public class FriendsRelationship
     {
         /// <summary>
         /// Идентификатор аккаунта

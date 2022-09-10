@@ -43,7 +43,7 @@ namespace NetCore.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+       
         [HttpGet]
         [Route("accounts/{id}")]
         public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByGroup(int id)
@@ -59,6 +59,84 @@ namespace NetCore.Server.Controllers
                     newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
 
                 _logger.LogInformation("Запрос GetAccountsByGroup обработан");
+
+                return Ok(newResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /*[HttpGet]
+        [Route("searchByName/{name}")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByName(string name)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос GetAccountsByGroup получен");
+
+                var result = await _accountProvider.GetAccountsByGroupAsync(id);
+                var newResult = new List<GetAccountResponce>();
+
+                foreach (var account in result)
+                    newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
+
+                _logger.LogInformation("Запрос GetAccountsByGroup обработан");
+
+                return Ok(newResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }*/
+
+        [HttpGet]
+        [Route("searchByName/{name}")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> SearchAccountsByNameAsync(string name)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос SearchAccountsByNameAsync получен");
+
+                var result = await _accountProvider.SearchAccountsByNameAsync(name);
+                var newResult = new List<GetAccountResponce>();
+
+                foreach (var account in result)
+                    newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
+
+                _logger.LogInformation("Запрос SearchAccountsByNameAsync обработан");
+
+                return Ok(newResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("searchByName/{group}/{name}")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> SearchAccountsByNameAsync(string group, string name)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос SearchAccountsByNameAsync получен");
+
+                var result = await _accountProvider.SearchAccountsByNameAsync(group, name);
+                var newResult = new List<GetAccountResponce>();
+
+                foreach (var account in result)
+                    newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
+
+                _logger.LogInformation("Запрос SearchAccountsByNameAsync обработан");
 
                 return Ok(newResult);
             }

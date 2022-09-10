@@ -1,6 +1,16 @@
-import { SIGNIN_API, LOGIN_API, LOGOUT_API, UPDATE_ACCOUNT_AVATAR_API } from "../api.js";
+import {
+  SIGNIN_API,
+  LOGIN_API,
+  LOGOUT_API,
+  UPDATE_ACCOUNT_AVATAR_API,
+} from "../api.js";
 
-import { LOGIN, LOGOUT, ADD_NOTIFICATION, UPDATE_ACCOUNT_AVATAR } from "../constants.js";
+import {
+  LOGIN,
+  LOGOUT,
+  ADD_NOTIFICATION,
+  UPDATE_ACCOUNT_AVATAR,
+} from "../constants.js";
 
 export const signin = (data) => {
   return async (dispatch) => {
@@ -18,9 +28,9 @@ export const signin = (data) => {
 export const login = (data) => {
   return async (dispatch) => {
     const responce = await fetch(LOGIN_API, {
-      method: "POST",      
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: 'include',
+      credentials: "include",
       body: JSON.stringify(data),
     });
 
@@ -35,6 +45,7 @@ export const login = (data) => {
         payload: { title: "Вход", description: "Чего вы пришли нахуй" },
       });
     } else {
+      responce.json().then(error => console.log(error.errors));
       dispatch({
         type: ADD_NOTIFICATION,
         payload: { title: "Ошибка входа", description: responce.statusText },

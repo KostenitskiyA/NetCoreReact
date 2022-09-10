@@ -1,4 +1,5 @@
 .group_wrapper {
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -7,6 +8,7 @@
   align-items: flex-start;
 
   .sidebar {
+    margin-right: 10px;
   }
 
   .wrapper {

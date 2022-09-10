@@ -30,17 +30,13 @@ body {
   align-items: flex-start;
 
   margin: 0;
-  padding: 0 5%;
+  padding: 0 10%;
 }
 
-.sidebar {
-  min-width: 150px;
-
-  padding: 0 5px;
-}
-
-.content {
-  padding: 0 5px;
+@media (max-width: 1000px) {
+  .main {
+    padding: 0 10px;
+  }
 }
 
 input[type="text"],

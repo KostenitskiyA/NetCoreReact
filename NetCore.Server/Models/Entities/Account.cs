@@ -28,11 +28,6 @@ namespace NetCore.Server.Models
         public User User { get; set; }
 
         /// <summary>
-        /// Составная таблица Аккаунты-Аккаунты
-        /// </summary>
-        public IEnumerable<AccountAccount> AccountsAccounts { get; set; }
-
-        /// <summary>
         /// Группы аккаунты
         /// </summary>
         public IEnumerable<Group> Groups { get; set; }

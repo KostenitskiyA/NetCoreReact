@@ -29,22 +29,20 @@ class App extends React.Component {
         <Navigation />
 
         <div className="main">
-          <div className="content liquid">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<LogIn />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/profile/:id" element={<Profile />} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/profile/:id" element={<Profile />} />
 
-              <Route path="/group/:id" element={<Group />}>
-                <Route path="board" element={<Board />} />
-                <Route path="todotable" element={<TodoTable />} />
-                <Route path="createTodo" element={<TodoForm />} />
-              </Route>
+            <Route path="/group/:id" element={<Group />}>
+              <Route path="board" element={<Board />} />
+              <Route path="todotable" element={<TodoTable />} />
+              <Route path="createTodo" element={<TodoForm />} />
+            </Route>
 
-              <Route path="/createGroup" element={<GroupForm />} />
-            </Routes>
-          </div>
+            <Route path="/createGroup" element={<GroupForm />} />
+          </Routes>
         </div>
 
         {/* <NotificationContainer /> */}

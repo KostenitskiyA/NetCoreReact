@@ -52,32 +52,24 @@ class BoardCard extends React.Component {
     //const date = day + " " + month + " " + year;
 
     return (
-      <div
-        className={className}
-        draggable
-        onDragStart={(e) => this.onDragStart(e, todo.id)}
-        onDragEnd={(e) => this.onDragEnd(e)}
-        onClick={() => this.onToggleModal()}
-      >
-        <div className="col">
-          <div className="tags"></div>
-          <div className="title">{todo.title}</div>
-          <div className="row">
-            <div className="date">DATE</div>
-            <div className="code">{todo.code}</div>
-            <div className="avatar"></div>
-          </div>
-        </div>
-
-        <Modal
-          title={todo.title}
-          isModalOpen={this.state.isOpen}
-          onCloseModal={() => this.onToggleModal()}
+      <React.Fragment>
+        <div
+          className={className}
+          draggable
+          onDragStart={(e) => this.onDragStart(e, todo.id)}
+          onDragEnd={(e) => this.onDragEnd(e)}
+          onClick={() => this.onToggleModal()}
         >
-          <Todo todo={todo} />
-        </Modal>
-
-        {/* <div ></div>
+          <div className="col">
+            <div className="tags"></div>
+            <div className="title">{todo.title}</div>
+            <div className="row">
+              <div className="date">DATE</div>
+              <div className="code">{todo.code}</div>
+              <div className="avatar"></div>
+            </div>
+          </div>
+          {/* <div ></div>
         <div className="description">{todo.description}</div>
         <div className="dates">
           <div className="date">            
@@ -89,7 +81,15 @@ class BoardCard extends React.Component {
         <button onClick={this.onDelete}>
           <i className="bi bi-x" />
         </button> */}
-      </div>
+        </div>
+        <Modal
+          title={todo.title}
+          isModalOpen={this.state.isOpen}
+          onCloseModal={this.onToggleModal}
+        >
+          <Todo todo={todo} />
+        </Modal>
+      </React.Fragment>
     );
   }
 }

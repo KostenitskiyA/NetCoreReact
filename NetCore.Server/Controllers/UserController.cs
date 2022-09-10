@@ -89,7 +89,7 @@ namespace NetCore.Server.Controllers
 
                 /*await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);*/
 
-                HttpContext.Response.Cookies.Append("124214", "214", new CookieOptions() { SameSite = SameSiteMode.None, Domain = "http://localhost:5500", Secure = false });
+                HttpContext.Response.Cookies.Append("124214", "214", new CookieOptions() { SameSite = SameSiteMode.None, Domain = "localhost", Secure = false, HttpOnly = true });
 
                 var claims = new List<Claim>
                 {
