@@ -32,13 +32,18 @@ namespace NetCore.Server.Controllers
             _userProvider = userProvider;
         }
 
+        /// <summary>
+        /// Регистрация пользователя
+        /// </summary>
+        /// <param name="request">Запрос регистрации пользователя</param>
+        /// <returns>Авторизированный пользователь</returns>
         [HttpPost]
         [Route("signin")]
-        public async Task<ActionResult<SignInResponce>> SignIn([FromBody] SignInRequest request)
+        public async Task<ActionResult<SignInResponce>> SignInAsync([FromBody] SignInRequest request)
         {
             try
             {
-                _logger.LogInformation("Запрос Signin получен");
+                _logger.LogInformation("Запрос SignInAsync получен");
 
                 var user = AutoMapperUtility<SignInRequest, User>.Map(request);
                 var account = AutoMapperUtility<SignInRequest, Account>.Map(request);
@@ -48,7 +53,7 @@ namespace NetCore.Server.Controllers
                 var result = await _userProvider.SignInAsync(user);
                 var responce = AutoMapperUtility<Account, SignInResponce>.Map(result);
 
-                _logger.LogInformation("Запрос Signin обработан");
+                _logger.LogInformation("Запрос SignInAsync обработан");
 
 
                 return Ok(responce);
@@ -61,22 +66,27 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="request">Запрос авторизации пользователя</param>
+        /// <returns>Авторизированный пользователь</returns>
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<LogInResponce>> LogIn([FromBody] LogInRequest request)
+        public async Task<ActionResult<LogInResponce>> LogInAsync([FromBody] LogInRequest request)
         {
             try
             {
-                _logger.LogInformation("Запрос Login получен");
+                _logger.LogInformation("Запрос LogInAsync получен");
 
                 var user = AutoMapperUtility<LogInRequest, User>.Map(request);
                 var result = await _userProvider.LogInAsync(user);
                 var responce = AutoMapperUtility<Account, LogInResponce>.Map(result);
 
-                /*var authParams = _authOptions.Value;
+                var authParams = _authOptions.Value;
                 var securityKey = authParams.GetSymmetricSecurityKey();
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.Name, result.Name) };
+                var claims = new List<Claim> { new Claim("Id", result.Id.ToString()), new Claim(JwtRegisteredClaimNames.Name, result.Name) };
                 var token = new JwtSecurityToken(
                     issuer: authParams.Issuer,
                     audience: authParams.Audience,
@@ -84,27 +94,11 @@ namespace NetCore.Server.Controllers
                     expires: DateTime.Now.AddSeconds(authParams.TokenLifetime),
                     signingCredentials: credentials);
 
-                var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);*/
-                //HttpContext.Response.Cookies.Append("Token", generatedToken);
+                var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-                /*await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, generatedToken);*/
+                responce.Token = generatedToken;
 
-                HttpContext.Response.Cookies.Append("124214", "214", new CookieOptions() { SameSite = SameSiteMode.None, Domain = "localhost", Secure = false, HttpOnly = true });
-
-                var claims = new List<Claim>
-                {
-                    new Claim("Id", responce.Id.ToString()),
-                    new Claim(ClaimTypes.Name, responce.Name)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity));
-
-                _logger.LogInformation("Запрос Login обработан");
+                _logger.LogInformation("Запрос LogInAsync обработан");
 
                 return Ok(responce);
             }
@@ -116,17 +110,21 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Деавторизация пользователя
+        /// </summary>
+        /// <returns>Результат выполнения</returns>
         [HttpPost]
         [Route("logout")]
-        public async Task<ActionResult> LogOut()
+        public async Task<ActionResult> LogOutAsync()
         {
             try
             {
-                _logger.LogInformation("Запрос Logout получен");
+                _logger.LogInformation("Запрос LogOutAsync получен");
 
                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-                _logger.LogInformation("Запрос Logout обработан");
+                _logger.LogInformation("Запрос LogOutAsync обработан");
 
                 return Redirect("");
             }

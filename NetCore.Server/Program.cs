@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Configurations;
 using NetCore.Server.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,15 +22,35 @@ builder.Services.AddCors(options =>
             .WithOrigins("http://localhost:5500");
         }));
 
-builder.Services.ConfigureApplicationCookie(o => { o.Cookie.SameSite = SameSiteMode.Strict; o.Cookie.Domain = "localhost"; o.Cookie.SecurePolicy = CookieSecurePolicy.None; });
+builder.Services.ConfigureApplicationCookie(o => { 
+    o.Cookie.SameSite = SameSiteMode.Strict; 
+    o.Cookie.Domain = "localhost"; 
+    o.Cookie.SecurePolicy = CookieSecurePolicy.None; 
+});
 
 var connection = builder.Configuration.GetConnectionString("DefaultDatabase");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection, options => options.EnableRetryOnFailure()));
 
-/*var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
-builder.Services.Configure<AuthOptions>(authOptionsConfiguration);*/
+var authOptionsConfiguration = builder.Configuration.GetSection("Auth");
+builder.Services.Configure<AuthOptions>(authOptionsConfiguration);
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+            {
+            ValidateIssuer = true,
+            ValidIssuer = "Server",
+            ValidateAudience = true,
+            ValidAudience = "Server",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("SomebodyOnceToldMeTheWorldIsGonnaRollMe")),
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+        };
+    });
+
+/*builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
@@ -36,7 +59,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SameSite = SameSiteMode.Strict;
         options.Cookie.SecurePolicy = CookieSecurePolicy.None;
         options.Cookie.Domain = "localhost";
-    });
+    });*/
 
 builder.Services.AddControllers();
 

@@ -44,9 +44,9 @@ class GroupMenu extends React.Component {
             </Link>
           </li>
           <li>
-            <Link to="createTodo">
+            <Link to="members">
               <i className="bi bi-people-fill" />
-              <span>Users</span>
+              <span>Members</span>
             </Link>
           </li>
           <li>

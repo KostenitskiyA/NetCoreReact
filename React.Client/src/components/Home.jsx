@@ -10,11 +10,7 @@ class Home extends React.Component {
     super(props);
   }
 
-  render() {
-    const { isLogin } = this.props;
-
-    if (!isLogin) return <Navigate to="/login" />;
-    
+  render() {    
     return (
       <GroupСarousel />
     );

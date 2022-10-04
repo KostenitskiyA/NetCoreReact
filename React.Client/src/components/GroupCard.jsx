@@ -16,7 +16,7 @@ class GroupCard extends React.Component {
     const { group } = this.props;
 
     return (
-      <Link to={"/group/" + group.id + "/board"}>
+      <Link to={"/group/" + group.id + "/board"} onClick={() => this.props.changeCurrentGroup(group.id)}>
         <div className="card">
           <div className="col">
             <div className="name">{group.name}</div>
@@ -29,7 +29,8 @@ class GroupCard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+  };
 };
 
 const mapDispatchToProps = {

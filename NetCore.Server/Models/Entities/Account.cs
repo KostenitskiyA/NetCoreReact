@@ -28,7 +28,12 @@ namespace NetCore.Server.Models
         public User User { get; set; }
 
         /// <summary>
-        /// Группы аккаунты
+        /// Дружеские отношения аккаунта
+        /// </summary>
+        public IEnumerable<FriendsRelationship> FriendsRelationships { get; set; }
+
+        /// <summary>
+        /// Группы аккаунта
         /// </summary>
         public IEnumerable<Group> Groups { get; set; }
 

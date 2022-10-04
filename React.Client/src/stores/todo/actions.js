@@ -24,7 +24,7 @@ export const getStatuses = () => {
   return async (dispatch) => {
     const responce = await fetch(GET_STATUSES_API, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
     });
 
     const json = await responce.json();

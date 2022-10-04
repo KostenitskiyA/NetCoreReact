@@ -31,27 +31,32 @@ namespace NetCore.Server.Services
             }
         }
 
-        /*public async Task<IEnumerable<Account>> GetAccountsByFriendsAsync(int id)
+        public async Task<IEnumerable<Account>> GetFriendsByAccountAsync(int id)
         {
             try
             {
-                var foundGroup = await _context.Groups
-                    .Include(g => g.Accounts)
-                    .SingleOrDefaultAsync(g => g.Id == id);
+                var foundFriends = await _context.FriendsRelationships
+                    .Where(f => f.AccountId == id)
+                    .Join(_context.Accounts,
+                        f => f.FriendId,
+                        a => a.Id,
+                        (f, a) => new Account() { 
+                            Id = a.Id, 
+                            Name = a.Name, 
+                            Avatar = a.Avatar 
+                        })
+                    .ToListAsync();
 
-                if (foundGroup == null)
-                    throw new Exception("Группа не найдена");
+                if (foundFriends == null)
+                    throw new Exception("Друзья не найдены");
 
-                if (foundGroup.Accounts == null)
-                    throw new Exception("Аккаунты не найдены");
-
-                return foundGroup.Accounts;
+                return foundFriends;
             }
             catch (Exception ex)
             {
                 throw;
             }
-        }*/
+        }
 
         public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
         {

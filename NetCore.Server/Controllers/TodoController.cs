@@ -21,6 +21,10 @@ namespace NetCore.Server.Controllers
             _todoService = todoService;
         }
 
+        /// <summary>
+        /// Получение статусов
+        /// </summary>
+        /// <returns>Коллекция статусов</returns>
         [HttpGet]
         [Route("statuses")]
         public async Task<ActionResult<IEnumerable<GetStatusesResponce>>> GetStatuses()
@@ -47,18 +51,23 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение задачи
+        /// </summary>
+        /// <param name="todoId">Идентификатор задачи</param>
+        /// <returns>Задача</returns>
         [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<GetTodoResponce>> GetTodo(int id)
+        [Route("{todoId}")]
+        public async Task<ActionResult<GetTodoResponce>> GetTodoAsync(int todoId)
         {
             try
             {
-                _logger.LogInformation("Запрос GetTodo получен");
+                _logger.LogInformation("Запрос GetTodoAsync получен");
 
-                var result = await _todoService.GetTodoAsync(id);
+                var result = await _todoService.GetTodoAsync(todoId);
                 var responce = AutoMapperUtility<Todo, GetTodoResponce>.Map(result);
 
-                _logger.LogInformation("Запрос GetTodo обработан");
+                _logger.LogInformation("Запрос GetTodoAsync обработан");
 
                 return Ok(responce);
             }
@@ -70,22 +79,58 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение задач аккаунта
+        /// </summary>
+        /// <param name="accountId">Идентификатор аккаунта</param>
+        /// <returns>Коллекция задач аккаунта</returns>
         [HttpGet]
-        [Route("byGroup/{id}")]
-        public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByGroup(int id)
+        [Route("{accountId}/todos")]
+        public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByAccountAsync(int accountId)
         {
             try
             {
-                _logger.LogInformation("Запрос GetTodosByGroup получен");
+                _logger.LogInformation("Запрос GetTodosByAccountAsync получен");
 
-                var result = await _todoService.GetTodosByGroupAsync(id);
+                var result = await _todoService.GetTodosByAccountAsync(accountId);
+                var responce = new List<GetTodoResponce>();
+
+                foreach (var todo in result)
+                    responce.Add(AutoMapperUtility<Todo, GetTodoResponce>.Map(todo));
+
+                _logger.LogInformation("Запрос GetTodosByAccountAsync обработан");
+
+                return Ok(responce);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Получение задач группы
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <returns>Коллекция задач группы</returns>
+        [HttpGet]
+        [Route("{groupId}/todos")]
+        public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByGroupAsync(int groupId)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос GetTodosByGroupAsync получен");
+
+                var result = await _todoService.GetTodosByGroupAsync(groupId);
                 var responce = new List<GetTodoResponce>();
 
                 foreach (var todo in result)
                     responce.Add(AutoMapperUtility<Todo, GetTodoResponce>.Map(todo));
 
 
-                _logger.LogInformation("Запрос GetTodosByGroup обработан");
+                _logger.LogInformation("Запрос GetTodosByGroupAsync обработан");
 
                 return Ok(responce);
             }
@@ -97,45 +142,24 @@ namespace NetCore.Server.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("byAccount/{id}")]
-        public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByAccount(int id)
-        {
-            try
-            {
-                _logger.LogInformation("Запрос GetTodosByAccount получен");
-
-                var result = await _todoService.GetTodosByAccountAsync(id);
-                var responce = new List<GetTodoResponce>();
-
-                foreach (var todo in result)
-                    responce.Add(AutoMapperUtility<Todo, GetTodoResponce>.Map(todo));
-
-                _logger.LogInformation("Запрос GetTodosByAccount обработан");
-
-                return Ok(responce);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-
-                return BadRequest(ex.Message);
-            }
-        }
-
+        /// <summary>
+        /// Создание задачи
+        /// </summary>
+        /// <param name="request">Запрос создания задачи</param>
+        /// <returns>Созданная задача</returns>
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<CreateTodoResponce>> CreateTodo([FromBody] CreateTodoRequest request)
+        public async Task<ActionResult<CreateTodoResponce>> CreateTodoAsync([FromBody] CreateTodoRequest request)
         {
             try
             {
-                _logger.LogInformation("Запрос CreateTodo получен");
+                _logger.LogInformation("Запрос CreateTodoAsync получен");
 
                 var todo = AutoMapperUtility<CreateTodoRequest, Todo>.Map(request);
                 var result = await _todoService.CreteTodoAsync(todo);
                 var responce = AutoMapperUtility<Todo, CreateTodoResponce>.Map(result);
 
-                _logger.LogInformation("Запрос CreateTodo обработан");
+                _logger.LogInformation("Запрос CreateTodoAsync обработан");
 
                 return Ok(responce);
             }
@@ -147,19 +171,24 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Обновление задачи
+        /// </summary>
+        /// <param name="request">Запрос обновления задачи</param>
+        /// <returns>Обновлённая задача</returns>
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<UpdateTodoResponce>> UpdateTodo([FromBody] UpdateTodoRequest request)
+        public async Task<ActionResult<UpdateTodoResponce>> UpdateTodoAsync([FromBody] UpdateTodoRequest request)
         {
             try
             {
-                _logger.LogInformation("Запрос UpdateTodo получен");
+                _logger.LogInformation("Запрос UpdateTodoAsync получен");
 
                 var todo = AutoMapperUtility<UpdateTodoRequest, Todo>.Map(request);
                 var result = await _todoService.UpdateTodoAsync(todo);
                 var responce = AutoMapperUtility<Todo, UpdateTodoResponce>.Map(result);
 
-                _logger.LogInformation("Запрос UpdateTodo обработан");
+                _logger.LogInformation("Запрос UpdateTodoAsync обработан");
 
                 return Ok(responce);
             }
@@ -171,17 +200,22 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление группы
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <returns>Результат выполнения</returns>
         [HttpPost]
-        [Route("delete/{id}")]
-        public async Task<ActionResult> DeleteTodo(int id)
+        [Route("{groupId}/delete")]
+        public async Task<ActionResult> DeleteTodoAsync(int groupId)
         {
             try
             {
-                _logger.LogInformation("Запрос DeleteTodo получен");
+                _logger.LogInformation("Запрос DeleteTodoAsync получен");
 
-                await _todoService.DeleteTodoAsync(id);
+                await _todoService.DeleteTodoAsync(groupId);
 
-                _logger.LogInformation("Запрос DeleteTodo обработан");
+                _logger.LogInformation("Запрос DeleteTodoAsync обработан");
 
                 return Ok();
             }
