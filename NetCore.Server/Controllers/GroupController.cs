@@ -154,15 +154,15 @@ namespace NetCore.Server.Controllers
         /// <param name="groupId">Идентификатор группы</param>
         /// <returns>Результат выполнения</returns>
         [HttpPost]
-        [Route("delete/{groupId}")]
+        [Route("{groupId}/delete")]
         public async Task<ActionResult> DeleteGroupAsync(int groupId)
         {
             try
             {
                 _logger.LogInformation("Запрос DeleteGroup получен");
 
-                await _groupService.DeleteGroupAsync(id);
-                await _groupAccountService.DeleteAllGroupAccountByGroupAsync(id);
+                await _groupService.DeleteGroupAsync(groupId);
+                await _groupAccountService.DeleteAllGroupAccountByGroupAsync(groupId);
 
                 _logger.LogInformation("Запрос DeleteGroup обработан");
 

@@ -86,7 +86,7 @@ namespace NetCore.Server.Controllers
         /// <param name="groupId">Идентификатор группы</param>
         /// <returns>Коллекция участников группы</returns>
         [HttpGet]
-        [Route("{groupId}/accounts")]
+        [Route("{groupId}/members")]
         public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByGroupAsync(int groupId)
         {
             try

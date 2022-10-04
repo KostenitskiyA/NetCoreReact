@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
@@ -20,15 +17,15 @@ namespace NetCore.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
-        private IOptions<AuthOptions> _authOptions;
+        private IOptions<JWTAuthenticationOptions> _authenticationOptions;
         private IUserService _userProvider;
 
         public UserController(ILogger<UserController> logger,
-            IOptions<AuthOptions> authOptions,
+            IOptions<JWTAuthenticationOptions> authenticationOptions,
             IUserService userProvider)
         {
             _logger = logger;
-            _authOptions = authOptions;
+            _authenticationOptions = authenticationOptions;
             _userProvider = userProvider;
         }
 
@@ -83,16 +80,16 @@ namespace NetCore.Server.Controllers
                 var result = await _userProvider.LogInAsync(user);
                 var responce = AutoMapperUtility<Account, LogInResponce>.Map(result);
 
-                var authParams = _authOptions.Value;
-                var securityKey = authParams.GetSymmetricSecurityKey();
-                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                var claims = new List<Claim> { new Claim("Id", result.Id.ToString()), new Claim(JwtRegisteredClaimNames.Name, result.Name) };
+                var authenticationOptions = _authenticationOptions.Value;
                 var token = new JwtSecurityToken(
-                    issuer: authParams.Issuer,
-                    audience: authParams.Audience,
-                    claims: claims,
-                    expires: DateTime.Now.AddSeconds(authParams.TokenLifetime),
-                    signingCredentials: credentials);
+                    issuer: authenticationOptions.Issuer,
+                    audience: authenticationOptions.Audience,
+                    claims: new List<Claim> { 
+                        new Claim("Id", result.Id.ToString()), 
+                        new Claim(JwtRegisteredClaimNames.Name, result.Name) 
+                    },
+                    expires: DateTime.Now.AddSeconds(authenticationOptions.TokenLifetime),
+                    signingCredentials: new SigningCredentials(authenticationOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
                 var generatedToken = new JwtSecurityTokenHandler().WriteToken(token);
 
@@ -121,9 +118,6 @@ namespace NetCore.Server.Controllers
             try
             {
                 _logger.LogInformation("Запрос LogOutAsync получен");
-
-               await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
                 _logger.LogInformation("Запрос LogOutAsync обработан");
 
                 return Redirect("");
