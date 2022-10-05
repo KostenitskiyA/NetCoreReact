@@ -6,7 +6,7 @@ namespace NetCore.Server.Models.Configurations
     /// <summary>
     /// Настройки JWT
     /// </summary>
-    public class AuthOptions
+    public class JWTAuthenticationOptions
     {
         /// <summary>
         /// Издатель

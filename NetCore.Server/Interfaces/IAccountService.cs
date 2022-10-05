@@ -10,38 +10,38 @@ namespace NetCore.Server.Interfaces
         /// <summary>
         /// Получение аккаунта
         /// </summary>
-        /// <param name="id">Идентификатор аккаунта</param>
+        /// <param name="accountId">Идентификатор аккаунта</param>
         /// <returns>Аккаунт</returns>
-        public Task<Account> GetAccountAsync(int id);
+        public Task<Account> GetAccountAsync(int accountId);
 
-        /*/// <summary>
+        /// <summary>
         /// Получение аккаунтов друзей
         /// </summary>
-        /// <param name="id">Идентификатор аккаунта</param>
+        /// <param name="accountId">Идентификатор аккаунта</param>
         /// <returns>Коллекция аккаунтов друзей</returns>
-        public Task<IEnumerable<Account>> GetAccountsByFriendsAsync(int id);*/
+        public Task<IEnumerable<Account>> GetFriendsByAccountAsync(int accountId);
 
         /// <summary>
         /// Получение аккаунтов группы
         /// </summary>
-        /// <param name="id">Идентификатор группы</param>
+        /// <param name="groupId">Идентификатор группы</param>
         /// <returns>Коллекция аккаунтов группы</returns>
-        public Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id);
+        public Task<IEnumerable<Account>> GetAccountsByGroupAsync(int groupId);
 
         /// <summary>
         /// Поиск аккаунтов по имени
         /// </summary>
-        /// <param name="name">Имя пользователя</param>
+        /// <param name="searchName">Имя пользователя</param>
         /// <returns>Коллекция найденных аккаунтов</returns>
-        public Task<IEnumerable<Account>> SearchAccountsByNameAsync(string name);
+        public Task<IEnumerable<Account>> SearchAccountsByNameAsync(string searchName);
 
         /// <summary>
         /// Поиск аккаунтов группы по имени
         /// </summary>
-        /// <param name="group">Код группы</param>
-        /// <param name="name">Имя пользователя</param>
+        /// <param name="groupId">Код группы</param>
+        /// <param name="searchName">Имя пользователя</param>
         /// <returns>Коллекция найденных аккаунтов</returns>
-        public Task<IEnumerable<Account>> SearchAccountsByNameAsync(string group, string name);
+        public Task<IEnumerable<Account>> SearchAccountsByNameAsync(string groupId, string searchName);
 
         /// <summary>
         /// Изменение аватара аккаунта

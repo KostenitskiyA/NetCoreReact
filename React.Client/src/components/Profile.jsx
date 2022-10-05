@@ -1,35 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Navigate, Link } from "react-router-dom";
+import Modal from "./Modal";
 import { updateAvatar } from "../stores/user/actions";
 import "../styles/profile";
 import "bootstrap-icons/font/bootstrap-icons";
+import AvatarCropper from "./AvatarCropper";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
 
-    this.imageUpload = this.imageUpload.bind(this);
-    this.avatarChange = this.avatarChange.bind(this);
-    this.deleteAvatar = this.deleteAvatar.bind(this);
+    this.state = {
+      isAvatarCropperModalOpen: false
+    }
+
+    this.onToggleAvatarCropperModal = this.onToggleAvatarCropperModal.bind(this);
   }
 
-  imageUpload(e) {
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      this.avatarChange(reader.result);
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
-  }
-
-  avatarChange(image) {
-    this.props.updateAvatar({ accountId: this.props.user.id, avatar: image });
-  }
-
-  deleteAvatar() {
-    this.props.updateAvatar({ accountId: this.props.user.id, avatar: "" });
+  onToggleAvatarCropperModal() {
+    this.setState({ ...this.state, isAvatarCropperModalOpen: !this.state.isAvatarCropperModalOpen });
   }
 
   render() {
@@ -45,30 +35,12 @@ class Profile extends React.Component {
       </div>
     );
 
-    const avatarLoaded = avatar != "" ? true : false;
-
     return (
       <div className="wrapper">
         <div className="container">
-          <div className="col">
-            <div className="avatar">{avatarImg}</div>
-            <div className="row">
-              <button disabled={avatarLoaded}>
-                <label htmlFor="avatar-input">
-                  <i className="bi bi-plus-lg"></i>
-                </label>
-              </button>
-              <button disabled={!avatarLoaded} onClick={this.deleteAvatar}>
-                <i className="bi bi-trash"></i>
-              </button>
-            </div>
+          <div className="col">            
+            <div className="avatar" onClick={() => {this.onToggleAvatarCropperModal()}}>{avatarImg}</div>
           </div>
-
-          <input
-            type="file"
-            id="avatar-input"
-            onChange={(e) => this.imageUpload(e)}
-          />
         </div>
 
         <div className="container">
@@ -88,6 +60,13 @@ class Profile extends React.Component {
             </div> */}
           </div>
         </div>
+
+        <Modal
+          isModalOpen={this.state.isAvatarCropperModalOpen}
+          onCloseModal={this.onToggleAvatarCropperModal}
+        >
+          <AvatarCropper />
+        </Modal>
       </div>
     );
   }

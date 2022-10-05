@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Requests;
@@ -25,15 +24,20 @@ namespace NetCore.Server.Controllers
             _groupAccountService = groupAccountService;
         }
 
+        /// <summary>
+        /// Получение группы
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <returns>Группа</returns>
         [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<GetGroupResponce>> GetGroup(int id)
+        [Route("{groupId}")]
+        public async Task<ActionResult<GetGroupResponce>> GetGroupAsync(int groupId)
         {
             try
             {
                 _logger.LogInformation("Запрос GetGroup получен");
 
-                var result = await _groupService.GetGroupAsync(id);
+                var result = await _groupService.GetGroupAsync(groupId);
                 var responce = AutoMapperUtility<Group, GetGroupResponce>.Map(result);
 
                 _logger.LogInformation("Запрос GetGroup обработан");
@@ -48,21 +52,26 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Получение групп аккаунта
+        /// </summary>
+        /// <param name="accountId">Идентификатор аккаунта</param>
+        /// <returns>Коллекция групп аккаунта</returns>
         [HttpGet]
-        [Route("byAccount/{id}")]
-        public async Task<ActionResult<IEnumerable<GetGroupResponce>>> GetGroupsByAccount(int id)
+        [Route("{accountId}/groups")]
+        public async Task<ActionResult<IEnumerable<GetGroupResponce>>> GetGroupsByAccountAsync(int accountId)
         {
             try
             {
-                _logger.LogInformation("Запрос GetGroupsByAccount получен");                
+                _logger.LogInformation("Запрос GetGroupsByAccountAsync получен");                
 
-                var result = await _groupService.GetGroupsByAccountAsync(id);
+                var result = await _groupService.GetGroupsByAccountAsync(accountId);
                 var responce = new List<GetGroupResponce>();
 
                 foreach (var group in result)
                     responce.Add(AutoMapperUtility<Group, GetGroupResponce>.Map(group));
 
-                _logger.LogInformation("Запрос GetGroupsByAccount обработан");
+                _logger.LogInformation("Запрос GetGroupsByAccountAsync обработан");
 
                 return Ok(responce);
             }
@@ -74,9 +83,14 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Создание группы
+        /// </summary>
+        /// <param name="request">Запрос создания группы</param>
+        /// <returns>Созданная группа</returns>
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<CreateGroupResponce>> CreateGroup([FromBody] CreateGroupRequest request)
+        public async Task<ActionResult<CreateGroupResponce>> CreateGroupAsync([FromBody] CreateGroupRequest request)
         {
             try
             {
@@ -104,10 +118,15 @@ namespace NetCore.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        
+        /// <summary>
+        /// Обновление группы
+        /// </summary>
+        /// <param name="request">Запрос обновления группы</param>
+        /// <returns>Обновленная группа</returns>
         [HttpPost]
         [Route("update")]
-        public async Task<ActionResult<UpdateGroupResponce>> UpdateGroup([FromBody] UpdateGroupRequest request)
+        public async Task<ActionResult<UpdateGroupResponce>> UpdateGroupAsync([FromBody] UpdateGroupRequest request)
         {
             try
             {
@@ -129,16 +148,21 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Удаление группы
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <returns>Результат выполнения</returns>
         [HttpPost]
-        [Route("delete/{id}")]
-        public async Task<ActionResult> DeleteGroup(int id)
+        [Route("{groupId}/delete")]
+        public async Task<ActionResult> DeleteGroupAsync(int groupId)
         {
             try
             {
                 _logger.LogInformation("Запрос DeleteGroup получен");
 
-                await _groupService.DeleteGroupAsync(id);
-                await _groupAccountService.DeleteAllGroupAccountByGroupAsync(id);
+                await _groupService.DeleteGroupAsync(groupId);
+                await _groupAccountService.DeleteAllGroupAccountByGroupAsync(groupId);
 
                 _logger.LogInformation("Запрос DeleteGroup обработан");
 

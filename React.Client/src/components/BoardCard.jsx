@@ -46,11 +46,6 @@ class BoardCard extends React.Component {
     const { todo } = this.props;
     const className = this.state.isSelected ? "card selected" : "card";
 
-    //const year = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(todo.createDate);
-    //const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(todo.createDate);
-    //const day = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(todo.createDate);
-    //const date = day + " " + month + " " + year;
-
     return (
       <React.Fragment>
         <div

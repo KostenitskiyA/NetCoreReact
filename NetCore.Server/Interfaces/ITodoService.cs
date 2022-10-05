@@ -16,23 +16,23 @@ namespace NetCore.Server.Interfaces
         /// <summary>
         /// Получение задачи
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="todoId">Идентификатор задачи</param>
         /// <returns>Задача</returns>
-        public Task<Todo> GetTodoAsync(int id);
+        public Task<Todo> GetTodoAsync(int todoId);
 
         /// <summary>
         /// Получение задач группы
         /// </summary>
-        /// <param name="id">Идентификатор группы</param>
+        /// <param name="groupId">Идентификатор группы</param>
         /// <returns>Коллекция задач группы</returns>
-        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id);
+        public Task<IEnumerable<Todo>> GetTodosByGroupAsync(int groupId);
 
         /// <summary>
         /// Получение задач аккаунта
         /// </summary>
-        /// <param name="id">Идентификатор аккаунта</param>
+        /// <param name="accountId">Идентификатор аккаунта</param>
         /// <returns>Коллекция задач аккаунта</returns>
-        public Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id);
+        public Task<IEnumerable<Todo>> GetTodosByAccountAsync(int accountId);
 
         /// <summary>
         /// Создание задачи
@@ -51,7 +51,7 @@ namespace NetCore.Server.Interfaces
         /// <summary>
         /// Удаление задачи
         /// </summary>
-        /// <param name="id">Идентификатор удаляемой задачи</param>
-        public Task DeleteTodoAsync(int id);
+        /// <param name="todoId">Идентификатор удаляемой задачи</param>
+        public Task DeleteTodoAsync(int todoId);
     }
 }

@@ -16,6 +16,9 @@ class Todo extends React.Component {
   render() {
     const { todo, statuses } = this.props;
 
+    var createDate = new Date(todo.createDate).toISOString().replace('Z', '');
+    var changeDate = new Date(todo.changeDate).toISOString().replace('Z', '');
+
     return (
       <div className="todo row">
         <div className="description col w-60">
@@ -25,7 +28,7 @@ class Todo extends React.Component {
               className="input-textarea"
               type="textarea"
               rows="10"
-              value={todo.description}
+              defaultValue={todo.description}
             />
           </div>
         </div>
@@ -35,12 +38,12 @@ class Todo extends React.Component {
             <select
               className="input-select"
               required
-              value={todo.statusId}
+              defaultValue={todo.statusId}
               onChange={this.onChangeStatus}
             >
               {statuses.map((status, key) => (
                 <option key={key} value={status.id}>
-                  {status.name}<i className="bi bi-person-fill"></i>
+                  {status.name}
                 </option>
               ))}
             </select>
@@ -50,7 +53,7 @@ class Todo extends React.Component {
             {/* <input
               className="input-text"
               type="text"
-              readOnly="true"
+              readOnly={true}
               value={this.props.statuses.filter((s) => s.Id == todo.statusId)}
             /> */}
           </div>
@@ -59,8 +62,7 @@ class Todo extends React.Component {
             <input
               className="input-date"
               type="date"
-              readOnly="true"
-              value={todo.createDate}
+              value={createDate}
             />
           </div>
           <div className="input">
@@ -68,8 +70,7 @@ class Todo extends React.Component {
             <input
               className="input-date"
               type="date"
-              readOnly="true"
-              value={todo.changeDate}
+              value={changeDate}
             />
           </div>
         </div>

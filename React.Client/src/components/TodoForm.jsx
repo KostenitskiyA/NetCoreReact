@@ -17,7 +17,7 @@ class TodoForm extends React.Component {
       description: "",
       statusId: 0,
       creatorId: 0,
-      executorId: 0,
+      groupId: this.props.groupId,
     };
 
     this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -43,7 +43,6 @@ class TodoForm extends React.Component {
   onChangeStatus(e) {
     e.preventDefault();
     this.setState({ statusId: parseInt(e.target.value) });
-    console.log(this.state);
   }
 
   onSubmit(e) {
@@ -112,6 +111,7 @@ class TodoForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    groupId: state.group.currentGroupId,
     user: state.user,
     statuses: state.todo.statuses,
   };

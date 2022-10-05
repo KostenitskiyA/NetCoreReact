@@ -13,12 +13,12 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<Account> GetAccountAsync(int id)
+        public async Task<Account> GetAccountAsync(int accountId)
         {
             try
             {
                 var foundAccount = await _context.Accounts
-                    .SingleOrDefaultAsync(u => u.Id == id);
+                    .SingleOrDefaultAsync(u => u.Id == accountId);
 
                 if (foundAccount == null)
                     throw new Exception("Аккаунт не найден");
@@ -31,35 +31,40 @@ namespace NetCore.Server.Services
             }
         }
 
-        /*public async Task<IEnumerable<Account>> GetAccountsByFriendsAsync(int id)
+        public async Task<IEnumerable<Account>> GetFriendsByAccountAsync(int accountId)
         {
             try
             {
-                var foundGroup = await _context.Groups
-                    .Include(g => g.Accounts)
-                    .SingleOrDefaultAsync(g => g.Id == id);
+                var foundFriends = await _context.FriendsRelationships
+                    .Where(f => f.AccountId == accountId)
+                    .Join(_context.Accounts,
+                        f => f.FriendId,
+                        a => a.Id,
+                        (f, a) => new Account() { 
+                            Id = a.Id, 
+                            Name = a.Name, 
+                            Avatar = a.Avatar 
+                        })
+                    .ToListAsync();
 
-                if (foundGroup == null)
-                    throw new Exception("Группа не найдена");
+                if (foundFriends == null)
+                    throw new Exception("Друзья не найдены");
 
-                if (foundGroup.Accounts == null)
-                    throw new Exception("Аккаунты не найдены");
-
-                return foundGroup.Accounts;
+                return foundFriends;
             }
             catch (Exception ex)
             {
                 throw;
             }
-        }*/
+        }
 
-        public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int id)
+        public async Task<IEnumerable<Account>> GetAccountsByGroupAsync(int groupId)
         {
             try
             {
                 var foundGroup = await _context.Groups
                     .Include(g => g.Accounts)
-                    .SingleOrDefaultAsync(g => g.Id == id);
+                    .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
@@ -75,12 +80,13 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Account>> SearchAccountsByNameAsync(string name)
+        public async Task<IEnumerable<Account>> SearchAccountsByNameAsync(string searchName)
         {
             try
             {
-                var foundAccounts = _context.Accounts
-                    .Where(a => a.Name.Contains(name));
+                var foundAccounts = await _context.Accounts
+                    .Where(a => a.Name.Contains(searchName))
+                    .ToListAsync();
 
                 if (foundAccounts == null)
                     throw new Exception("Аккаунты не найдены");
@@ -93,13 +99,13 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Account>> SearchAccountsByNameAsync(string group, string name)
+        public async Task<IEnumerable<Account>> SearchAccountsByNameAsync(string groupId, string searchName)
         {
             try
             {
                 var foundGroup = await _context.Groups
                     .Include(g => g.Accounts)
-                    .SingleOrDefaultAsync(g => g.Code == group);
+                    .SingleOrDefaultAsync(g => g.Code == groupId);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
@@ -107,9 +113,9 @@ namespace NetCore.Server.Services
                 if (foundGroup.Accounts == null)
                     throw new Exception("Аккаунты не найдены");
 
-                if (!String.IsNullOrEmpty(name))
+                if (!String.IsNullOrEmpty(searchName))
                     return foundGroup.Accounts
-                        .Where(a => a.Name.Contains(name));
+                        .Where(a => a.Name.Contains(searchName));
 
                 return foundGroup.Accounts;
             }

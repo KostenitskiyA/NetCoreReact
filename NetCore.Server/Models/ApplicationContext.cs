@@ -15,7 +15,7 @@ namespace NetCore.Server.Models
 
         public DbSet<Todo> Todos { get; set; }
 
-        /*public DbSet<FriendsRelationship> FriendsRelationships { get; set; }*/
+        public DbSet<FriendsRelationship> FriendsRelationships { get; set; }
 
         public DbSet<GroupAccount> GroupsAccounts { get; set; }
 
@@ -70,31 +70,37 @@ namespace NetCore.Server.Models
 
             var friendsRelationship1 = new FriendsRelationship()
             {
+                Id = 1,
                 AccountId = 1,
                 FriendId = 2
             };
             var friendsRelationship2 = new FriendsRelationship()
             {
+                Id = 2,
                 AccountId = 2,
                 FriendId = 1
             };
             var friendsRelationship3 = new FriendsRelationship()
             {
+                Id = 3,
                 AccountId = 2,
                 FriendId = 3
             };
             var friendsRelationship4 = new FriendsRelationship()
             {
+                Id = 4,
                 AccountId = 3,
                 FriendId = 2
             };
             var friendsRelationship5 = new FriendsRelationship()
             {
+                Id = 5,
                 AccountId = 1,
                 FriendId = 3
             };
             var friendsRelationship6 = new FriendsRelationship()
             {
+                Id = 6,
                 AccountId = 3,
                 FriendId = 1
             };
@@ -237,35 +243,16 @@ namespace NetCore.Server.Models
 
             modelBuilder.Entity<Group>().HasData(groups);
             modelBuilder.Entity<Account>().HasData(accounts);
-            /*modelBuilder.Entity<FriendsRelationship>().HasData(friendsRelationship);*/
+            modelBuilder.Entity<FriendsRelationship>().HasData(friendsRelationship);
             modelBuilder.Entity<GroupAccount>().HasData(groupAccount);
             modelBuilder.Entity<User>().HasData(users);
             modelBuilder.Entity<TodoStatus>().HasData(todoStatuses);
             modelBuilder.Entity<Todo>().HasData(todos);
 
-            /*modelBuilder.Entity<Account>()
-                .HasMany(a => a.AccountsAccounts)
-                .WithOne(aa => aa.Account)
+            modelBuilder.Entity<Account>()
+                .HasMany(a => a.FriendsRelationships)
+                .WithOne(f => f.Account)
                 .HasForeignKey(a => a.AccountId);
-
-            modelBuilder.Entity<FriendsRelationship>()
-                .HasOne(a => a.Friend)
-                .WithMany(f => f.AccountsAccounts)
-                .HasForeignKey(a => a.FriendId);*/
-
-            /*modelBuilder.Entity<Account>()
-                .HasMany(a => a.Accounts)
-                .WithMany(f => f.Accounts)
-                .UsingEntity<FriendsRelationship>(
-                    e => e
-                    .HasOne(a => a.Account)
-                    .WithMany(b => b.Friends)
-                    .HasForeignKey(fr => fr.AccountId),
-                    e => e
-                    .HasOne(a => a.Account)
-                    .WithMany(b => b.Friends)
-                    .HasForeignKey(fr => fr.FriendId)
-                );*/
 
             modelBuilder.Entity<Group>()
                 .HasMany(g => g.Accounts)

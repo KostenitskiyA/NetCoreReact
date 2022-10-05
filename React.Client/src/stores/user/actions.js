@@ -37,7 +37,7 @@ export const login = (data) => {
     if (responce.ok) {
       const json = await responce.json();
 
-      sessionStorage.setItem("Id", json.id);
+      localStorage.setItem("token", json.token);
 
       dispatch({ type: LOGIN, payload: json });
       dispatch({

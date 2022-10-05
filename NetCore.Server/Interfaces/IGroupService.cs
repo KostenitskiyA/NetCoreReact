@@ -10,16 +10,16 @@ namespace NetCore.Server.Interfaces
         /// <summary>
         /// Получение группы
         /// </summary>
-        /// <param name="id">Идентификатор группы</param>
+        /// <param name="groupId">Идентификатор группы</param>
         /// <returns>Группа</returns>
-        public Task<Group> GetGroupAsync(int id);
+        public Task<Group> GetGroupAsync(int groupId);
 
         /// <summary>
         /// Получение групп аккаунта
         /// </summary>
-        /// <param name="id">Идентификатор аккаунта</param>
+        /// <param name="accountId">Идентификатор аккаунта</param>
         /// <returns>Коллекция групп</returns>
-        public Task<IEnumerable<Group>> GetGroupsByAccountAsync(int id);
+        public Task<IEnumerable<Group>> GetGroupsByAccountAsync(int accountId);
 
         /// <summary>
         /// Создание группы
@@ -38,7 +38,7 @@ namespace NetCore.Server.Interfaces
         /// <summary>
         /// Удаление группы
         /// </summary>
-        /// <param name="id">Идентификатор удаляемой группы</param>
-        public Task DeleteGroupAsync(int id);
+        /// <param name="groupId">Идентификатор удаляемой группы</param>
+        public Task DeleteGroupAsync(int groupId);
     }
 }

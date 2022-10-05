@@ -31,12 +31,12 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<Todo> GetTodoAsync(int id)
+        public async Task<Todo> GetTodoAsync(int todoId)
         {
             try
             {
                 var foundTodo = await _context.Todos
-                    .SingleOrDefaultAsync(t => t.Id == id);
+                    .SingleOrDefaultAsync(t => t.Id == todoId);
 
                 if (foundTodo == null)
                     throw new Exception("Задача не найдена");
@@ -49,13 +49,13 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int id)
+        public async Task<IEnumerable<Todo>> GetTodosByGroupAsync(int groupId)
         {
             try
             {
                 var foundGroup = await _context.Groups
                     .Include(g => g.Todos)
-                    .SingleOrDefaultAsync(g => g.Id == id);
+                    .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
@@ -71,13 +71,13 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Todo>> GetTodosByAccountAsync(int id)
+        public async Task<IEnumerable<Todo>> GetTodosByAccountAsync(int accountId)
         {
             try
             {
                 var foundAccount = await _context.Accounts
                     .Include(a => a.Todos)
-                    .SingleOrDefaultAsync(a => a.Id == id);
+                    .SingleOrDefaultAsync(a => a.Id == accountId);
 
                 if (foundAccount == null)
                     throw new Exception("Аккаунт не найден");
@@ -123,12 +123,12 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task DeleteTodoAsync(int id)
+        public async Task DeleteTodoAsync(int todoId)
         {
             try
             {
                 var foundTodo = await _context.Todos
-                    .SingleOrDefaultAsync(t => t.Id == id);
+                    .SingleOrDefaultAsync(t => t.Id == todoId);
 
                 if (foundTodo == null)
                     throw new Exception("Задача не найдена");

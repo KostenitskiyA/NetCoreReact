@@ -6,6 +6,11 @@
     public class FriendsRelationship
     {
         /// <summary>
+        /// Идентификатор
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// Идентификатор аккаунта
         /// </summary>
         public int AccountId { get; set; }
@@ -16,13 +21,8 @@
         public Account Account { get; set; }
 
         /// <summary>
-        /// Идентификатор друга
+        /// Идентификатор аккаунта друга
         /// </summary>
         public int FriendId { get; set; }
-
-        /// <summary>
-        /// Друг
-        /// </summary>
-        public Account Friend { get; set; }
     }
 }

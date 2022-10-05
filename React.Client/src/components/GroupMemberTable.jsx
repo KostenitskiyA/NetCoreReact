@@ -1,44 +1,66 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "bootstrap-icons/font/bootstrap-icons";
 import "../styles/style";
-import "../styles/userTable";
+//import "../styles/userTable";
 
 class GroupMemberTable extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoaded: true,
-      searchName: "",
+      isLoaded: false,
+      accounts: null,
+      // searchName: "",
     };
 
-    this.onChangeSearch = this.onChangeSearch.bind(this);
+    // this.onChangeSearch = this.onChangeSearch.bind(this);
   }
 
-  async onChangeSearch(e) {
-    this.setState({ isLoaded: false, searchName: e.target.value });
-    await fetch("https://localhost:7139/api/account/searchByName" + this.state.searchName, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    }).then(result => result.json());
-    this.setState({ isLoaded: true });
+  // async onChangeSearch(e) {
+  //   this.setState({ isLoaded: false, searchName: e.target.value });
+  //   await fetch("https://localhost:7139/api/account/searchByName" + this.state.searchName, {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   }).then(result => result.json());
+  //   this.setState({ isLoaded: true });
+  // }
+
+  async componentDidMount() {
+    await fetch(
+      "https://localhost:7139/api/account/accounts/" +
+        this.props.currentGroup.id,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((result) => result.json())
+      .then((json) =>
+        this.setState({ ...this.state, isLoaded: true, accounts: json })
+      );
   }
 
   render() {
-    const { isLoaded, searchName } = this.state;
+    const { isLoaded, accounts } = this.state;
     const { isLogin } = this.props;
 
     if (isLogin) return <Navigate to="/login" />;
 
     var rows;
 
-    if (isLoaded) {
+    if (isLoaded && accounts) {
       rows = accounts.map((account, key) => (
         <tr className="tr" key={key}>
-          <td className="td">{account.name}</td>
+          <td className="td">
+            <img
+              src={account.avatar}
+              style={{ width: "32px", height: "32px", borderRadius: "100%" }}
+            />
+          </td>
+          <td className="td">{account.name}</td>          
         </tr>
       ));
     } else {
@@ -51,7 +73,7 @@ class GroupMemberTable extends React.Component {
 
     return (
       <div className="account-table">
-        <div className="filters row">
+        {/* <div className="filters row">
           <div className="input search">
             <label>Search</label>
             <input
@@ -60,7 +82,7 @@ class GroupMemberTable extends React.Component {
               onChange={this.onChangeSearch}
             />
           </div>
-        </div>
+        </div> */}
         <div className="table">
           <table className="table">
             <thead className="thead">
@@ -78,12 +100,11 @@ class GroupMemberTable extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.isLogin,
-    userId: state.user.id,
+    user: state.user,
+    currentGroup: state.group.currentGroup,
   };
 };
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupMemberTable);

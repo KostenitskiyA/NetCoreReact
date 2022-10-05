@@ -21,17 +21,22 @@ namespace NetCore.Server.Controllers
             _accountProvider = accountProvider;
         }
 
+        /// <summary>
+        /// Получение аккаунта
+        /// </summary>
+        /// <param name="accountId">Идентификатор аккаунта</param>
+        /// <returns>Аккаунт</returns>
         [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<GetAccountResponce>> GetAccount(int id)
+        [Route("{accountId}")]
+        public async Task<ActionResult<GetAccountResponce>> GetAccountAsync(int accountId)
         {
             try
             {
                 _logger.LogInformation("Запрос GetAccount получен");
-                
-                var result = await _accountProvider.GetAccountAsync(id);
+
+                var result = await _accountProvider.GetAccountAsync(accountId);
                 var responce = AutoMapperUtility<Account, GetAccountResponce>.Map(result);
-                               
+
                 _logger.LogInformation("Запрос GetAccount обработан");
 
                 return Ok(responce);
@@ -43,16 +48,52 @@ namespace NetCore.Server.Controllers
                 return BadRequest(ex.Message);
             }
         }
-       
+
+        /// <summary>
+        /// Получение друзей аккаунта
+        /// </summary>
+        /// <param name="accountId">Идентификатор аккаунта</param>
+        /// <returns>Коллекции друзей аккаунта</returns>
         [HttpGet]
-        [Route("accounts/{id}")]
-        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByGroup(int id)
+        [Route("{accountId}/friends")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetFriendsByAccountAsync(int accountId)
+        {
+            try
+            {
+                _logger.LogInformation("Запрос GetAccountFriends получен");
+
+                var result = await _accountProvider.GetFriendsByAccountAsync(accountId);
+                var newResult = new List<GetAccountResponce>();
+
+                foreach (var account in result)
+                    newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
+
+                _logger.LogInformation("Запрос GetAccountFriends обработан");
+
+                return Ok(newResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Получение участников группы
+        /// </summary>
+        /// <param name="groupId">Идентификатор группы</param>
+        /// <returns>Коллекция участников группы</returns>
+        [HttpGet]
+        [Route("{groupId}/members")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByGroupAsync(int groupId)
         {
             try
             {
                 _logger.LogInformation("Запрос GetAccountsByGroup получен");
 
-                var result = await _accountProvider.GetAccountsByGroupAsync(id);
+                var result = await _accountProvider.GetAccountsByGroupAsync(groupId);
                 var newResult = new List<GetAccountResponce>();
 
                 foreach (var account in result)
@@ -70,41 +111,20 @@ namespace NetCore.Server.Controllers
             }
         }
 
-        /*[HttpGet]
-        [Route("searchByName/{name}")]
-        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> GetAccountsByName(string name)
-        {
-            try
-            {
-                _logger.LogInformation("Запрос GetAccountsByGroup получен");
-
-                var result = await _accountProvider.GetAccountsByGroupAsync(id);
-                var newResult = new List<GetAccountResponce>();
-
-                foreach (var account in result)
-                    newResult.Add(AutoMapperUtility<Account, GetAccountResponce>.Map(account));
-
-                _logger.LogInformation("Запрос GetAccountsByGroup обработан");
-
-                return Ok(newResult);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-
-                return BadRequest(ex.Message);
-            }
-        }*/
-
+        /// <summary>
+        /// Поиск аккаунтов по имени
+        /// </summary>
+        /// <param name="searchName"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("searchByName/{name}")]
-        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> SearchAccountsByNameAsync(string name)
+        [Route("searchByName/{searchName}")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> SearchAccountsByNameAsync(string searchName)
         {
             try
             {
                 _logger.LogInformation("Запрос SearchAccountsByNameAsync получен");
 
-                var result = await _accountProvider.SearchAccountsByNameAsync(name);
+                var result = await _accountProvider.SearchAccountsByNameAsync(searchName);
                 var newResult = new List<GetAccountResponce>();
 
                 foreach (var account in result)
@@ -122,15 +142,21 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Поиск аккаунтов участников группы по имени
+        /// </summary>
+        /// <param name="groupId">Код группы</param>
+        /// <param name="searchName">Имя поиска</param>
+        /// <returns>Коллекция найденных участников группы</returns>
         [HttpGet]
-        [Route("searchByName/{group}/{name}")]
-        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> SearchAccountsByNameAsync(string group, string name)
+        [Route("searchByName/{groupId}/{searchName}")]
+        public async Task<ActionResult<IEnumerable<GetAccountResponce>>> SearchAccountsByNameAsync(string groupId, string searchName)
         {
             try
             {
                 _logger.LogInformation("Запрос SearchAccountsByNameAsync получен");
 
-                var result = await _accountProvider.SearchAccountsByNameAsync(group, name);
+                var result = await _accountProvider.SearchAccountsByNameAsync(groupId, searchName);
                 var newResult = new List<GetAccountResponce>();
 
                 foreach (var account in result)
@@ -148,9 +174,14 @@ namespace NetCore.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Обновление аватара
+        /// </summary>
+        /// <param name="request">Объект изменения аватара</param>
+        /// <returns>Результат выполнения</returns>
         [HttpPost]
         [Route("updateAvatar")]
-        public async Task<ActionResult> UpdateAvatar(UpdateAvatarRequest request)
+        public async Task<ActionResult> UpdateAvatarAsync([FromBody] UpdateAvatarRequest request)
         {
             try
             {

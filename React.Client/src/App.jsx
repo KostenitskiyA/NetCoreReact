@@ -15,6 +15,7 @@ import Group from "./components/Group";
 import Board from "./components/Board";
 import TodoTable from "./components/TodoTable";
 import TodoForm from "./components/TodoForm";
+import Members from "./components/Members";
 
 import NotificationContainer from "./components/NotificationContainer";
 
@@ -39,6 +40,7 @@ class App extends React.Component {
               <Route path="board" element={<Board />} />
               <Route path="todotable" element={<TodoTable />} />
               <Route path="createTodo" element={<TodoForm />} />
+              <Route path="members" element={<Members />} />
             </Route>
 
             <Route path="/createGroup" element={<GroupForm />} />

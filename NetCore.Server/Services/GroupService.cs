@@ -13,12 +13,12 @@ namespace NetCore.Server.Services
             _context = context;
         }
 
-        public async Task<Group> GetGroupAsync(int id)
+        public async Task<Group> GetGroupAsync(int groupId)
         {
             try
             {
                 var foundGroup = await _context.Groups
-                    .SingleOrDefaultAsync(g => g.Id == id);
+                    .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
@@ -31,13 +31,13 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task<IEnumerable<Group>> GetGroupsByAccountAsync(int id)
+        public async Task<IEnumerable<Group>> GetGroupsByAccountAsync(int accountId)
         {
             try
             {
                 var foundUser = await _context.Accounts
                     .Include(a => a.Groups)
-                    .SingleOrDefaultAsync(a => a.Id == id);
+                    .SingleOrDefaultAsync(a => a.Id == accountId);
 
                 if (foundUser == null)
                     throw new Exception("Пользователь не найден");
@@ -99,12 +99,12 @@ namespace NetCore.Server.Services
             }
         }
 
-        public async Task DeleteGroupAsync(int id)
+        public async Task DeleteGroupAsync(int groupId)
         {
             try
             {
                 var foundGroup = await _context.Groups
-                    .SingleOrDefaultAsync(g => g.Id == id);
+                    .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
                     throw new Exception("Группа не найдена");
