@@ -35,7 +35,7 @@ export const getStatuses = () => {
 // Получение задачи
 export const getTodo = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODO_API + id, {
+    const responce = await fetch(GET_TODO_API.replace("{todoId}", id), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -48,7 +48,7 @@ export const getTodo = (id) => {
 // Получение задач группы
 export const getTodosByGroup = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODOS_BY_GROUP_API + id, {
+    const responce = await fetch(GET_TODOS_BY_GROUP_API.replace("{groupId}", id), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -61,7 +61,7 @@ export const getTodosByGroup = (id) => {
 // Получение задач аккаунта
 export const getTodosByAccount = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODOS_BY_ACCOUNT_API + id, {
+    const responce = await fetch(GET_TODOS_BY_ACCOUNT_API.replace("{accountId}", id), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -122,7 +122,7 @@ export const updateTodo = (data) => {
 // Удаление задачи
 export const deleteTodo = (id) => {
   return async (dispatch) => {
-    await fetch(DELETE_TODO_API + id, {
+    await fetch(DELETE_TODO_API.replace("{groupId}", id), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })

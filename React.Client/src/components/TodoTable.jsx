@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { getStatuses, getTodosByAccount } from "../stores/todo/actions";
+import TodoTableRow from "./TodoTableRow";
 
 import "bootstrap-icons/font/bootstrap-icons";
 import "../styles/style";
@@ -17,7 +18,6 @@ class TodoTable extends React.Component {
     };
 
     this.onChangeSearch = this.onChangeSearch.bind(this);
-    this.onTaskOpen = this.onTaskOpen.bind(this);
   }
 
   componentDidMount() {
@@ -28,10 +28,6 @@ class TodoTable extends React.Component {
 
   onChangeSearch(e) {
     this.setState({ searchName: e.target.value });
-  }
-
-  onTaskOpen(id) {
-    return <Navigate to={"/todotable/" + id} />;
   }
 
   render() {
@@ -78,20 +74,7 @@ class TodoTable extends React.Component {
               </thead>
               <tbody className="tbody">
                 {filteredTodos.map((todo, key) => (
-                  <tr
-                    className="tr"
-                    key={key}
-                    onClick={() => this.onTaskOpen(todo.id)}
-                  >
-                    <td className="td">{todo.title}</td>
-                    <td className="td">
-                      {
-                        statuses.find((status) => status.id == todo.statusId)
-                          .name
-                      }
-                    </td>
-                    <td className="td">{new Date(todo.createDate).getFullYear()}</td>
-                  </tr>
+                  <TodoTableRow todo={todo} key={key}/>                
                 ))}
               </tbody>
             </table>

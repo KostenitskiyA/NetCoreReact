@@ -25,7 +25,7 @@ namespace NetCore.Server.Services
 
                 return foundAccount;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -40,10 +40,11 @@ namespace NetCore.Server.Services
                     .Join(_context.Accounts,
                         f => f.FriendId,
                         a => a.Id,
-                        (f, a) => new Account() { 
-                            Id = a.Id, 
-                            Name = a.Name, 
-                            Avatar = a.Avatar 
+                        (f, a) => new Account()
+                        {
+                            Id = a.Id,
+                            Name = a.Name,
+                            Avatar = a.Avatar
                         })
                     .ToListAsync();
 
@@ -52,7 +53,7 @@ namespace NetCore.Server.Services
 
                 return foundFriends;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -74,7 +75,7 @@ namespace NetCore.Server.Services
 
                 return foundGroup.Accounts;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -93,7 +94,7 @@ namespace NetCore.Server.Services
 
                 return foundAccounts;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -119,7 +120,7 @@ namespace NetCore.Server.Services
 
                 return foundGroup.Accounts;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -139,7 +140,7 @@ namespace NetCore.Server.Services
 
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

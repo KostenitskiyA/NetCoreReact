@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-
 import { deleteTodo } from "../stores/todo/actions";
-
-import "../styles/board";
-import "bootstrap-icons/font/bootstrap-icons";
 import Modal from "./Modal";
 import Todo from "./Todo";
+
+import "../styles/boardCard";
+import "bootstrap-icons/font/bootstrap-icons";
 
 class BoardCard extends React.Component {
   constructor(props) {
@@ -59,9 +58,9 @@ class BoardCard extends React.Component {
             <div className="tags"></div>
             <div className="title">{todo.title}</div>
             <div className="row">
-              <div className="date">DATE</div>
-              <div className="code">{todo.code}</div>
-              <div className="avatar"></div>
+              <div className="date">{new Date(todo.createDate).toLocaleDateString()}</div>
+              <div className="code">{todo.id}</div>
+              <div className="avatars"></div>
             </div>
           </div>
           {/* <div ></div>

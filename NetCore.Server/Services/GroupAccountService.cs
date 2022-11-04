@@ -27,7 +27,7 @@ namespace NetCore.Server.Services
 
                 return createdGroupAccount.Entity;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -49,7 +49,7 @@ namespace NetCore.Server.Services
 
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -71,7 +71,7 @@ namespace NetCore.Server.Services
 
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

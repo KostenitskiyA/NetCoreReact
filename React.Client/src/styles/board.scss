@@ -1,107 +1,13 @@
 @import "./constants.scss";
 
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-
-  .column {
+.board {
+  .row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
-
-    background-color: #e7e7e7;
-
-    margin: 0 20px 0 0;
-    border: 1px solid #e7e7e7;
-    border-radius: 0.25rem;
-    padding: 10px;
-    min-width: 190px;
-
-    .status-title {
-      text-align: center;
-
-      margin: 0 0 5px 0;;
-      border: 0;
-      padding: 0;
-    }
-
-    .container {
-      height: 100%;
-      padding: 10px;
-
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      align-content: stretch;
-      justify-content: flex-start;
-      align-items: stretch;
-
-      .card {
-        min-width: 150px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-content: space-around;
-        align-items: stretch;
-
-        background-color: #ffffff;
-
-        margin: 0 0 10px 0;
-        border: 1px solid #ffffff;
-        border-radius: 0.25rem;
-        padding: 10px;
-
-        .title {
-          margin: 0 0 5px 0;
-          border: 0;
-          padding: 0;
-        }
-
-        .description {
-          margin: 0 0 5px 0;
-          border: 0;
-          padding: 0;
-        }
-
-        .dates {
-          display: flex;
-          flex-wrap: nowrap;
-          align-items: stretch;
-          align-content: stretch;
-          justify-content: space-between;
-
-          font-size: 0.75rem;
-        }
-
-        .close-button {
-          position: absolute;
-          top: 0;
-          right: 0;
-
-          background-color: aqua;
-
-          margin: 0;
-          border: 1px solid white;
-          border-radius: 50%;
-          padding: 2px;
-        }
-      }
-
-      .card:last-child {
-        margin: 0;
-      }
-
-      .selected {
-        background-color: aqua;
-        border-color: aqua;
-      }
-    }
-
-    &:last-child {
-      margin: 0;
-    }
+    align-content: flex-start;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px;
   }
 }

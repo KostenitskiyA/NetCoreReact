@@ -15,7 +15,7 @@
   border-radius: 0.5rem;
   padding: 20px;
 
-  .title {
+  &_title {
     text-align: center;
 
     font-size: xx-large;
@@ -25,12 +25,12 @@
     padding: 40px 20px;
   }
 
-  .inputs {
+  &_inputs {
     margin: 0 0 20px 0;
     border: 0;
     padding: 0;
 
-    .input {
+    &_input {
       display: flex;
       flex-direction: column;
 
@@ -41,12 +41,12 @@
         margin-bottom: 0;
       }
 
-      label {
+      &_label {
         margin: 0 0 5px 0;
         padding: 0 0 0 10px;
       }
 
-      input {
+      &_input {
         font-family: "Ubuntu Mono";
 
         margin: 0;
@@ -55,7 +55,7 @@
     }
   }
 
-  .button {
+  &_button {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

@@ -29,12 +29,12 @@ namespace NetCore.Server.Services
                     .Include(u => u.Account)
                     .SingleOrDefaultAsync(u => u.Id == createdUser.Entity.Id);
 
-                if (createdUser == null)
+                if (created == null || created.Account == null)
                     throw new Exception("Не удалось создать пользователя");
 
                 return created.Account;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -49,12 +49,12 @@ namespace NetCore.Server.Services
                     .SingleOrDefaultAsync(u => u.Login == user.Login
                                             && u.Password == user.Password);
 
-                if (foundUser == null)
+                if (foundUser == null || foundUser.Account == null)
                     throw new Exception("Пользователь не найден");
 
                 return foundUser.Account;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

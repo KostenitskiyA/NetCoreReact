@@ -3,7 +3,7 @@
     /// <summary>
     /// Ответ создания рабочей группы
     /// </summary>
-    public class CreateGroupResponce
+    public class CreateGroupResponse
     {
         /// <summary>
         /// Идентификатор

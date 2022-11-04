@@ -8,7 +8,7 @@ using NetCore.Server.Utilities;
 namespace NetCore.Server.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]    
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly ILogger<AccountController> _logger;
@@ -41,11 +41,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -72,11 +72,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(newResult);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -103,11 +103,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(newResult);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -134,11 +134,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(newResult);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -166,11 +166,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(newResult);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -193,12 +193,12 @@ namespace NetCore.Server.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
-        }        
+        }
     }
 }

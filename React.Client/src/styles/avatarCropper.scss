@@ -1,58 +1,58 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
+// .wrapper {
+//   display: flex;
+//   flex-direction: column;
 
-  .container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: stretch;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(255, 255, 255);
+//   .container {
+//     display: flex;
+//     flex-direction: row;
+//     flex-wrap: nowrap;
+//     align-content: stretch;
+//     justify-content: center;
+//     align-items: center;
+//     background-color: rgb(255, 255, 255);
 
-    box-shadow: 0 2px 5px -2px #7a7a7a;
+//     box-shadow: 0 2px 5px -2px #7a7a7a;
 
-    margin: 0 0 10px 0;
-    border: none;
-    border-radius: 0.5rem;    
-    padding: 15px;
+//     margin: 0 0 10px 0;
+//     border: none;
+//     border-radius: 0.5rem;    
+//     padding: 15px;
 
-    &:last-child {
-      margin: 0;
-    }
+//     &:last-child {
+//       margin: 0;
+//     }
 
-    .avatar {
-      margin: 0 0 5px 0;
-      border: 1px solid #7a7a7a25;
-      border-radius: 100%;
-      padding: 0;
-      box-shadow: 0 2px 5px -2px #7a7a7a;
+//     .avatar {
+//       margin: 0 0 5px 0;
+//       border: 1px solid #7a7a7a25;
+//       border-radius: 100%;
+//       padding: 0;
+//       box-shadow: 0 2px 5px -2px #7a7a7a;
 
-      .avatar-img {
-        width: 80px;
-        height: 80px;
+//       .avatar-img {
+//         width: 80px;
+//         height: 80px;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
 
-        border-radius: 100%;
-      }      
-    }
+//         border-radius: 100%;
+//       }      
+//     }
 
-    #upload-button {
-      display: none;
-    }
+//     #upload-button {
+//       display: none;
+//     }
 
-    .input-form {
-      display: flex;
-      flex-direction: column;
-      margin: 0 0 10px 0;
-    }
-  }
-}
+//     .input-form {
+//       display: flex;
+//       flex-direction: column;
+//       margin: 0 0 10px 0;
+//     }
+//   }
+// }
 
-.avatar-icon {
-  font-size: 58px;
-}
+// .avatar-icon {
+//   font-size: 58px;
+// }

@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { updateTodo } from "../stores/todo/actions";
 import BoardCard from "../components/BoardCard";
-import "../styles/board";
+
+import "../styles/boardColumn";
 import "bootstrap-icons/font/bootstrap-icons";
 
 class BoardColumn extends React.Component {
@@ -39,8 +40,8 @@ class BoardColumn extends React.Component {
     const { status, todos } = this.props;
 
     return (
-      <div className="column w-20">
-        <div className="status-title">{status.name}</div>
+      <div className="column">
+        <div className="title">{status.name}</div>
         <div
           className="container"
           onDragEnter={(e) => this.onDragEnter(e)}

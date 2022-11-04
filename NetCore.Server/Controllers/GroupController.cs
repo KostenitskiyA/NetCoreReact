@@ -44,11 +44,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -75,11 +75,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -90,7 +90,7 @@ namespace NetCore.Server.Controllers
         /// <returns>Созданная группа</returns>
         [HttpPost]
         [Route("create")]
-        public async Task<ActionResult<CreateGroupResponce>> CreateGroupAsync([FromBody] CreateGroupRequest request)
+        public async Task<ActionResult<CreateGroupResponse>> CreateGroupAsync([FromBody] CreateGroupRequest request)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace NetCore.Server.Controllers
 
                 var group = AutoMapperUtility<CreateGroupRequest, Group>.Map(request);
                 var result = await _groupService.CreateGroupAsync(group);
-                var responce = AutoMapperUtility<Group, CreateGroupResponce>.Map(result);
+                var responce = AutoMapperUtility<Group, CreateGroupResponse>.Map(result);
 
                 var groupAccount = new GroupAccount() {
                     IsCreator = true,
@@ -111,11 +111,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
         
@@ -140,11 +140,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -168,11 +168,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
     }

@@ -25,7 +25,7 @@ namespace NetCore.Server.Services
 
                 return foundTodoStatuses;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -43,7 +43,7 @@ namespace NetCore.Server.Services
 
                 return foundTodo;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -65,7 +65,7 @@ namespace NetCore.Server.Services
 
                 return foundGroup.Todos;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -87,7 +87,7 @@ namespace NetCore.Server.Services
 
                 return foundAccount.Todos;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -102,7 +102,7 @@ namespace NetCore.Server.Services
 
                 return createdTodo.Entity;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -117,7 +117,7 @@ namespace NetCore.Server.Services
 
                 return editedTodo.Entity;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -136,7 +136,7 @@ namespace NetCore.Server.Services
                 _context.Todos.Remove(foundTodo);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
