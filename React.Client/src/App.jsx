@@ -25,6 +25,11 @@ class App extends React.Component {
   }
 
   render() {
+    var token = localStorage.getItem("token");
+    if (!token) {
+      return <Navigate to="/login" />;
+    }
+
     return (
       <BrowserRouter>
         <Navigation />

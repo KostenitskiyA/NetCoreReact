@@ -55,11 +55,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -99,11 +99,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -122,11 +122,11 @@ namespace NetCore.Server.Controllers
 
                 return Redirect("");
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
     }

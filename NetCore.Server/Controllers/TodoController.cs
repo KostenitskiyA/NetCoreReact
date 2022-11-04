@@ -43,11 +43,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -71,11 +71,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -85,7 +85,7 @@ namespace NetCore.Server.Controllers
         /// <param name="accountId">Идентификатор аккаунта</param>
         /// <returns>Коллекция задач аккаунта</returns>
         [HttpGet]
-        [Route("{accountId}/todos")]
+        [Route("account:{accountId}/todos")]
         public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByAccountAsync(int accountId)
         {
             try
@@ -102,11 +102,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -116,7 +116,7 @@ namespace NetCore.Server.Controllers
         /// <param name="groupId">Идентификатор группы</param>
         /// <returns>Коллекция задач группы</returns>
         [HttpGet]
-        [Route("{groupId}/todos")]
+        [Route("group:{groupId}/todos")]
         public async Task<ActionResult<IEnumerable<GetTodoResponce>>> GetTodosByGroupAsync(int groupId)
         {
             try
@@ -134,11 +134,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -163,11 +163,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -192,11 +192,11 @@ namespace NetCore.Server.Controllers
 
                 return Ok(responce);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
+                _logger.LogError(exception.Message);
 
-                return BadRequest(ex.Message);
+                return BadRequest(exception.Message);
             }
         }
 
@@ -219,10 +219,10 @@ namespace NetCore.Server.Controllers
 
                 return Ok();
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex.Message);
-                return BadRequest(ex.Message);
+                _logger.LogError(exception.Message);
+                return BadRequest(exception.Message);
             }
         }
     }

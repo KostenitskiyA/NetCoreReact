@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Navigate, Link } from "react-router-dom";
-import Modal from "./Modal";
 import { updateAvatar } from "../stores/user/actions";
-import "../styles/profile";
-import "bootstrap-icons/font/bootstrap-icons";
 import AvatarCropper from "./AvatarCropper";
+import Modal from "./Modal";
+
+import "bootstrap-icons/font/bootstrap-icons";
+import "../styles/profile";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class Profile extends React.Component {
     );
 
     return (
-      <div className="wrapper">
+      <div className="profile">
         <div className="container">
           <div className="col">            
             <div className="avatar" onClick={() => {this.onToggleAvatarCropperModal()}}>{avatarImg}</div>

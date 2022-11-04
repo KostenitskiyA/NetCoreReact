@@ -13,6 +13,7 @@ class LogIn extends React.Component {
     this.state = {
       login: "",
       password: "",
+      errors: [],
     };
 
     this.onChangeLogin = this.onChangeLogin.bind(this);
@@ -41,8 +42,11 @@ class LogIn extends React.Component {
 
   render() {
     const { isLogin } = this.props.user;
+    const { login, password, errors } = this.state;
 
     if (isLogin) return <Navigate to="/" />;
+
+    var loginError = errors["login"] ? <label>{errors["login"]}</label> : null;
 
     return (
       <form className="login-form" onSubmit={(e) => this.onSubmit(e)}>
@@ -52,17 +56,18 @@ class LogIn extends React.Component {
             <label>Username</label>
             <input
               type="text"
-              value={this.state.login}
+              value={login}
               onChange={(event) => {
                 this.onChangeLogin(event);
               }}
             />
+            {loginError}
           </div>
           <div className="input">
             <label>Password</label>
             <input
               type="password"
-              value={this.state.password}
+              value={password}
               onChange={(event) => {
                 this.onChangePassword(event);
               }}

@@ -111,8 +111,8 @@ class TodoForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    groupId: state.group.currentGroupId,
     user: state.user,
+    groupId: state.group.currentGroup.id,    
     statuses: state.todo.statuses,
   };
 };

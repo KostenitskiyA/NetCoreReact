@@ -42,7 +42,7 @@ export const login = (data) => {
       dispatch({ type: LOGIN, payload: json });
       dispatch({
         type: ADD_NOTIFICATION,
-        payload: { title: "Вход", description: "Чего вы пришли нахуй" },
+        payload: { title: "Вход", description: "" },
       });
     } else {
       responce.json().then(error => console.log(error.errors));
@@ -66,7 +66,7 @@ export const logout = () => {
     dispatch({ type: LOGOUT, payload: null });
     // dispatch({
     //   type: ADD_NOTIFICATION,
-    //   payload: { title: "Выход", description: "Идите нахуй" },
+    //   payload: { title: "Выход", description: "" },
     // });
   };
 };

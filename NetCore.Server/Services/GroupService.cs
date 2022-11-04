@@ -25,7 +25,7 @@ namespace NetCore.Server.Services
 
                 return foundGroup;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -47,7 +47,7 @@ namespace NetCore.Server.Services
 
                 return foundUser.Groups;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -67,7 +67,7 @@ namespace NetCore.Server.Services
 
                 return createdGroup.Entity;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -93,7 +93,7 @@ namespace NetCore.Server.Services
 
                 return editedTodo.Entity;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -114,7 +114,7 @@ namespace NetCore.Server.Services
 
                 await _context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

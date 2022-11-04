@@ -51,6 +51,10 @@
     }
 
     @media (max-width: 1000px) {
+      i {
+        margin-right: 0;
+      }
+
       span {
         display: none;
       }

@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { getStatuses, getTodosByGroup } from "../stores/todo/actions";
 import BoardColumn from "./BoardColumn";
+import Modal from "./Modal";
+
 import "../styles/board";
 import "bootstrap-icons/font/bootstrap-icons";
-import { Navigate } from "react-router-dom";
-import Modal from "./Modal";
 
 class Board extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Board extends React.Component {
 
   render() {
     const { isLoaded } = this.state;
-    const { userId, isLogin, statuses } = this.props;
+    const { isLogin, statuses } = this.props;
 
     if (!isLogin) return <Navigate to="/login" />;
 

@@ -30,8 +30,10 @@ class GroupMemberTable extends React.Component {
 
   async componentDidMount() {
     await fetch(
-      "https://localhost:7139/api/account/accounts/" +
-        this.props.currentGroup.id,
+      "https://localhost:7139/api/account/{groupId}/members".replace(
+        "{groupId}",
+        this.props.currentGroup.id
+      ),
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -60,7 +62,7 @@ class GroupMemberTable extends React.Component {
               style={{ width: "32px", height: "32px", borderRadius: "100%" }}
             />
           </td>
-          <td className="td">{account.name}</td>          
+          <td className="td">{account.name}</td>
         </tr>
       ));
     } else {
