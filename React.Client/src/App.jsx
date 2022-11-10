@@ -1,6 +1,8 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
+
+import { autoLogin } from "./stores/user/actions";
 
 import Navigation from "./components/Navigation";
 import Home from "./components/Home";
@@ -24,11 +26,16 @@ class App extends React.Component {
     super(props);
   }
 
-  render() {
-    var token = localStorage.getItem("token");
-    if (!token) {
+  tokenCheck() {
+    if (localStorage.getItem("token") && !this.props.isLogin) {
+      this.props.autoLogin();
+    } else {
       return <Navigate to="/login" />;
     }
+  }  
+
+  render() {
+    this.tokenCheck();
 
     return (
       <BrowserRouter>
@@ -59,9 +66,13 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    isLogin: state.user.isLogin,
+  };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  autoLogin,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

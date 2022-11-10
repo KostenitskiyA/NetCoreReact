@@ -40,13 +40,34 @@ namespace NetCore.Server.Services
             }
         }
 
+        public async Task<Account> LogInAsync(int userId)
+        {
+            try
+            {
+                var foundUser = await _context.Users
+                    .Include(u => u.Account)
+                    .AsNoTracking()
+                    .SingleOrDefaultAsync(u => u.Id == userId);
+
+                if (foundUser == null || foundUser.Account == null)
+                    throw new Exception("Пользователь не найден");
+
+                return foundUser.Account;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<Account> LogInAsync(User user)
         {
             try
             {
                 var foundUser = await _context.Users
                     .Include(u => u.Account)
-                    .SingleOrDefaultAsync(u => u.Login == user.Login
+                    .AsNoTracking()
+                    .SingleAsync(u => u.Login == user.Login
                                             && u.Password == user.Password);
 
                 if (foundUser == null || foundUser.Account == null)

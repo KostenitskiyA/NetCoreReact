@@ -10,15 +10,14 @@ class GroupMenu extends React.Component {
   }
 
   render() {
-    //const user = this.props.user;
-    //const group = this.props.group;
+    const { group } = this.props;
 
     return (
-      <div className="menu col">
+      <div className="menu">
         <ul>
-          {/* <li>
+          <li className="group-name">
             <span>{group.name}</span>
-          </li> */}
+          </li>
           <li>
             <Link to="board">
               <i className="bi bi-kanban" />
@@ -63,7 +62,6 @@ class GroupMenu extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
     group: state.group.currentGroup,
   };
 };

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NetCore.Server.Interfaces;
@@ -52,6 +53,35 @@ namespace NetCore.Server.Controllers
 
                 _logger.LogInformation("Запрос SignInAsync обработан");
 
+
+                return Ok(responce);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception.Message);
+
+                return BadRequest(exception.Message);
+            }
+        }
+
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <returns>Авторизированный пользователь</returns>
+        [Authorize]
+        [HttpGet]
+        [Route("login")]
+        public async Task<ActionResult<LogInResponce>> LogInAsync()
+        {
+            try
+            {
+                _logger.LogInformation("Запрос LogInAsync получен");
+
+                var userId = Convert.ToInt32(User.FindFirstValue("Id"));
+                var result = await _userProvider.LogInAsync(userId);
+                var responce = AutoMapperUtility<Account, LogInResponce>.Map(result);
+
+                _logger.LogInformation("Запрос LogInAsync обработан");
 
                 return Ok(responce);
             }

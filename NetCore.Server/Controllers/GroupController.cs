@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Requests;
@@ -118,7 +119,7 @@ namespace NetCore.Server.Controllers
                 return BadRequest(exception.Message);
             }
         }
-        
+
         /// <summary>
         /// Обновление группы
         /// </summary>

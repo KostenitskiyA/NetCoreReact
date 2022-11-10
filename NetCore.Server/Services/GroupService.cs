@@ -18,6 +18,7 @@ namespace NetCore.Server.Services
             try
             {
                 var foundGroup = await _context.Groups
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
@@ -37,6 +38,7 @@ namespace NetCore.Server.Services
             {
                 var foundUser = await _context.Accounts
                     .Include(a => a.Groups)
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(a => a.Id == accountId);
 
                 if (foundUser == null)

@@ -25,6 +25,32 @@ export const signin = (data) => {
   };
 };
 
+export const autoLogin = () => {
+  return async (dispatch) => {
+    const responce = await fetch(LOGIN_API, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
+      credentials: "include",
+    });
+
+    if (responce.ok) {
+      const json = await responce.json();
+
+      dispatch({ type: LOGIN, payload: json });
+      dispatch({
+        type: ADD_NOTIFICATION,
+        payload: { title: "Вход", description: "" },
+      });
+    } else {
+      responce.json().then(error => console.log(error.errors));
+      dispatch({
+        type: ADD_NOTIFICATION,
+        payload: { title: "Ошибка входа", description: responce.statusText },
+      });
+    }
+  };
+};
+
 export const login = (data) => {
   return async (dispatch) => {
     const responce = await fetch(LOGIN_API, {
@@ -61,7 +87,7 @@ export const logout = () => {
     //   headers: { "Content-Type": "application/json" },
     // });
 
-    sessionStorage.clear();
+    localStorage.clear();
 
     dispatch({ type: LOGOUT, payload: null });
     // dispatch({

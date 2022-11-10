@@ -1,0 +1,75 @@
+@import "./constants.scss";
+
+.group-members-table {
+  table {
+    display: table;
+  
+    width: 100%;
+    height: auto;
+  
+    background-color: #ffffff;
+  
+    margin: 0;
+    padding: 0;
+    border-radius: 0.25em;
+    box-shadow: 0 1px 5px -2px #7a7a7a;
+    border-collapse: collapse;
+
+    thead {
+      display: table-header-group;
+  
+      margin: 0;
+      padding: 0;
+
+      tr {
+        display: table-row;
+  
+        margin: 0;
+        padding: 0;
+
+        th {
+          display: table-cell;
+  
+          font-family: "Ubuntu Mono";
+  
+          margin: 0;
+          padding: 10px;
+        }
+      }
+    }
+
+    tbody {
+      display: table-row-group;
+  
+      margin: 0;
+      padding: 0;
+
+      tr {
+        display: table-row;
+  
+        margin: 0;
+        padding: 0;
+  
+        &:hover {
+          display: table-row;
+  
+          background-color: #c9c9ca;
+  
+          margin: 0;
+          padding: 0;
+        }
+
+        td {
+          display: table-cell;
+  
+          text-align: center;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  
+          margin: 0;
+          padding: 10px;
+          border-top: 1px solid #c9c9ca;
+        }
+      }
+    }
+  }
+}
