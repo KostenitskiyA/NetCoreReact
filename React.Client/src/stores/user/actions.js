@@ -14,7 +14,7 @@ import {
 
 export const signin = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(SIGNIN_API, {
+    const responce = await fetch(SIGNIN_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -27,7 +27,7 @@ export const signin = (data) => {
 
 export const autoLogin = () => {
   return async (dispatch) => {
-    const responce = await fetch(LOGIN_API, {
+    const responce = await fetch(LOGIN_API(), {
       method: "GET",
       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
       credentials: "include",
@@ -53,7 +53,7 @@ export const autoLogin = () => {
 
 export const login = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(LOGIN_API, {
+    const responce = await fetch(LOGIN_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -82,7 +82,7 @@ export const login = (data) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    // const responce = await fetch(LOGOUT_API, {
+    // const responce = await fetch(LOGOUT_API(), {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
     // });
@@ -99,7 +99,7 @@ export const logout = () => {
 
 export const updateAvatar = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(UPDATE_ACCOUNT_AVATAR_API, {
+    const responce = await fetch(UPDATE_ACCOUNT_AVATAR_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
