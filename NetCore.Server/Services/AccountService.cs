@@ -18,6 +18,7 @@ namespace NetCore.Server.Services
             try
             {
                 var foundAccount = await _context.Accounts
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(u => u.Id == accountId);
 
                 if (foundAccount == null)
@@ -46,6 +47,7 @@ namespace NetCore.Server.Services
                             Name = a.Name,
                             Avatar = a.Avatar
                         })
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (foundFriends == null)
@@ -65,6 +67,7 @@ namespace NetCore.Server.Services
             {
                 var foundGroup = await _context.Groups
                     .Include(g => g.Accounts)
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
@@ -87,6 +90,7 @@ namespace NetCore.Server.Services
             {
                 var foundAccounts = await _context.Accounts
                     .Where(a => a.Name.Contains(searchName))
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (foundAccounts == null)
@@ -106,6 +110,7 @@ namespace NetCore.Server.Services
             {
                 var foundGroup = await _context.Groups
                     .Include(g => g.Accounts)
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(g => g.Code == groupId);
 
                 if (foundGroup == null)

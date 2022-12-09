@@ -26,12 +26,12 @@ class TodoTableRow extends React.Component {
 
     return (
       <React.Fragment>
-        <tr className="tr" key={key} onClick={() => this.onToggleModal()}>
-          <td className="td">{todo.title}</td>
-          <td className="td">
+        <tr key={key} onClick={() => this.onToggleModal()}>
+          <td>{todo.title}</td>
+          <td>
             {statuses.find((status) => status.id == todo.statusId).name}
           </td>
-          <td className="td">{new Date(todo.createDate).getFullYear()}</td>
+          <td>{new Date(todo.createDate).toLocaleDateString()}</td>
         </tr>
 
         <Modal

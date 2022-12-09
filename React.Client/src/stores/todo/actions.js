@@ -1,8 +1,8 @@
 import {
   GET_STATUSES_API,
   GET_TODO_API,
-  GET_TODOS_BY_GROUP_API,
   GET_TODOS_BY_ACCOUNT_API,
+  GET_TODOS_BY_GROUP_API,
   CREATE_TODO_API,
   UPDATE_TODO_API,
   DELETE_TODO_API,  
@@ -22,7 +22,7 @@ import {
 // Получение статусов
 export const getStatuses = () => {
   return async (dispatch) => {
-    const responce = await fetch(GET_STATUSES_API, {
+    const responce = await fetch(GET_STATUSES_API(), {
       method: "GET",
       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
     });
@@ -35,7 +35,7 @@ export const getStatuses = () => {
 // Получение задачи
 export const getTodo = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODO_API.replace("{todoId}", id), {
+    const responce = await fetch(GET_TODO_API(id), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -45,23 +45,10 @@ export const getTodo = (id) => {
   };
 };
 
-// Получение задач группы
-export const getTodosByGroup = (id) => {
-  return async (dispatch) => {
-    const responce = await fetch(GET_TODOS_BY_GROUP_API.replace("{groupId}", id), {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-
-    const json = await responce.json();
-    dispatch({ type: GET_TODOS_BY_GROUP, payload: json });
-  };
-};
-
 // Получение задач аккаунта
 export const getTodosByAccount = (id) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_TODOS_BY_ACCOUNT_API.replace("{accountId}", id), {
+    const responce = await fetch(GET_TODOS_BY_ACCOUNT_API(id), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -71,10 +58,23 @@ export const getTodosByAccount = (id) => {
   };
 };
 
+// Получение задач группы
+export const getTodosByGroup = (id) => {
+  return async (dispatch) => {
+    const responce = await fetch(GET_TODOS_BY_GROUP_API(id), {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const json = await responce.json();
+    dispatch({ type: GET_TODOS_BY_GROUP, payload: json });
+  };
+};
+
 // Создание задачи
 export const createTodo = (data) => {
   return async (dispatch) => {
-    await fetch(CREATE_TODO_API, {
+    await fetch(CREATE_TODO_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -98,7 +98,7 @@ export const createTodo = (data) => {
 // Обновление задачи
 export const updateTodo = (data) => {
   return async (dispatch) => {
-    await fetch(UPDATE_TODO_API, {
+    await fetch(UPDATE_TODO_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -122,7 +122,7 @@ export const updateTodo = (data) => {
 // Удаление задачи
 export const deleteTodo = (id) => {
   return async (dispatch) => {
-    await fetch(DELETE_TODO_API.replace("{groupId}", id), {
+    await fetch(DELETE_TODO_API(id), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })

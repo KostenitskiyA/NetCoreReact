@@ -28,6 +28,16 @@
     margin: 0;
     padding: 10px 0;
 
+    @media (max-width: 1000px) {
+      .group-name {
+      display: none;
+    }
+    }
+
+    .group-name {
+      text-align: center;
+    }
+
     li {
       margin: 0;
       padding: 5px 15px;

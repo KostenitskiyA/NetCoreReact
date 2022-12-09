@@ -46,22 +46,22 @@ class LogIn extends React.Component {
 
     if (isLogin) return <Navigate to="/" />;
 
-    var loginError = errors["login"] ? <label>{errors["login"]}</label> : null;
+    var loginError = errors["login"] ? errors["login"] : null;
 
     return (
       <form className="login-form" onSubmit={(e) => this.onSubmit(e)}>
         <div className="title">Login</div>
         <div className="inputs">
           <div className="input">
-            <label>Username</label>
+            <label className="input">Username</label>
             <input
+              className="input"
               type="text"
               value={login}
               onChange={(event) => {
                 this.onChangeLogin(event);
               }}
             />
-            {loginError}
           </div>
           <div className="input">
             <label>Password</label>

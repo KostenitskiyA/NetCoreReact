@@ -1,0 +1,11 @@
+.board {
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 10px;
+  }
+}

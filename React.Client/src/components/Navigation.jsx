@@ -3,6 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../stores/user/actions";
 import "../styles/navigation";
+import AvatarIcon from "./AvatarIcon";
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -19,12 +20,6 @@ class Navigation extends React.Component {
   render() {
     const { id, name, avatar, isLogin } = this.props.user;
 
-    const avatarImg = avatar ? (
-      <img src={avatar} />
-    ) : (
-      <i className="bi bi-person-fill"></i>
-    );
-
     var items;
 
     isLogin
@@ -38,7 +33,7 @@ class Navigation extends React.Component {
             <li className="item">
               <Link className="link" to={"/profile/" + id}>
                 {name}
-                <div className="avatar-img">{avatarImg}</div>
+                <AvatarIcon avatar={avatar}/>
               </Link>
             </li>
           </React.Fragment>

@@ -14,7 +14,7 @@ import {
 
 export const signin = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(SIGNIN_API, {
+    const responce = await fetch(SIGNIN_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -25,9 +25,35 @@ export const signin = (data) => {
   };
 };
 
+export const autoLogin = () => {
+  return async (dispatch) => {
+    const responce = await fetch(LOGIN_API(), {
+      method: "GET",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
+      credentials: "include",
+    });
+
+    if (responce.ok) {
+      const json = await responce.json();
+
+      dispatch({ type: LOGIN, payload: json });
+      dispatch({
+        type: ADD_NOTIFICATION,
+        payload: { title: "Вход", description: "" },
+      });
+    } else {
+      responce.json().then(error => console.log(error.errors));
+      dispatch({
+        type: ADD_NOTIFICATION,
+        payload: { title: "Ошибка входа", description: responce.statusText },
+      });
+    }
+  };
+};
+
 export const login = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(LOGIN_API, {
+    const responce = await fetch(LOGIN_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -56,12 +82,12 @@ export const login = (data) => {
 
 export const logout = () => {
   return async (dispatch) => {
-    // const responce = await fetch(LOGOUT_API, {
+    // const responce = await fetch(LOGOUT_API(), {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
     // });
 
-    sessionStorage.clear();
+    localStorage.clear();
 
     dispatch({ type: LOGOUT, payload: null });
     // dispatch({
@@ -73,7 +99,7 @@ export const logout = () => {
 
 export const updateAvatar = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(UPDATE_ACCOUNT_AVATAR_API, {
+    const responce = await fetch(UPDATE_ACCOUNT_AVATAR_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

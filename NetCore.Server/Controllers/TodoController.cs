@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NetCore.Server.Interfaces;
 using NetCore.Server.Models;
 using NetCore.Server.Models.Requests;
@@ -56,6 +57,7 @@ namespace NetCore.Server.Controllers
         /// </summary>
         /// <param name="todoId">Идентификатор задачи</param>
         /// <returns>Задача</returns>
+        [Authorize]
         [HttpGet]
         [Route("{todoId}")]
         public async Task<ActionResult<GetTodoResponce>> GetTodoAsync(int todoId)
@@ -201,19 +203,19 @@ namespace NetCore.Server.Controllers
         }
 
         /// <summary>
-        /// Удаление группы
+        /// Удаление задачи
         /// </summary>
-        /// <param name="groupId">Идентификатор группы</param>
+        /// <param name="todoId">Идентификатор группы</param>
         /// <returns>Результат выполнения</returns>
         [HttpPost]
-        [Route("{groupId}/delete")]
-        public async Task<ActionResult> DeleteTodoAsync(int groupId)
+        [Route("{todoId}/delete")]
+        public async Task<ActionResult> DeleteTodoAsync(int todoId)
         {
             try
             {
                 _logger.LogInformation("Запрос DeleteTodoAsync получен");
 
-                await _todoService.DeleteTodoAsync(groupId);
+                await _todoService.DeleteTodoAsync(todoId);
 
                 _logger.LogInformation("Запрос DeleteTodoAsync обработан");
 

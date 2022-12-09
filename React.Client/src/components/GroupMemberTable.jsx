@@ -2,9 +2,10 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 
+import AvatarIcon from "./AvatarIcon";
+
+import "../styles/member";
 import "bootstrap-icons/font/bootstrap-icons";
-import "../styles/style";
-//import "../styles/userTable";
 
 class GroupMemberTable extends React.Component {
   constructor(props) {
@@ -57,10 +58,7 @@ class GroupMemberTable extends React.Component {
       rows = accounts.map((account, key) => (
         <tr className="tr" key={key}>
           <td className="td">
-            <img
-              src={account.avatar}
-              style={{ width: "32px", height: "32px", borderRadius: "100%" }}
-            />
+            <AvatarIcon avatar={account.avatar}/>            
           </td>
           <td className="td">{account.name}</td>
         </tr>
@@ -74,7 +72,7 @@ class GroupMemberTable extends React.Component {
     }
 
     return (
-      <div className="account-table">
+      <div className="group-members-table">
         {/* <div className="filters row">
           <div className="input search">
             <label>Search</label>
@@ -86,13 +84,14 @@ class GroupMemberTable extends React.Component {
           </div>
         </div> */}
         <div className="table">
-          <table className="table">
-            <thead className="thead">
-              <tr className="tr">
-                <th className="th">Имя</th>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Имя</th>
               </tr>
             </thead>
-            <tbody className="tbody">{rows}</tbody>
+            <tbody>{rows}</tbody>
           </table>
         </div>
       </div>

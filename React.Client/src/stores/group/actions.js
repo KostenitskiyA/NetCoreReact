@@ -18,7 +18,7 @@ import {
 // Изменение текущей группы
 export const changeCurrentGroup = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_GROUP_API.replace("{groupId}", data), {
+    const responce = await fetch(GET_GROUP_API(data), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -31,7 +31,7 @@ export const changeCurrentGroup = (data) => {
 // Получение группы
 export const getGroup = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(GET_GROUP_API.replace("{groupId}", data), {
+    const responce = await fetch(GET_GROUP_API(data), {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -44,13 +44,10 @@ export const getGroup = (data) => {
 // Получение групп аккаунта
 export const getGroupsByAccount = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(
-      GET_GROUPS_BY_ACCOUNT_API.replace("{accountId}", data),
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    const responce = await fetch(GET_GROUPS_BY_ACCOUNT_API(data), {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
     const json = await responce.json();
     dispatch({ type: GET_GROUPS_BY_ACCOUNT, payload: json });
@@ -60,7 +57,7 @@ export const getGroupsByAccount = (data) => {
 // Создание группы
 export const createGroup = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(CREATE_GROUP_API, {
+    const responce = await fetch(CREATE_GROUP_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -74,7 +71,7 @@ export const createGroup = (data) => {
 // Обновление группы
 export const updateGroup = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(UPDATE_GROUP_API, {
+    const responce = await fetch(UPDATE_GROUP_API(), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -88,7 +85,7 @@ export const updateGroup = (data) => {
 // Удаление группы
 export const deleteGroup = (data) => {
   return async (dispatch) => {
-    const responce = await fetch(DELETE_GROUP_API.replace("{groupId}", data), {
+    const responce = await fetch(DELETE_GROUP_API(data), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     });

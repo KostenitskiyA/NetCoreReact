@@ -18,6 +18,7 @@ namespace NetCore.Server.Services
             try
             {
                 var foundTodoStatuses = await _context.TodoStatuses
+                    .AsNoTracking()
                     .ToListAsync();
 
                 if (foundTodoStatuses == null)
@@ -36,6 +37,7 @@ namespace NetCore.Server.Services
             try
             {
                 var foundTodo = await _context.Todos
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(t => t.Id == todoId);
 
                 if (foundTodo == null)
@@ -55,6 +57,7 @@ namespace NetCore.Server.Services
             {
                 var foundGroup = await _context.Groups
                     .Include(g => g.Todos)
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(g => g.Id == groupId);
 
                 if (foundGroup == null)
@@ -77,6 +80,7 @@ namespace NetCore.Server.Services
             {
                 var foundAccount = await _context.Accounts
                     .Include(a => a.Todos)
+                    .AsNoTracking()
                     .SingleOrDefaultAsync(a => a.Id == accountId);
 
                 if (foundAccount == null)

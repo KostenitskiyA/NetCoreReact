@@ -118,7 +118,7 @@ namespace NetCore.Server.Controllers
                 return BadRequest(exception.Message);
             }
         }
-        
+
         /// <summary>
         /// Обновление группы
         /// </summary>
